@@ -43,7 +43,7 @@
   --container: 1200px;
   --gutter: clamp(16px, 4vw, 40px);
   --header-h: 64px;
-  --section-space: clamp(80px, 10vw, 136px);
+  --section-space: clamp(60px, 8.8vw, 118px);  /* phone ~60px, desktop ~112–118px */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -1045,38 +1045,41 @@ html:not(.js) .js-only {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 14px;
-  margin-bottom: clamp(36px, 5vw, 60px);
+  gap: 8px;
+  margin-bottom: clamp(28px, 4vw, 48px);
 }
 
+/* Small, quiet section number with a short tick */
 .section-index {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  color: var(--accent);
+  gap: 6px;
+  color: var(--faint);
   font-family: var(--font-mono);
-  font-size: 0.8125rem;
+  font-size: 0.6875rem;
   font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1;
   font-variant-numeric: tabular-nums;
 }
 
 .section-index::after {
   content: "";
-  width: 28px;
+  width: 12px;
   height: 1px;
   background: currentColor;
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 .section-title {
-  font-size: clamp(2.125rem, 5.2vw, 3.75rem);
-  letter-spacing: -0.05em;
-  line-height: 1;
+  font-size: clamp(1.75rem, 4.2vw, 3rem);
+  letter-spacing: -0.045em;
+  line-height: 1.05;
 }
 
 .section-intro {
   max-width: 38em;
-  margin: calc(clamp(36px, 5vw, 60px) * -0.5) 0 clamp(32px, 4vw, 48px);
+  margin: calc(clamp(28px, 4vw, 48px) * -0.5) 0 clamp(28px, 3.5vw, 44px);
   color: var(--muted);
   font-size: clamp(1.0625rem, 1.5vw, 1.1875rem);
 }
@@ -2041,7 +2044,7 @@ html:not(.js) .js-only {
 }
 
 .contact-intro .section-title {
-  font-size: clamp(2.75rem, 7vw, 5rem);
+  font-size: clamp(2.2rem, 5.6vw, 4rem);
 }
 
 .contact-note {
