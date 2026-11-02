@@ -103,11 +103,11 @@ portfolio:
       tools: ["Google Sheets"]
       link: "https://docs.google.com/spreadsheets/d/1qmdii_crHkBCz38AoZM4wB0z7KvREubd9FTeGDE5Ieg/edit?usp=sharing"
       image: ""
-    - title: "Customer Email Templates"
+    - title: "Customer Support Response Library"
       label: "Sample project"
-      text: "Ready-to-use replies for common e-commerce situations: order updates, delays, returns and complaints."
+      text: "A support playbook for a small online shop: 10 reply templates for order updates, delays, returns and complaints, with response time targets, escalation rules and store policy fields."
       tools: ["Google Docs"]
-      link: ""
+      link: "https://docs.google.com/document/d/1xYm1fliueMGKPDli2UzKeNNLda1rVmu8jLQrLuVwvgo/edit?usp=sharing"
       image: ""
     - title: "Data Cleanup Before/After"
       label: "Sample project"
