@@ -19,7 +19,7 @@ nav:
       href: "#experience"
     - label: "Portfolio"
       href: "#portfolio"
-    - label: "Case study"
+    - label: "Automation"
       href: "#case-study"
     - label: "Contact"
       href: "#contact"
@@ -136,9 +136,9 @@ portfolio:
       image: "static/img/portfolio/data-cleanup.webp"
 
 case_study:
-  title: "Case study"
-  name: "Job-search automation pipeline"
-  summary: "A personal Python system I built with an AI coding assistant to run my own remote job search end to end, with a human approval step before anything is sent."
+  title: "Automation case study"
+  name: "Python workflow with a human approval step"
+  summary: "A personal system I built with an AI coding assistant to run my own remote job search: it collects listings, scores them, drafts tailored emails and waits for my approval before anything is sent. I can apply the same approach to repetitive business tasks such as order follow-ups or payment reminders."
   steps:
     - "Collects job listings from multiple sources"
     - "Scores and filters them against my criteria"
