@@ -1,13 +1,12 @@
 // Small, dependency-free enhancements:
 // header + scroll progress, active nav link, mobile menu, live clock, spotlight cards,
-// scroll reveal, count-up stats, email menus, copy email and the Ctrl/Cmd+K command palette.
+// scroll reveal, count-up stats, email menus and copy email.
 (function () {
   "use strict";
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   var touchOnly = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
-  var isMac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
 
   function $(selector, root) { return (root || document).querySelector(selector); }
   function $$(selector, root) { return Array.prototype.slice.call((root || document).querySelectorAll(selector)); }
@@ -317,142 +316,6 @@
     if (event.key === "Escape" && openEmail) {
       event.preventDefault();
       closeEmailMenu(openEmail, true);
-    }
-  });
-
-  // ---------- Command palette ----------
-  var palette = $("[data-palette]");
-  if (!palette || typeof palette.showModal !== "function") return;
-
-  var input = $("[data-palette-input]", palette);
-  var list = $("[data-palette-list]", palette);
-  var empty = $("[data-palette-empty]", palette);
-  var items = $$(".palette-item", list);
-  var groups = $$(".palette-group", list);
-  var openers = $$("[data-palette-open]");
-  var active = -1;
-  var lastFocus = null;
-
-  openers.forEach(function (button) {
-    var kbd = $("kbd", button);
-    if (kbd && !isMac && button.dataset.hintOther) kbd.textContent = button.dataset.hintOther;
-    button.addEventListener("click", openPalette);
-  });
-
-  function visibleItems() {
-    return items.filter(function (item) { return !item.hidden; });
-  }
-
-  function setActive(index) {
-    var visible = visibleItems();
-    items.forEach(function (item) { item.setAttribute("aria-selected", "false"); });
-    if (!visible.length) {
-      active = -1;
-      input.removeAttribute("aria-activedescendant");
-      return;
-    }
-    active = (index + visible.length) % visible.length;
-    var current = visible[active];
-    current.setAttribute("aria-selected", "true");
-    input.setAttribute("aria-activedescendant", current.id);
-    current.scrollIntoView({ block: "nearest" });
-  }
-
-  function filter() {
-    var query = input.value.trim().toLowerCase();
-    items.forEach(function (item) {
-      item.hidden = query !== "" && item.textContent.toLowerCase().indexOf(query) === -1;
-    });
-    // Hide a group heading when none of its items match.
-    groups.forEach(function (group) {
-      var next = group.nextElementSibling;
-      var any = false;
-      while (next && !next.classList.contains("palette-group")) {
-        if (!next.hidden) any = true;
-        next = next.nextElementSibling;
-      }
-      group.hidden = !any;
-    });
-    if (empty) empty.hidden = visibleItems().length > 0;
-    setActive(0);
-  }
-
-  function openPalette() {
-    if (palette.open) return;
-    if (menu && !menu.hidden) setMenu(false);
-    if (openEmail) closeEmailMenu(openEmail, false);
-    lastFocus = document.activeElement;
-    input.value = "";
-    filter();
-    palette.showModal();
-    input.focus();
-  }
-
-  function closePalette() {
-    if (palette.open) palette.close();
-  }
-
-  palette.addEventListener("close", function () {
-    if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
-  });
-
-  // Click on the backdrop closes the palette.
-  palette.addEventListener("click", function (event) {
-    if (event.target === palette) closePalette();
-  });
-
-  function run(item) {
-    if (!item) return;
-    var action = item.dataset.action;
-    closePalette();
-    if (action === "goto") {
-      var target = document.querySelector(item.dataset.target);
-      if (target) {
-        target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
-        history.replaceState(null, "", item.dataset.target);
-      }
-    } else if (action === "copy") {
-      copyEmail();
-    } else if (action === "mail" && email) {
-      window.location.href = "mailto:" + email;
-    } else if (action === "open" && item.dataset.href) {
-      window.open(item.dataset.href, "_blank", "noopener");
-    } else if (action === "download" && item.dataset.href) {
-      var link = document.createElement("a");
-      link.href = item.dataset.href;
-      link.download = item.dataset.filename || "";
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    }
-  }
-
-  input.addEventListener("input", filter);
-  input.addEventListener("keydown", function (event) {
-    if (event.key === "ArrowDown") {
-      event.preventDefault();
-      setActive(active + 1);
-    } else if (event.key === "ArrowUp") {
-      event.preventDefault();
-      setActive(active - 1);
-    } else if (event.key === "Enter") {
-      event.preventDefault();
-      run(visibleItems()[active]);
-    }
-  });
-
-  items.forEach(function (item) {
-    item.addEventListener("mousemove", function () {
-      var index = visibleItems().indexOf(item);
-      if (index !== active) setActive(index);
-    });
-    item.addEventListener("click", function () { run(item); });
-  });
-
-  document.addEventListener("keydown", function (event) {
-    if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
-      event.preventDefault();
-      if (palette.open) closePalette(); else openPalette();
     }
   });
 })();

@@ -32,7 +32,6 @@
 {% endmacro %}
 
 {% block body %}
-{% set palette = nav.palette %}
 {% set ns = namespace(email_label="", cv="", cv_label="", sheets=0) %}
 {% for button in hero.buttons or [] %}
   {% if button.href and button.href.startswith("mailto:") and not ns.email_label %}{% set ns.email_label = button.label %}{% endif %}
@@ -59,14 +58,11 @@
     </ul>
     {% endif %}
     <div class="bar-actions">
-      {% if palette %}
-      <button class="kbd-hint" type="button" data-palette-open aria-haspopup="dialog" aria-controls="palette"
-              aria-label="Open command palette"
-              data-hint-mac="{{ palette.hint_mac }}" data-hint-other="{{ palette.hint_other }}">
-        <kbd>{{ palette.hint_mac }}</kbd>
-      </button>
-      {% endif %}
+      {% if contact.booking_url and ui.book_call %}
+      <a class="btn btn-primary btn-sm bar-cta" href="{{ contact.booking_url }}" target="_blank" rel="noopener">{{ ui.book_call }}</a>
+      {% else %}
       <div class="bar-email">{{ m.email_menu(email_label, "email-menu-header", "btn-primary btn-sm", false, "end") }}</div>
+      {% endif %}
       {% if nav["items"] %}
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu" data-menu-toggle>
         <span></span><span></span>
@@ -123,16 +119,25 @@
         {% if hero.value_proposition %}<p class="hero-lead">{{ hero.value_proposition }}</p>{% endif %}
 
         {% set buttons = (hero.buttons or []) | selectattr("href") | list %}
-        {% if buttons %}
+        {# Booking link first (when set), then the email menu, then the CV as a small text link #}
+        {% set booking = contact.booking_url and ui.book_call_hero %}
+        {% if buttons or booking %}
         <div class="hero-actions">
+          {% if booking %}
+          <a class="btn btn-primary btn-lg" href="{{ contact.booking_url }}" target="_blank" rel="noopener">
+            {{ ui.book_call_hero }}
+            <span class="btn-arrow" aria-hidden="true">↗</span>
+          </a>
+          {% endif %}
           {% for button in buttons %}
           {% if button.href.startswith("mailto:") %}
-          {{ m.email_menu(button.label, "email-menu-hero", "btn-primary btn-lg") }}
-          {% else %}
-          <a class="btn btn-ghost btn-lg" href="{{ button.href }}"{% if button.href.endswith('.pdf') %} download="{{ button.href.split('/')[-1] }}"{% endif %}>
-            {{ button.label }}
-            {% if button.href.endswith('.pdf') %}<span class="btn-arrow btn-arrow-down" aria-hidden="true">↓</span>{% endif %}
+          {{ m.email_menu(button.label, "email-menu-hero", "btn-ghost btn-lg" if booking else "btn-primary btn-lg", not booking) }}
+          {% elif button.href.endswith(".pdf") %}
+          <a class="hero-text-link" href="{{ button.href }}" download="{{ button.href.split('/')[-1] }}">
+            {{ button.label }} <span aria-hidden="true">↓</span>
           </a>
+          {% else %}
+          <a class="btn btn-ghost btn-lg" href="{{ button.href }}">{{ button.label }}</a>
           {% endif %}
           {% endfor %}
         </div>
@@ -462,8 +467,8 @@
         <p class="contact-email" translate="no">{{ contact.email }}</p>
         <div class="contact-actions">
           {{ m.email_menu(email_label, "email-menu-contact", "btn-primary btn-lg") }}
-          {% if palette.copy_email %}
-          <button class="btn btn-ghost btn-lg js-only" type="button" data-copy-email>{{ palette.copy_email }}</button>
+          {% if ui.copy_email %}
+          <button class="btn btn-ghost btn-lg js-only" type="button" data-copy-email>{{ ui.copy_email }}</button>
           {% endif %}
           {% if contact.booking_url and ui.book_call %}
           <a class="btn btn-ghost btn-lg" href="{{ contact.booking_url }}" target="_blank" rel="noopener">
@@ -499,6 +504,11 @@
       {% else %}
       <a class="btn btn-light btn-xl" href="{{ footer.cta_link }}">{{ footer.cta_button }} <span class="btn-arrow" aria-hidden="true">→</span></a>
       {% endif %}
+      {% if contact.booking_url and ui.book_call %}
+      <a class="btn btn-outline-light btn-xl" href="{{ contact.booking_url }}" target="_blank" rel="noopener">
+        {{ ui.book_call }} <span aria-hidden="true">↗</span>
+      </a>
+      {% endif %}
     </div>
     {% endif %}
     <div class="footer-bottom">
@@ -512,72 +522,6 @@
     </div>
   </div>
 </footer>
-
-{# ================= Command palette ================= #}
-{% if palette %}
-<dialog class="palette" id="palette" aria-label="Command palette" data-palette>
-  <div class="palette-box">
-    <div class="palette-search">
-      <span class="palette-icon" aria-hidden="true"></span>
-      <input class="palette-input" type="text" autocomplete="off" spellcheck="false"
-             role="combobox" aria-expanded="true" aria-controls="palette-list" aria-autocomplete="list"
-             aria-label="Search commands" placeholder="{{ palette.placeholder }}" data-palette-input>
-      <kbd class="palette-esc" aria-hidden="true">Esc</kbd>
-    </div>
-    <ul class="palette-list" id="palette-list" role="listbox" aria-label="Commands" data-palette-list>
-      {% if nav["items"] %}
-      {% if palette.group_sections %}<li class="palette-group" role="presentation">{{ palette.group_sections }}</li>{% endif %}
-      {% for item in nav["items"] %}
-      <li class="palette-item" role="option" id="cmd-goto-{{ loop.index }}" aria-selected="false"
-          data-action="goto" data-target="{{ item.href }}">
-        <span class="palette-item-icon" aria-hidden="true">#</span>{{ item.label }}
-      </li>
-      {% endfor %}
-      {% endif %}
-      {% if contact.email or ns.cv %}
-      {% if palette.group_actions %}<li class="palette-group" role="presentation">{{ palette.group_actions }}</li>{% endif %}
-      {% if contact.email %}
-      {% if ui.open_gmail %}
-      <li class="palette-item" role="option" id="cmd-gmail" aria-selected="false" data-action="open"
-          data-href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to={{ contact.email }}">
-        <span class="palette-item-icon" aria-hidden="true">G</span>{{ ui.open_gmail }}
-      </li>
-      {% endif %}
-      {% if ui.open_outlook %}
-      <li class="palette-item" role="option" id="cmd-outlook" aria-selected="false" data-action="open"
-          data-href="https://outlook.live.com/mail/0/deeplink/compose?to={{ contact.email }}">
-        <span class="palette-item-icon" aria-hidden="true">O</span>{{ ui.open_outlook }}
-      </li>
-      {% endif %}
-      {% if palette.send_email %}
-      <li class="palette-item" role="option" id="cmd-mail" aria-selected="false" data-action="mail">
-        <span class="palette-item-icon" aria-hidden="true">@</span>{{ palette.send_email }}
-      </li>
-      {% endif %}
-      {% if contact.booking_url and ui.book_call %}
-      <li class="palette-item" role="option" id="cmd-book" aria-selected="false" data-action="open"
-          data-href="{{ contact.booking_url }}">
-        <span class="palette-item-icon" aria-hidden="true">◷</span>{{ ui.book_call }}
-      </li>
-      {% endif %}
-      {% if palette.copy_email %}
-      <li class="palette-item" role="option" id="cmd-copy" aria-selected="false" data-action="copy">
-        <span class="palette-item-icon" aria-hidden="true">⧉</span>{{ palette.copy_email }}
-      </li>
-      {% endif %}
-      {% endif %}
-      {% if palette.download_cv and ns.cv %}
-      <li class="palette-item" role="option" id="cmd-cv" aria-selected="false" data-action="download"
-          data-href="{{ ns.cv }}" data-filename="{{ cv_file }}">
-        <span class="palette-item-icon" aria-hidden="true">↓</span>{{ palette.download_cv }}
-      </li>
-      {% endif %}
-      {% endif %}
-    </ul>
-    {% if palette.empty %}<p class="palette-empty" data-palette-empty hidden>{{ palette.empty }}</p>{% endif %}
-  </div>
-</dialog>
-{% endif %}
 
 {{ m.toast() }}
 {% endblock %}

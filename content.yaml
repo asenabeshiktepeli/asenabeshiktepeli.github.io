@@ -23,18 +23,6 @@ nav:
       href: "#case-study"
     - label: "Contact"
       href: "#contact"
-  # Command palette (Ctrl+K / Cmd+K)
-  palette:
-    hint_mac: "⌘K"
-    hint_other: "Ctrl K"
-    placeholder: "Type a command or search…"
-    group_sections: "Sections"
-    group_actions: "Actions"
-    copy_email: "Copy email address"
-    send_email: "Send an email"
-    download_cv: "Download CV"
-    copied: "Email address copied"
-    empty: "No results found"
 
 hero:
   name: "Asena Beshiktepeli"
@@ -218,6 +206,9 @@ ui:
   back_to_top: "Back to top"
   skip_to_content: "Skip to content"
   book_call: "Book a call"
+  book_call_hero: "Book a 15-min call"
+  copy_email: "Copy email address"
+  email_copied: "Email address copied"
   page_not_found: "Page not found"
   back_to_homepage: "Back to homepage"
   # Tool groups: group names are labels; tool names must match tools.items exactly.

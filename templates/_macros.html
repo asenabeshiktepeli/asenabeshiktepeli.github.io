@@ -28,9 +28,9 @@
         <span class="email-menu-icon" aria-hidden="true">@</span>{{ ui.default_mail }}
       </a>
       {% endif %}
-      {% if nav.palette.copy_email %}
+      {% if ui.copy_email %}
       <button class="email-menu-item" type="button" data-copy-email>
-        <span class="email-menu-icon" aria-hidden="true">⧉</span>{{ nav.palette.copy_email }}
+        <span class="email-menu-icon" aria-hidden="true">⧉</span>{{ ui.copy_email }}
       </button>
       {% endif %}
     </div>
@@ -41,5 +41,5 @@
 {# Toast for "Email address copied"; main.js reads the address from here. #}
 {% macro toast() %}
 <div class="toast" role="status" aria-live="polite" data-toast
-     data-email="{{ contact.email }}" data-copied="{{ nav.palette.copied }}"></div>
+     data-email="{{ contact.email }}" data-copied="{{ ui.email_copied }}"></div>
 {% endmacro %}
