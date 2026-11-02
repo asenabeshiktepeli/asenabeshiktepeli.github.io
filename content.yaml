@@ -213,6 +213,33 @@ contact:
   calls: "Available for calls on Zoom or Google Meet"
   booking_url: "https://calendar.app.google/fwpRjwe6mynyjp12A"  # e.g. a Calendly link – empty hides every "Book a call" button
 
+faq:
+  title: "FAQ"  # empty items list hides the section
+  # links: turn a phrase in the answer into a link.
+  #   href "booking" = contact.booking_url (new tab), "email" = mailto contact.email,
+  #   "#id" = a section on this page, or any https:// URL (new tab).
+  items:
+    - question: "Which time zone do you work in?"
+      answer: "I'm based in Kyrenia, Cyprus (EET, UTC+2). My hours are flexible and I can align with your time zone."
+    - question: "Are you available full-time?"
+      answer: "Yes. I'm looking for full-time, fully remote work."
+    - question: "Which tools do you use?"
+      answer: "Google Workspace (Gmail, Sheets, Docs, Drive, Calendar), Microsoft Excel, Trello, Asana, Notion, Slack, Zoom and Google Meet. I also use Python and n8n for simple automations, and I'm happy to learn the tools your team already uses."
+    - question: "Which languages do you speak?"
+      answer: "Turkish (native) and English (B2, upper-intermediate)."
+    - question: "How do we get started?"
+      answer: "Book a 15-minute intro call or send me an email. We'll talk about your tasks, the tools you use and how you'd like updates."
+      links:
+        - text: "Book a 15-minute intro call"
+          href: "booking"
+        - text: "send me an email"
+          href: "email"
+    - question: "Can I see examples of your work?"
+      answer: "Yes. The Selected work section has three sample projects built with fictional data, each with a link you can open."
+      links:
+        - text: "Selected work"
+          href: "#portfolio"
+
 footer:
   cta: "Your customers, orders and data, in good hands."
   cta_button: "Email me"

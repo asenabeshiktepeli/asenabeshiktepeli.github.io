@@ -432,6 +432,25 @@
   </section>
   {% endif %}
 
+  {# ================= FAQ (details/summary, no JS) ================= #}
+  {% set faq_items = (faq["items"] or []) | selectattr("question") | list %}
+  {% if faq_items %}
+  {% set sec.n = sec.n + 1 %}
+  <section class="section{% if sec.n is odd %} section-soft{% endif %}" id="faq">
+    <div class="container">
+      {{ section_head(faq.title, sec.n) }}
+      <div class="faq card reveal">
+        {% for item in faq_items %}
+        <details class="faq-item">
+          <summary class="faq-question">{{ item.question }}<span class="faq-icon" aria-hidden="true"></span></summary>
+          <p class="faq-answer">{{ item.answer | no_translate | link_phrases(item.links) }}</p>
+        </details>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
   {# ================= Contact ================= #}
   {% set sec.n = sec.n + 1 %}
   <section class="section contact{% if sec.n is odd %} section-soft{% endif %}" id="contact">

@@ -50,6 +50,32 @@ def make_no_translate(terms):
     return no_translate
 
 
+def make_linker(contact):
+    """Filter: turn phrases in already-escaped text into links (used by FAQ answers).
+
+    href "booking" -> contact.booking_url, "email" -> mailto:contact.email,
+    "#id" -> same page, https://... -> new tab. Links without a target stay plain text.
+    """
+    special = {
+        "booking": contact.get("booking_url") or "",
+        "email": f"mailto:{contact['email']}" if contact.get("email") else "",
+    }
+
+    def link_phrases(html, links):
+        html = Markup(html)
+        for link in links or []:
+            text = str(escape(link.get("text") or ""))
+            href = special.get(link.get("href"), link.get("href") or "")
+            if not text or not href or text not in html:
+                continue
+            new_tab = ' target="_blank" rel="noopener"' if href.startswith("http") else ""
+            anchor = f'<a href="{escape(href)}"{new_tab}>{text}</a>'
+            html = Markup(str(html).replace(text, anchor, 1))
+        return html
+
+    return link_phrases
+
+
 def person_jsonld(content):
     """schema.org Person for search engines, built only from content.yaml."""
     meta = content.get("meta") or {}
@@ -129,6 +155,7 @@ def main():
     names = [hero.get("name"), (content.get("nav") or {}).get("brand")]
     names += [job.get("company") for job in (content.get("experience") or {}).get("items") or []]
     env.filters["no_translate"] = make_no_translate(names + NO_TRANSLATE_TERMS)
+    env.filters["link_phrases"] = make_linker(content.get("contact") or {})
 
     OUT.mkdir(exist_ok=True)
     home = env.get_template("index.html").render(**content, page="home", person_jsonld=person_jsonld(content))

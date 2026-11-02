@@ -1880,6 +1880,107 @@ html:not(.js) .js-only {
   }
 }
 
+/* ---------- FAQ ---------- */
+
+.faq {
+  max-width: 880px;
+  padding: 4px clamp(18px, 3vw, 32px);
+}
+
+.faq:hover {
+  transform: none;
+}
+
+.faq-item + .faq-item {
+  border-top: 1px solid var(--border);
+}
+
+.faq-question {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 0;
+  font-size: clamp(1rem, 1.4vw, 1.0625rem);
+  font-weight: 500;
+  line-height: 1.4;
+  list-style: none;
+  cursor: pointer;
+}
+
+.faq-question::-webkit-details-marker {
+  display: none;
+}
+
+.faq-question:hover {
+  color: var(--accent);
+}
+
+.faq-question:focus-visible {
+  outline-offset: 2px;
+}
+
+/* Plus that turns into a minus when open */
+.faq-icon {
+  position: relative;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.faq-icon::before,
+.faq-icon::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 1.5px;
+  margin: -0.75px 0 0 -5px;
+  border-radius: 1px;
+  background: var(--accent);
+  transition: transform 0.25s var(--ease);
+}
+
+.faq-icon::after {
+  transform: rotate(90deg);
+}
+
+.faq-item[open] .faq-icon {
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+}
+
+.faq-item[open] .faq-icon::after {
+  transform: rotate(0deg);
+}
+
+.faq-answer {
+  position: relative;
+  z-index: 2;
+  max-width: 44em;
+  padding: 0 44px 22px 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.faq-answer a {
+  font-weight: 500;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .faq-answer {
+    padding-right: 0;
+  }
+}
+
 /* ---------- Contact ---------- */
 
 .contact {
