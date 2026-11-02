@@ -1,0 +1,8 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.env.*
+Thumbs.db
+desktop.ini
+portfolyo-site-plan.md
