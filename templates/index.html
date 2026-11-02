@@ -263,7 +263,7 @@
         <article class="card project spotlight reveal" style="--d: {{ loop.index0 }}">
           <div class="project-media" aria-hidden="{{ 'false' if item.image else 'true' }}">
             {% if item.image %}
-            <img src="{{ item.image }}" alt="{{ item.title }}" loading="lazy">
+            <img src="{{ item.image }}" alt="Screenshot of {{ item.title }}{% if item.label %} ({{ item.label | lower }}){% endif %}" width="1600" height="1000" loading="lazy" decoding="async">
             {% elif "Docs" in tools_text %}
             <div class="pv pv-doc">
               <div class="pv-page">

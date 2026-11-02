@@ -1355,8 +1355,19 @@ html:not(.js) .kbd-hint {
 
 .project-media img {
   width: 100%;
-  height: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
   object-fit: cover;
+  object-position: top;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  transition: transform 0.8s var(--ease);
+}
+
+.project:hover .project-media img {
+  transform: translateY(-4px) scale(1.015);
 }
 
 .project-body {
@@ -2373,6 +2384,7 @@ html:not(.js) .kbd-hint {
   .card:hover,
   .btn:hover,
   .project:hover .pv,
+  .project:hover .project-media img,
   .js .card.reveal.is-visible:hover {
     transform: none;
   }
