@@ -224,7 +224,10 @@ faq:
     - question: "Are you available full-time?"
       answer: "Yes. I'm looking for full-time, fully remote work."
     - question: "Which tools do you use?"
-      answer: "Google Workspace (Gmail, Sheets, Docs, Drive, Calendar), Microsoft Excel, Trello, Asana, Notion, Slack, Zoom and Google Meet. I also use Python and n8n for simple automations, and I'm happy to learn the tools your team already uses."
+      answer: "Everything listed under Tools I use above, mainly Google Workspace and Excel. I'm happy to learn the tools your team already uses."
+      links:
+        - text: "Tools I use"
+          href: "#tools"
     - question: "Which languages do you speak?"
       answer: "Turkish (native) and English (B2, upper-intermediate)."
     - question: "How do we get started?"

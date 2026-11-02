@@ -458,15 +458,10 @@
       <div class="contact-intro reveal">
         {{ section_head(contact.title, sec.n) }}
         {% if contact.text %}<p class="statement">{{ contact.text }}</p>{% endif %}
-        {% set details = ([contact.location] + (contact.work_style or [])) | select | list %}
-        {% if details %}
+        {# Location only; work style and languages are covered by At a glance and the FAQ #}
+        {% if contact.location %}
         <ul class="chips">
-          {% for detail in details %}<li class="chip">{{ detail | no_translate }}</li>{% endfor %}
-        </ul>
-        {% endif %}
-        {% if contact.languages %}
-        <ul class="chips">
-          {% for language in contact.languages %}<li class="chip chip-soft">{{ language }}</li>{% endfor %}
+          <li class="chip">{{ contact.location | no_translate }}</li>
         </ul>
         {% endif %}
         {% if contact.calls %}<p class="contact-note">{{ contact.calls }}</p>{% endif %}
