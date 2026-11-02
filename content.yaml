@@ -1,0 +1,130 @@
+# content.yaml – all site content lives here. Edit this file to update the site.
+# Rule: only verified, real information. Empty values marked TODO must be confirmed by Asena.
+
+meta:
+  title: "Asena Beshiktepeli – E-commerce Customer Support & Virtual Assistant"
+  description: "Remote e-commerce customer support and virtual assistant based in Kyrenia, Cyprus. Eight years of sales and after-sales support experience."
+  lang: en
+  url: "https://asenabeshiktepeli.github.io"
+
+nav:
+  - label: About
+    href: "#about"
+  - label: Services
+    href: "#services"
+  - label: Experience
+    href: "#experience"
+  - label: Portfolio
+    href: "#portfolio"
+  - label: Case study
+    href: "#case-study"
+  - label: Certifications
+    href: "#certifications"
+  - label: Contact
+    href: "#contact"
+
+hero:
+  name: "Asena Beshiktepeli"
+  title: "E-commerce Customer Support & Virtual Assistant"
+  value_proposition: "I help online businesses keep customers informed, orders on track and data organised, so owners can focus on growth."
+  buttons:
+    - label: "Email me"
+      href: "mailto:asenabeshiktepeli@gmail.com"
+    - label: "Download CV"
+      href: ""  # TODO: Asena doğrulayacak (CV PDF dosyası, ör. static/cv.pdf)
+  photo: ""  # TODO: Asena doğrulayacak (profesyonel fotoğraf var mı? ör. static/img/photo.jpg)
+  photo_alt: "Portrait of Asena Beshiktepeli"
+
+about:
+  text: >-
+    I spent eight years as a Sales Consultant at Cagra Co LTD, where I worked
+    directly with local and international customers and handled after-sales support.
+    I completed the ALX Virtual Assistant Programme and the Google Advanced Data
+    Analytics Certificate, and I hold a Marketing degree from Girne American University.
+    Today I work fully remotely from Kyrenia, Cyprus, supporting e-commerce businesses
+    with customer communication, order follow-up and data tasks.
+
+services:
+  - title: "Customer Support"
+    text: "Clear, friendly replies to customer emails and messages, from pre-sale questions to after-sales follow-up."
+  - title: "Order Tracking"
+    text: "Keeping order status organised in one shared sheet so nothing gets missed."
+  - title: "Email Templates"
+    text: "Ready-to-use reply templates that keep your customer communication consistent and fast."
+  - title: "Data Cleanup"
+    text: "Turning messy customer or product lists into clean, consistent and usable data."
+
+experience:
+  - company: "Cagra Co LTD"
+    role: "Sales Consultant"
+    start: "2018"
+    end: "2026"  # TODO: Asena doğrulayacak (ayrılış ayı)
+    location: ""  # TODO: Asena doğrulayacak (şirketin şehri/ülkesi)
+    highlights:
+      - "Grew the foreign customer base by about 60%."
+      - "Reached 120% of the internal sales target."
+      - "Provided after-sales support to customers."
+    tools: []  # TODO: Asena doğrulayacak (ör. Logo Tiger 3, Excel/Sheets – plan dosyasındaki açık sorular)
+
+portfolio:
+  - title: "Order Tracking Sheet"
+    label: "Sample project"
+    text: "A spreadsheet for tracking orders from purchase to delivery."
+    image: ""  # TODO: Asena doğrulayacak (ekran görüntüsü)
+    link: ""   # TODO: Asena doğrulayacak (dosya veya paylaşım linki)
+  - title: "Customer Email Templates"
+    label: "Sample project"
+    text: "A set of reply templates for common e-commerce customer requests."
+    image: ""  # TODO: Asena doğrulayacak (ekran görüntüsü)
+    link: ""   # TODO: Asena doğrulayacak (dosya veya paylaşım linki)
+  - title: "Data Cleanup Before/After"
+    label: "Sample project"
+    text: "A messy dataset cleaned and standardised, shown side by side."
+    image: ""  # TODO: Asena doğrulayacak (önce/sonra görselleri)
+    link: ""   # TODO: Asena doğrulayacak (dosya veya paylaşım linki)
+
+case_study:
+  title: "Job-search automation pipeline"
+  summary: "A personal project that organises my job search: collecting listings, tracking applications and preparing emails for review."  # TODO: Asena doğrulayacak (özet doğru mu?)
+  built_with: "Built with the help of an AI coding assistant."
+  tech:
+    - "Python"
+    - "SQLite"
+    - "Git"
+  highlights:
+    - "500+ automated tests."
+    - "No email is sent without my approval."
+    - "Version-controlled with Git."
+  link: ""  # TODO: Asena doğrulayacak (depo herkese açık mı? GitHub linki)
+
+certifications:
+  - name: "ALX Virtual Assistant Programme"
+    issuer: "ALX"
+    date: "Nov 2025"
+    link: ""  # TODO: Asena doğrulayacak (sertifika doğrulama linki)
+  - name: "Google Advanced Data Analytics Certificate"
+    issuer: "Google"
+    date: "May 2026"
+    link: ""  # TODO: Asena doğrulayacak (sertifika doğrulama linki)
+  - name: "Marketing degree"
+    issuer: "Girne American University"
+    date: ""  # TODO: Asena doğrulayacak (mezuniyet yılı)
+
+working_style:
+  timezone: "EET (UTC+2)"
+  location_type: "Fully remote"
+  hours: "Flexible hours"
+  channels:
+    - "Email"
+    # TODO: Asena doğrulayacak (başka kanallar? ör. Slack, Google Meet, Zoom)
+  languages: []  # TODO: Asena doğrulayacak (konuşulan diller ve seviyeleri)
+
+contact:
+  email: "asenabeshiktepeli@gmail.com"
+  github: "https://github.com/asenabeshiktepeli"
+  upwork: ""  # TODO: Asena doğrulayacak (Upwork profil linki henüz yok)
+  location: "Kyrenia, Cyprus"
+
+footer:
+  text: "© 2026 Asena Beshiktepeli"
+  note: "Built with Python and hosted on GitHub Pages."
