@@ -198,7 +198,7 @@ contact:
     - "Turkish – Native"
     - "English – B2 (Upper-intermediate)"
   calls: "Available for calls on Zoom or Google Meet"
-  booking_url: ""  # e.g. a Calendly link – empty hides every "Book a call" button
+  booking_url: "https://calendar.app.google/fwpRjwe6mynyjp12A"  # e.g. a Calendly link – empty hides every "Book a call" button
 
 footer:
   cta: "Your customers, orders and data, in good hands."
