@@ -1247,6 +1247,63 @@ html:not(.js) .js-only {
   padding: clamp(22px, 2.4vw, 30px);
 }
 
+/* "Includes" list with small check marks */
+.includes {
+  display: grid;
+  gap: 8px;
+  margin-top: 6px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.includes li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.includes svg {
+  flex: none;
+  margin-top: 2px;
+  padding: 1px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* Pinned to the bottom so cards in a row line up */
+.service-sample {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  margin-top: auto;
+  padding-top: 10px;
+  color: var(--accent);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.service-sample:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.service-sample:hover .btn-arrow {
+  transform: translateX(3px);
+}
+
+/* Portfolio card reached from a "See sample" link */
+.project:target {
+  border-color: var(--accent-line);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 14%, transparent), var(--shadow);
+}
+
 .service-top {
   display: flex;
   align-items: flex-start;

@@ -227,6 +227,21 @@
           </div>
           <h3 class="card-title">{{ service.title }}</h3>
           {% if service.text %}<p class="card-text">{{ service.text }}</p>{% endif %}
+          {% if service.includes %}
+          <ul class="includes">
+            {% for point in service.includes %}
+            <li>
+              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M3.5 8.5 6.5 11.5 12.5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>{{ point | no_translate }}</span>
+            </li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+          {% if service.sample and ui.see_sample %}
+          <a class="service-sample" href="{{ service.sample }}" aria-label="{{ ui.see_sample }}: {{ service.title }}">
+            {{ ui.see_sample }} <span class="btn-arrow" aria-hidden="true">→</span>
+          </a>
+          {% endif %}
         </article>
         {% endfor %}
       </div>
@@ -275,7 +290,7 @@
       <div class="projects">
         {% for item in portfolio["items"] %}
         {% set tools_text = (item.tools or []) | join(" ") %}
-        <article class="card project spotlight reveal" style="--d: {{ loop.index0 }}">
+        <article class="card project spotlight reveal"{% if item.id %} id="{{ item.id }}"{% endif %} style="--d: {{ loop.index0 }}">
           <div class="project-media" aria-hidden="{{ 'false' if item.image else 'true' }}">
             {% if item.image %}
             <img src="{{ item.image }}" alt="Screenshot of {{ item.title }}{% if item.label %} ({{ item.label | lower }}){% endif %}" width="1600" height="1000" loading="lazy" decoding="async">

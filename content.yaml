@@ -58,12 +58,32 @@ services:
   items:
     - title: "Customer Support"
       text: "Clear, friendly replies to customer emails and messages, including complaints and returns."
+      includes:
+        - "Replies to email, chat and marketplace messages in your tone"
+        - "Complaints and returns handled with clear next steps"
+        - "Refunds and special cases escalated to you"
+      sample: "#work-response-library"  # optional: link to a portfolio card id
     - title: "Order & Shipping Tracking"
       text: "Keeping every order visible from purchase to delivery, and following up on delays."
+      includes:
+        - "Daily order status check and follow-up list"
+        - "Customers told about delays before they ask"
+        - "Carrier follow-up on stalled parcels"
+      sample: "#work-order-tracking"
     - title: "Quotes, Invoices & Payment Follow-up"
       text: "Preparing quotes and proformas and tracking invoices until they are paid."
+      includes:
+        - "Quotes and proformas prepared from your price list"
+        - "Invoices tracked until they are paid"
+        - "Polite, timely payment reminders"
+      sample: ""
     - title: "Data Entry & Spreadsheet Reports"
       text: "Clean, organised spreadsheets and simple reports in Excel and Google Sheets."
+      includes:
+        - "Product, order and customer data entry"
+        - "Duplicates and inconsistent formats cleaned up"
+        - "Simple reports in Excel or Google Sheets"
+      sample: "#work-data-cleanup"
 
 experience:
   title: "Experience"
@@ -94,18 +114,21 @@ portfolio:
   view_label: "View sample"  # button text (↗ is added by the template); the button only shows when an item has a link
   items:
     - title: "Order Tracking Sheet"
+      id: "work-order-tracking"  # anchor target for links such as services "sample"
       label: "Sample project"
       text: "A Google Sheets tracker that shows each order's status, shipping date and follow-up notes at a glance."
       tools: ["Google Sheets"]
       link: "https://docs.google.com/spreadsheets/d/1qmdii_crHkBCz38AoZM4wB0z7KvREubd9FTeGDE5Ieg/edit?usp=sharing"
       image: "static/img/portfolio/order-tracking.webp"
     - title: "Customer Support Response Library"
+      id: "work-response-library"
       label: "Sample project"
       text: "A support playbook for a small online shop: 10 reply templates for order updates, delays, returns and complaints, with response time targets, escalation rules and store policy fields."
       tools: ["Google Docs"]
       link: "https://docs.google.com/document/d/1xYm1fliueMGKPDli2UzKeNNLda1rVmu8jLQrLuVwvgo/edit?usp=sharing"
       image: "static/img/portfolio/response-library.webp"
     - title: "Data Cleanup Before/After"
+      id: "work-data-cleanup"
       label: "Sample project"
       text: "A messy customer export cleaned with reusable formulas: duplicates found automatically, names split, dates, countries and amounts standardised, every change logged and every row checked against the final list."
       tools: ["Google Sheets"]
@@ -212,6 +235,7 @@ ui:
   back_to_top: "Back to top"
   skip_to_content: "Skip to content"
   book_call: "Book a call"
+  see_sample: "See sample"
   book_call_hero: "Book a 15-min call"
   copy_email: "Copy email address"
   email_copied: "Email address copied"
