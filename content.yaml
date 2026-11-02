@@ -40,7 +40,7 @@ hero:
   photo_alt: "Portrait of Asena Beshiktepeli"
   # Short trust points shown in one thin line under the hero; empty list hides it
   trust:
-    - "8 years in customer-facing sales and support"
+    - "Nearly 8 years in customer-facing sales and support"
     - "ALX Virtual Assistant certified"
     - "Google Advanced Data Analytics certified"
     - "Turkish & English"

@@ -159,42 +159,31 @@
       </div>
     </div>
 
-    {# Trust line: hero.trust, hidden when empty #}
+    {# Proof block: "At a glance" title, trust points (hero.trust) and the experience stats.
+       Each part hides when its list is empty. #}
     {% set trust = (hero.trust or []) | select | list %}
-    {% if trust %}
-    <div class="container hero-trust">
-      <ul class="trust reveal">
-        {% for point in trust %}<li>{{ point | no_translate }}</li>{% endfor %}
-      </ul>
-    </div>
-    {% endif %}
-
-    {# At a glance: only values that already exist in content.yaml #}
-    {% set work_style = contact.work_style or [] %}
-    {% if job.stats or job.dates or work_style %}
+    {% set stats = job.stats or [] %}
+    {% if trust or stats %}
     <div class="container">
       <div class="glance reveal">
         {% if ui.at_a_glance %}<p class="glance-title">{{ ui.at_a_glance }}</p>{% endif %}
-        <dl class="glance-grid">
-          {% for stat in job.stats or [] %}
-          <div class="glance-item">
-            <dt class="glance-label">{{ stat.label }}</dt>
-            <dd class="glance-value" data-count>{{ stat.value }}</dd>
-          </div>
-          {% endfor %}
-          {% if job.dates %}
-          <div class="glance-item">
-            <dt class="glance-label">{{ job.role }}{% if job.company %} · <span translate="no">{{ job.company }}</span>{% endif %}</dt>
-            <dd class="glance-value glance-value-sm">{{ job.dates }}</dd>
-          </div>
+        <div class="glance-body{% if not (trust and stats) %} glance-body-single{% endif %}">
+          {% if trust %}
+          <ul class="trust">
+            {% for point in trust %}<li>{{ point | no_translate }}</li>{% endfor %}
+          </ul>
           {% endif %}
-          {% if work_style %}
-          <div class="glance-item">
-            <dt class="glance-label">{{ work_style[1:] | join(" · ") }}</dt>
-            <dd class="glance-value glance-value-sm">{{ work_style[0] }}</dd>
-          </div>
+          {% if stats %}
+          <dl class="glance-grid">
+            {% for stat in stats %}
+            <div class="glance-item">
+              <dt class="glance-label">{{ stat.label }}</dt>
+              <dd class="glance-value" data-count>{{ stat.value }}</dd>
+            </div>
+            {% endfor %}
+          </dl>
           {% endif %}
-        </dl>
+        </div>
       </div>
     </div>
     {% endif %}
