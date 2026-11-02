@@ -46,10 +46,8 @@ hero:
     - "Turkish & English"
 
 about:
-  title: "About"
-  text:  # one string, or a list of paragraphs
-    - "From November 2018 to August 2026 I worked as a Sales Consultant at Cagra Co LTD, handling the full customer journey: emails and phone calls, face-to-face sales, quotes and proformas, order tracking, shipping coordination, complaints and returns, and invoice and payment follow-up in Logo Tiger 3. I prepared tables and reports in Excel and trained new colleagues on Logo at entry level."
-    - "Now I bring that experience to remote work, supporting e-commerce businesses with customer support and order operations. I also build my own automations in Python, including a job-search pipeline I set up with an AI coding assistant."
+  title: "Background"  # About + Experience in one section (menu label stays "About")
+  text: "I spent nearly 8 years on the customer side of a building materials and interior decoration business in Kyrenia, Cyprus: answering customers, preparing quotes, tracking orders until delivery and following up on payments. Now I bring that experience to e-commerce businesses remotely, handling customer messages, order follow-ups and clean data, so you can focus on growing your business. I also build small automations in Python to take repetitive work off your list."
 
 services:
   title: "Services"

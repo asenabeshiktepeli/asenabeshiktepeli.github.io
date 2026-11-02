@@ -1076,20 +1076,24 @@ html:not(.js) .js-only {
   font-size: clamp(1.0625rem, 1.5vw, 1.1875rem);
 }
 
-.split {
+/* Background section: short intro in body text size above the experience card */
+.background-intro {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-  gap: clamp(24px, 5vw, 80px);
-  align-items: start;
+  gap: 1em;
+  max-width: 46em;
+  margin-bottom: clamp(32px, 4vw, 48px);
+  color: var(--text);
+  font-size: clamp(1.0625rem, 1.3vw, 1.125rem);
+  line-height: 1.7;
+  text-wrap: pretty;
 }
 
-.split .section-head {
-  margin-bottom: 0;
-}
-
-.about-copy {
-  display: grid;
-  gap: 1.5em;
+.sub-label {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .statement {
@@ -1099,19 +1103,6 @@ html:not(.js) .js-only {
   letter-spacing: -0.022em;
   color: var(--text);
   text-wrap: pretty;
-}
-
-.body-lg {
-  max-width: 40em;
-  color: var(--muted);
-  font-size: clamp(1.0625rem, 1.5vw, 1.1875rem);
-  text-wrap: pretty;
-}
-
-@media (max-width: 800px) {
-  .split {
-    grid-template-columns: 1fr;
-  }
 }
 
 /* ---------- Cards: light, gradient edge on hover ---------- */
@@ -1313,7 +1304,7 @@ html:not(.js) .js-only {
 
 .jobs {
   display: grid;
-  gap: 24px;
+  gap: 16px;
 }
 
 .job {
@@ -1895,6 +1886,13 @@ html:not(.js) .js-only {
   background:
     radial-gradient(60% 80% at 100% 100%, color-mix(in oklab, var(--accent-bright) 8%, transparent), transparent 70%),
     var(--bg);
+}
+
+/* Keep the white/grey rhythm when Contact lands on a soft slot */
+.contact.section-soft {
+  background:
+    radial-gradient(60% 80% at 100% 100%, color-mix(in oklab, var(--accent-bright) 8%, transparent), transparent 70%),
+    var(--bg-soft);
 }
 
 .contact-layout {

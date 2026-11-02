@@ -323,29 +323,22 @@
   </section>
   {% endif %}
 
-  {# ================= About ================= #}
+  {# ================= Background: about intro + experience ================= #}
   {% set about_paragraphs = ([about.text] if about.text is string else (about.text or [])) | select | list %}
-  {% if about_paragraphs %}
+  {% if about_paragraphs or experience["items"] %}
   {% set sec.n = sec.n + 1 %}
   <section class="section{% if sec.n is odd %} section-soft{% endif %}" id="about">
-    <div class="container split">
-      {{ section_head(about.title, sec.n) }}
-      <div class="about-copy reveal">
-        {% for paragraph in about_paragraphs %}
-        <p class="{{ 'statement' if loop.first else 'body-lg' }}">{{ paragraph | no_translate }}</p>
-        {% endfor %}
-      </div>
-    </div>
-  </section>
-  {% endif %}
-
-  {# ================= Experience ================= #}
-  {% if experience["items"] %}
-  {% set sec.n = sec.n + 1 %}
-  <section class="section{% if sec.n is odd %} section-soft{% endif %}" id="experience">
     <div class="container">
-      {{ section_head(experience.title, sec.n) }}
-      <div class="jobs">
+      {{ section_head(about.title, sec.n) }}
+      {% if about_paragraphs %}
+      <div class="background-intro reveal">
+        {% for paragraph in about_paragraphs %}<p>{{ paragraph | no_translate }}</p>{% endfor %}
+      </div>
+      {% endif %}
+      {% if experience["items"] %}
+      {# id="experience" keeps old #experience links landing here #}
+      <div class="jobs" id="experience">
+        {% if experience.title %}<p class="sub-label reveal">{{ experience.title }}</p>{% endif %}
         {% for job in experience["items"] %}
         <article class="card job reveal">
           <div class="job-head">
@@ -368,6 +361,7 @@
         </article>
         {% endfor %}
       </div>
+      {% endif %}
     </div>
   </section>
   {% endif %}
