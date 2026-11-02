@@ -121,19 +121,19 @@
   // ---------- Count-up stats ("120%" -> 0…120%) ----------
   var NUMBER = /^(\D*)(\d+(?:\.\d+)?)(\D*)$/;
 
-  // Start numeric stats at zero so they don't flash the final value first.
+  // The final value ("60%") stays in the HTML. It only drops to zero at the moment the
+  // animation starts, and a timer always restores it, so a stat never stays at 0%.
   function prepareCount(element) {
     var final = element.textContent.trim();
-    var match = final.match(NUMBER);
-    if (!match) return false; // free text stays as it is
+    if (!NUMBER.test(final)) return false; // free text stays as it is
     element.dataset.final = final;
     element.setAttribute("aria-label", final);
-    element.textContent = match[1] + (0).toFixed((match[2].split(".")[1] || "").length) + match[3];
     return true;
   }
 
   function countUp(element) {
-    var match = (element.dataset.final || "").match(NUMBER);
+    var final = element.dataset.final || "";
+    var match = final.match(NUMBER);
     if (!match) return;
     var prefix = match[1];
     var target = parseFloat(match[2]);
@@ -141,15 +141,24 @@
     var decimals = (match[2].split(".")[1] || "").length;
     var duration = 1600;
     var start = null;
+    var done = false;
+
+    function finish() {
+      done = true;
+      element.textContent = final;
+    }
 
     function frame(time) {
+      if (done) return;
       if (start === null) start = time;
       var progress = Math.min((time - start) / duration, 1);
       var eased = 1 - Math.pow(1 - progress, 4);
       element.textContent = prefix + (target * eased).toFixed(decimals) + suffix;
-      if (progress < 1) requestAnimationFrame(frame);
+      if (progress < 1) requestAnimationFrame(frame); else finish();
     }
     requestAnimationFrame(frame);
+    // Safety net: if frames stop (background tab, throttling), show the final value anyway.
+    setTimeout(finish, duration + 400);
   }
 
   // ---------- Scroll reveal + count-up trigger ----------

@@ -890,10 +890,62 @@ html:not(.js) .js-only {
 }
 
 /* At a glance strip */
+/* Thin trust line between the hero and the glance strip */
+.trust {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 0;
+  margin-top: clamp(40px, 6vw, 72px);
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.trust li + li::before {
+  content: "·";
+  margin: 0 12px;
+  color: var(--faint);
+}
+
 .glance {
   margin-top: clamp(48px, 7vw, 88px);
   padding-top: 24px;
   border-top: 1px solid var(--border);
+}
+
+.hero-trust + .container .glance {
+  margin-top: 28px;
+}
+
+@media (max-width: 560px) {
+  .trust {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .trust li + li::before {
+    content: none;
+  }
+
+  .trust li {
+    position: relative;
+    padding-left: 14px;
+  }
+
+  .trust li::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.65em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent-line);
+  }
 }
 
 .glance-title {

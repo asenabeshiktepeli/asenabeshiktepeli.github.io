@@ -157,6 +157,16 @@
       </div>
     </div>
 
+    {# Trust line: hero.trust, hidden when empty #}
+    {% set trust = (hero.trust or []) | select | list %}
+    {% if trust %}
+    <div class="container hero-trust">
+      <ul class="trust reveal">
+        {% for point in trust %}<li>{{ point | no_translate }}</li>{% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
     {# At a glance: only values that already exist in content.yaml #}
     {% set work_style = contact.work_style or [] %}
     {% if job.stats or job.dates or work_style %}
