@@ -203,7 +203,6 @@
         <article class="card service spotlight reveal" style="--d: {{ loop.index0 }}">
           <div class="service-top">
             <span class="icon-tile">{{ service_icon(loop.index0) }}</span>
-            <span class="card-index" aria-hidden="true">{{ "%02d" | format(loop.index) }}</span>
           </div>
           <h3 class="card-title">{{ service.title }}</h3>
           {% if service.text %}<p class="card-text">{{ service.text }}</p>{% endif %}
@@ -241,11 +240,14 @@
         <article class="card project spotlight reveal"{% if item.id %} id="{{ item.id }}"{% endif %} style="--d: {{ loop.index0 }}">
           <div class="project-media" aria-hidden="{{ 'false' if item.image else 'true' }}">
             {% if item.image %}
-            {# <name>-800.webp is made by tools/make_thumbs.py #}
+            {# <name>-800.webp is made by tools/make_thumbs.py.
+               The image repeats the "View sample" link for mouse users only. #}
+            {% if item.link %}<a class="project-media-link" href="{{ item.link }}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">{% endif %}
             <img src="{{ item.image }}"{% if item.image.endswith(".webp") %}
                  srcset="{{ item.image[:-5] }}-800.webp 800w, {{ item.image }} 1600w"
                  sizes="(max-width: 860px) calc(100vw - 64px), 520px"{% endif %}
                  alt="Screenshot of {{ item.title }}{% if item.label %} ({{ item.label | lower }}){% endif %}" width="1600" height="1000" loading="lazy" decoding="async">
+            {% if item.link %}</a>{% endif %}
             {% endif %}
           </div>
           <div class="project-body">
