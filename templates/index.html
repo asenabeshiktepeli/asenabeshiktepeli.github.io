@@ -274,6 +274,34 @@
   </section>
   {% endif %}
 
+  {# ================= How I work ================= #}
+  {% set hiw_steps = (how_i_work.steps or []) | selectattr("title") | list %}
+  {% if hiw_steps %}
+  {% set sec.n = sec.n + 1 %}
+  <section class="section{% if sec.n is odd %} section-soft{% endif %}" id="how-i-work">
+    <div class="container">
+      {{ section_head(how_i_work.title, sec.n) }}
+      <ol class="steps" style="--n: {{ hiw_steps | length }}">
+        {% for step in hiw_steps %}
+        <li class="card step reveal" style="--d: {{ loop.index0 }}">
+          <span class="step-index" aria-hidden="true">{{ "%02d" | format(loop.index) }}</span>
+          <h3 class="step-title">{{ step.title }}</h3>
+          {% if step.text %}<p class="step-text">{{ step.text }}</p>{% endif %}
+        </li>
+        {% endfor %}
+      </ol>
+      {% if how_i_work.cta and contact.booking_url %}
+      <div class="steps-cta reveal">
+        <a class="btn btn-primary btn-lg" href="{{ contact.booking_url }}" target="_blank" rel="noopener">
+          {{ how_i_work.cta }}
+          <span class="btn-arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+  {% endif %}
+
   {# ================= Case study: pipeline ================= #}
   {% if case_study.name %}
   {% set sec.n = sec.n + 1 %}

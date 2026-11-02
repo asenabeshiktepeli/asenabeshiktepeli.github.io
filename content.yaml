@@ -15,6 +15,8 @@ nav:
       href: "#services"
     - label: "Work"
       href: "#portfolio"
+    - label: "How I work"
+      href: "#how-i-work"
     - label: "Automation"
       href: "#case-study"
     - label: "About"
@@ -130,6 +132,19 @@ portfolio:
       tools: ["Google Sheets"]
       link: "https://docs.google.com/spreadsheets/d/15lbhsX5VS6nrGrRYlrYHuI1Cgy2hru-fDLFgh4He9sY/edit?usp=sharing"
       image: "static/img/portfolio/data-cleanup.webp"
+
+how_i_work:
+  title: "How I work"  # empty steps list hides the section
+  steps:
+    - title: "Intro call"
+      text: "A 15-minute call about your tasks, tools and priorities."
+    - title: "Access & setup"
+      text: "You share access to the tools I need, with the permissions you choose. I write down your policies and tone of voice in a short guide, so every reply sounds like your business."
+    - title: "Daily work"
+      text: "I handle customer messages, order follow-ups and data tasks during our agreed hours. Refunds and special cases come to you before I reply."
+    - title: "Updates"
+      text: "A short end-of-day summary by email or Slack, so you always know what's done and what's open."
+  cta: "Book a 15-min call"  # button under the steps; links to contact.booking_url (hidden if that is empty)
 
 case_study:
   title: "Automation case study"

@@ -1571,6 +1571,103 @@ html:not(.js) .js-only {
   background: var(--bg-soft);
 }
 
+/* ---------- How I work: light numbered steps ---------- */
+
+.steps {
+  --gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: clamp(20px, 2.4vw, 28px);
+}
+
+.step:hover {
+  transform: none;
+}
+
+/* Thin line from each step to the next, level with the number */
+.step:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  top: calc(clamp(20px, 2.4vw, 28px) + 17px);
+  left: 100%;
+  width: var(--gap);
+  height: 1px;
+  background: linear-gradient(90deg, var(--border-strong), var(--accent-line));
+}
+
+.step-index {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  margin-bottom: 8px;
+  border: 1px solid var(--accent-line);
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.step-title {
+  font-size: 1.125rem;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.step-text {
+  color: var(--muted);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.steps-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(28px, 4vw, 44px);
+}
+
+/* Tablet: 2 x 2, no connectors (they would point the wrong way) */
+@media (max-width: 1023px) {
+  .steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .step:not(:last-child)::before {
+    content: none;
+  }
+}
+
+/* Phone: one column with a short vertical connector */
+@media (max-width: 639px) {
+  .steps {
+    --gap: 14px;
+    grid-template-columns: 1fr;
+  }
+
+  .step:not(:last-child)::before {
+    content: "";
+    top: 100%;
+    left: calc(clamp(20px, 2.4vw, 28px) + 17px);
+    width: 1px;
+    height: var(--gap);
+    background: var(--accent-line);
+  }
+
+  .steps-cta .btn {
+    width: 100%;
+  }
+}
+
 /* ---------- Case study: pipeline ---------- */
 
 .case {
@@ -2253,6 +2350,7 @@ html:not(.js) .js-only {
 }
 
 .js .job.reveal.is-visible:hover,
+.js .step.reveal.is-visible:hover,
 .js .contact-card.reveal.is-visible:hover {
   transform: none;
 }
