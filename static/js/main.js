@@ -79,9 +79,19 @@
       link.addEventListener("click", function () { setMenu(false); });
     });
     document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape" && !menu.hidden) {
+      if (menu.hidden) return;
+      if (event.key === "Escape") {
         setMenu(false);
         menuToggle.focus();
+      } else if (event.key === "Tab") {
+        // Focus trap: Tab / Shift+Tab cycle through the menu toggle (the close button) and the menu links.
+        var stops = [menuToggle].concat($$("a[href], button:not([disabled])", menu));
+        var index = stops.indexOf(document.activeElement);
+        var next = event.shiftKey ? index - 1 : index + 1;
+        if (index === -1 || next < 0 || next >= stops.length) {
+          event.preventDefault();
+          stops[event.shiftKey ? stops.length - 1 : 0].focus();
+        }
       }
     });
   }

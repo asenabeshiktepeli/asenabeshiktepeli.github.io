@@ -2,7 +2,7 @@
 # Empty values ("") are hidden on the site.
 
 meta:
-  title: "Asena Beshiktepeli – E-commerce Virtual Assistant & Customer Support"
+  title: "Asena Beshiktepeli – E-commerce Virtual Assistant"
   description: "I help e-commerce businesses answer customers faster, track orders clearly and keep their data clean."
   lang: en
   url: "https://asenabeshiktepeli.github.io"  # no trailing slash; used for canonical, Open Graph, sitemap and robots.txt

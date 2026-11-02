@@ -32,7 +32,7 @@
 {% endmacro %}
 
 {% block body %}
-{% set ns = namespace(email_label="", cv="", cv_label="", sheets=0) %}
+{% set ns = namespace(email_label="", cv="", cv_label="") %}
 {% for button in hero.buttons or [] %}
   {% if button.href and button.href.startswith("mailto:") and not ns.email_label %}{% set ns.email_label = button.label %}{% endif %}
   {% if button.href and button.href.endswith(".pdf") and not ns.cv %}{% set ns.cv = button.href %}{% set ns.cv_label = button.label %}{% endif %}
@@ -235,7 +235,6 @@
       {% if portfolio.intro %}<p class="section-intro reveal">{{ portfolio.intro }}</p>{% endif %}
       <div class="projects">
         {% for item in portfolio["items"] %}
-        {% set tools_text = (item.tools or []) | join(" ") %}
         <article class="card project spotlight reveal"{% if item.id %} id="{{ item.id }}"{% endif %} style="--d: {{ loop.index0 }}">
           <div class="project-media" aria-hidden="{{ 'false' if item.image else 'true' }}">
             {% if item.image %}
@@ -244,36 +243,6 @@
                  srcset="{{ item.image[:-5] }}-800.webp 800w, {{ item.image }} 1600w"
                  sizes="(max-width: 860px) calc(100vw - 64px), 520px"{% endif %}
                  alt="Screenshot of {{ item.title }}{% if item.label %} ({{ item.label | lower }}){% endif %}" width="1600" height="1000" loading="lazy" decoding="async">
-            {% elif "Docs" in tools_text %}
-            <div class="pv pv-doc">
-              <div class="pv-page">
-                <i class="pv-h"></i><i></i><i></i><i class="pv-short"></i>
-                <i class="pv-h pv-h2"></i><i></i><i class="pv-short"></i>
-                <span class="pv-tag"></span><i></i><i class="pv-short"></i>
-              </div>
-            </div>
-            {% else %}
-            {% set ns.sheets = ns.sheets + 1 %}
-            {% if ns.sheets == 1 %}
-            <div class="pv pv-sheet">
-              <div class="pv-table">
-                <div class="pv-row pv-row-head"><i></i><i></i><i></i><i></i></div>
-                {% for n in range(5) %}
-                <div class="pv-row"><i></i><i></i><i></i><b class="pv-pill pv-pill-{{ n % 3 }}"></b></div>
-                {% endfor %}
-              </div>
-            </div>
-            {% else %}
-            <div class="pv pv-split">
-              <div class="pv-table pv-messy">
-                {% for n in range(5) %}<div class="pv-row"><i></i><i></i><i></i></div>{% endfor %}
-              </div>
-              <span class="pv-arrow">→</span>
-              <div class="pv-table pv-clean">
-                {% for n in range(5) %}<div class="pv-row"><i></i><i></i><i></i></div>{% endfor %}
-              </div>
-            </div>
-            {% endif %}
             {% endif %}
           </div>
           <div class="project-body">
