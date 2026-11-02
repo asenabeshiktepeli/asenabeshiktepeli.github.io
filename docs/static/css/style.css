@@ -1206,10 +1206,12 @@ html:not(.js) .js-only {
 
 /* ---------- Services ---------- */
 
+/* 2x2 from 640px up (equal-height rows), one column on phones */
 .services {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 20px;
 }
 
 .service {
@@ -1300,15 +1302,11 @@ html:not(.js) .js-only {
   height: 22px;
 }
 
-@media (max-width: 1024px) {
-  .services {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 560px) {
+@media (max-width: 639px) {
   .services {
     grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+    gap: 16px;
   }
 
   .service-top {
