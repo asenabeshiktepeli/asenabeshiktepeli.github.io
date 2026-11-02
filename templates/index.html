@@ -95,7 +95,7 @@
         {% if buttons %}
         <div class="hero-actions">
           {% for button in buttons %}
-          <a class="btn {{ 'btn-primary' if loop.first else 'btn-ghost' }}" href="{{ button.href }}"{% if button.href.endswith('.pdf') %} download{% endif %}>
+          <a class="btn {{ 'btn-primary' if loop.first else 'btn-ghost' }}" href="{{ button.href }}"{% if button.href.endswith('.pdf') %} download="{{ button.href.split('/')[-1] }}"{% endif %}>
             {{ button.label }}
             {% if loop.first %}<span class="btn-arrow" aria-hidden="true">→</span>{% endif %}
           </a>
@@ -412,6 +412,14 @@
       {% if palette.send_email %}
       <li class="palette-item" role="option" id="cmd-mail" aria-selected="false" data-action="mail">
         <span class="palette-item-icon" aria-hidden="true">@</span>{{ palette.send_email }}
+      </li>
+      {% endif %}
+      {% set cv = namespace(href="") %}
+      {% for button in hero.buttons or [] %}{% if button.href and button.href.endswith('.pdf') and not cv.href %}{% set cv.href = button.href %}{% endif %}{% endfor %}
+      {% if palette.download_cv and cv.href %}
+      <li class="palette-item" role="option" id="cmd-cv" aria-selected="false" data-action="download"
+          data-href="{{ cv.href }}" data-filename="{{ cv.href.split('/')[-1] }}">
+        <span class="palette-item-icon" aria-hidden="true">↓</span>{{ palette.download_cv }}
       </li>
       {% endif %}
       {% endif %}

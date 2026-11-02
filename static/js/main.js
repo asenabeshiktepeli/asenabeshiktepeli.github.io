@@ -281,6 +281,13 @@
       copyEmail();
     } else if (action === "mail" && email) {
       window.location.href = "mailto:" + email;
+    } else if (action === "download" && item.dataset.href) {
+      var link = document.createElement("a");
+      link.href = item.dataset.href;
+      link.download = item.dataset.filename || "";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
     }
   }
 

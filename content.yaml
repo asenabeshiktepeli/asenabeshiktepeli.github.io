@@ -31,6 +31,7 @@ nav:
     group_actions: "Actions"
     copy_email: "Copy email address"
     send_email: "Send an email"
+    download_cv: "Download CV"
     copied: "Email address copied"
     empty: "No results found"
 
@@ -47,14 +48,14 @@ hero:
     - label: "Email me"
       href: "mailto:asenabeshiktepeli@gmail.com"
     - label: "Download CV"
-      href: ""  # CV link not ready yet – empty hides the button
+      href: "static/cv/Asena_Beshiktepeli_CV.pdf"
   photo: "static/img/profile.jpg"  # if the file is missing, build.py falls back to the monogram
   photo_alt: "Portrait of Asena Beshiktepeli"
 
 about:
   title: "About"
   text:  # one string, or a list of paragraphs
-    - "From 2018 to 2026 I worked as a Sales Consultant at Cagra Co LTD, handling the full customer journey: emails and phone calls, face-to-face sales, quotes and proformas, order tracking, shipping coordination, complaints and returns, and invoice and payment follow-up in Logo Tiger 3. I prepared tables and reports in Excel and trained new colleagues on Logo at entry level."
+    - "From November 2018 to August 2026 I worked as a Sales Consultant at Cagra Co LTD, handling the full customer journey: emails and phone calls, face-to-face sales, quotes and proformas, order tracking, shipping coordination, complaints and returns, and invoice and payment follow-up in Logo Tiger 3. I prepared tables and reports in Excel and trained new colleagues on Logo at entry level."
     - "Now I bring that experience to remote work, supporting e-commerce businesses with customer support and order operations. I also build my own automations in Python, including a job-search pipeline I set up with an AI coding assistant."
 
 services:
@@ -74,7 +75,7 @@ experience:
   items:
     - role: "Sales Consultant"
       company: "Cagra Co LTD"
-      dates: "2018 – 2026"
+      dates: "Nov 2018 – Aug 2026"
       location: "Kyrenia, Cyprus"
       summary: "Building materials and interior decoration supplies."
       # value: a number like "60%" or "120%" counts up on scroll; any other text shows as-is
