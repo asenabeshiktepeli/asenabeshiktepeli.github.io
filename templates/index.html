@@ -116,8 +116,11 @@
           {% endif %}
         </div>
 
-        <h1 class="hero-name" translate="no">{{ words(hero.name) }}</h1>
-        {% if hero.title %}<p class="hero-title">{{ hero.title }}</p>{% endif %}
+        {# One H1 for name + role; the spans keep the old two-line look #}
+        <h1 class="hero-heading">
+          <span class="hero-name" translate="no">{{ words(hero.name) }}</span>
+          {% if hero.title %}<span class="hero-title">{{ hero.title }}</span>{% endif %}
+        </h1>
         {% if hero.value_proposition %}<p class="hero-lead">{{ hero.value_proposition }}</p>{% endif %}
 
         {% set buttons = (hero.buttons or []) | selectattr("href") | list %}

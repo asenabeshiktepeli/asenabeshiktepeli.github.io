@@ -772,7 +772,14 @@ html:not(.js) .js-only {
   font-size: 0.75rem;
 }
 
+.hero-heading {
+  font-weight: inherit;
+  letter-spacing: normal;
+  line-height: inherit;
+}
+
 .hero-name {
+  display: block;
   font-size: clamp(2.75rem, 7.6vw, 6.25rem);
   font-weight: 600;
   letter-spacing: -0.055em;
@@ -791,8 +798,11 @@ html:not(.js) .js-only {
 }
 
 .hero-title {
+  display: block;
   margin-top: 24px;
   font-size: clamp(1.125rem, 2vw, 1.4375rem);
+  line-height: 1.6;
+  text-wrap: wrap;
   font-weight: 500;
   letter-spacing: -0.015em;
   color: var(--accent);
