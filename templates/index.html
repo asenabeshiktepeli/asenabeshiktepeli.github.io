@@ -40,9 +40,11 @@
 {% set email_label = ns.email_label or footer.cta_button %}
 {% set cv_file = ns.cv.split("/")[-1] if ns.cv else "" %}
 {% set job = (experience["items"] or [{}])[0] %}
+{# Section number and soft background follow the rendered order #}
+{% set sec = namespace(n=0) %}
 
 {# ================= Header: thin glass bar ================= #}
-{% if ui.skip_to_content %}<a class="skip-link" href="#about">{{ ui.skip_to_content }}</a>{% endif %}
+{% if ui.skip_to_content %}<a class="skip-link" href="#services">{{ ui.skip_to_content }}</a>{% endif %}
 <header class="site-header" data-header>
   <div class="progress" aria-hidden="true"><span data-progress></span></div>
   <nav class="bar container" aria-label="Main">
@@ -198,26 +200,12 @@
     {% endif %}
   </section>
 
-  {# ================= About ================= #}
-  {% set about_paragraphs = ([about.text] if about.text is string else (about.text or [])) | select | list %}
-  {% if about_paragraphs %}
-  <section class="section" id="about">
-    <div class="container split">
-      {{ section_head(about.title, 1) }}
-      <div class="about-copy reveal">
-        {% for paragraph in about_paragraphs %}
-        <p class="{{ 'statement' if loop.first else 'body-lg' }}">{{ paragraph | no_translate }}</p>
-        {% endfor %}
-      </div>
-    </div>
-  </section>
-  {% endif %}
-
   {# ================= Services ================= #}
   {% if services["items"] %}
-  <section class="section" id="services">
+  {% set sec.n = sec.n + 1 %}
+  <section class="section{% if sec.n is odd %} section-soft{% endif %}" id="services">
     <div class="container">
-      {{ section_head(services.title, 2) }}
+      {{ section_head(services.title, sec.n) }}
       <div class="services">
         {% for service in services["items"] %}
         <article class="card service spotlight reveal" style="--d: {{ loop.index0 }}">
@@ -249,43 +237,12 @@
   </section>
   {% endif %}
 
-  {# ================= Experience ================= #}
-  {% if experience["items"] %}
-  <section class="section section-soft" id="experience">
-    <div class="container">
-      {{ section_head(experience.title, 3) }}
-      <div class="jobs">
-        {% for job in experience["items"] %}
-        <article class="card job reveal">
-          <div class="job-head">
-            <div class="job-meta">
-              <h3 class="job-role">{{ job.role }}</h3>
-              {% if job.company %}<p class="job-company" translate="no">{{ job.company }}</p>{% endif %}
-              <ul class="job-facts">
-                <li class="job-dates">{% if job.dates %}{{ job.dates }}{% else %}{{ job.start }}{% if job.end %} — {{ job.end }}{% endif %}{% endif %}</li>
-                {% if job.location %}<li>{{ job.location | no_translate }}</li>{% endif %}
-              </ul>
-              {% if job.summary %}<p class="job-summary">{{ job.summary }}</p>{% endif %}
-            </div>
-          </div>
-          {% set duties = job.duties or job.highlights %}
-          {% if duties %}
-          <ul class="duties">
-            {% for text in duties %}<li>{{ text | no_translate }}</li>{% endfor %}
-          </ul>
-          {% endif %}
-        </article>
-        {% endfor %}
-      </div>
-    </div>
-  </section>
-  {% endif %}
-
   {# ================= Portfolio ================= #}
   {% if portfolio["items"] %}
-  <section class="section" id="portfolio">
+  {% set sec.n = sec.n + 1 %}
+  <section class="section{% if sec.n is odd %} section-soft{% endif %}" id="portfolio">
     <div class="container">
-      {{ section_head(portfolio.title, 4) }}
+      {{ section_head(portfolio.title, sec.n) }}
       {% if portfolio.intro %}<p class="section-intro reveal">{{ portfolio.intro }}</p>{% endif %}
       <div class="projects">
         {% for item in portfolio["items"] %}
@@ -352,9 +309,10 @@
 
   {# ================= Case study: pipeline ================= #}
   {% if case_study.name %}
-  <section class="section" id="case-study">
+  {% set sec.n = sec.n + 1 %}
+  <section class="section{% if sec.n is odd %} section-soft{% endif %}" id="case-study">
     <div class="container">
-      {{ section_head(case_study.title, 5) }}
+      {{ section_head(case_study.title, sec.n) }}
       <article class="case spotlight reveal">
         <div class="case-bg" aria-hidden="true"></div>
         <div class="case-inner">
@@ -403,11 +361,61 @@
   </section>
   {% endif %}
 
+  {# ================= About ================= #}
+  {% set about_paragraphs = ([about.text] if about.text is string else (about.text or [])) | select | list %}
+  {% if about_paragraphs %}
+  {% set sec.n = sec.n + 1 %}
+  <section class="section{% if sec.n is odd %} section-soft{% endif %}" id="about">
+    <div class="container split">
+      {{ section_head(about.title, sec.n) }}
+      <div class="about-copy reveal">
+        {% for paragraph in about_paragraphs %}
+        <p class="{{ 'statement' if loop.first else 'body-lg' }}">{{ paragraph | no_translate }}</p>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  {# ================= Experience ================= #}
+  {% if experience["items"] %}
+  {% set sec.n = sec.n + 1 %}
+  <section class="section{% if sec.n is odd %} section-soft{% endif %}" id="experience">
+    <div class="container">
+      {{ section_head(experience.title, sec.n) }}
+      <div class="jobs">
+        {% for job in experience["items"] %}
+        <article class="card job reveal">
+          <div class="job-head">
+            <div class="job-meta">
+              <h3 class="job-role">{{ job.role }}</h3>
+              {% if job.company %}<p class="job-company" translate="no">{{ job.company }}</p>{% endif %}
+              <ul class="job-facts">
+                <li class="job-dates">{% if job.dates %}{{ job.dates }}{% else %}{{ job.start }}{% if job.end %} — {{ job.end }}{% endif %}{% endif %}</li>
+                {% if job.location %}<li>{{ job.location | no_translate }}</li>{% endif %}
+              </ul>
+              {% if job.summary %}<p class="job-summary">{{ job.summary }}</p>{% endif %}
+            </div>
+          </div>
+          {% set duties = job.duties or job.highlights %}
+          {% if duties %}
+          <ul class="duties">
+            {% for text in duties %}<li>{{ text | no_translate }}</li>{% endfor %}
+          </ul>
+          {% endif %}
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
   {# ================= Certifications ================= #}
   {% if certifications["items"] %}
-  <section class="section section-soft" id="certifications">
+  {% set sec.n = sec.n + 1 %}
+  <section class="section{% if sec.n is odd %} section-soft{% endif %}" id="certifications">
     <div class="container">
-      {{ section_head(certifications.title, 6) }}
+      {{ section_head(certifications.title, sec.n) }}
       <ul class="certs">
         {% for cert in certifications["items"] %}
         <li class="card cert spotlight reveal" style="--d: {{ loop.index0 }}">
@@ -435,9 +443,10 @@
 
   {# ================= Tools ================= #}
   {% if tools["items"] %}
-  <section class="section" id="tools">
+  {% set sec.n = sec.n + 1 %}
+  <section class="section{% if sec.n is odd %} section-soft{% endif %}" id="tools">
     <div class="container">
-      {{ section_head(tools.title, 7) }}
+      {{ section_head(tools.title, sec.n) }}
       {# Groups come from ui.tool_groups; only names that exist in tools.items are shown,
          and any tool left out of every group still appears in a final card. #}
       {% set groups = ui.tool_groups or [] %}
@@ -468,10 +477,11 @@
   {% endif %}
 
   {# ================= Contact ================= #}
-  <section class="section contact" id="contact">
+  {% set sec.n = sec.n + 1 %}
+  <section class="section contact{% if sec.n is odd %} section-soft{% endif %}" id="contact">
     <div class="container contact-layout">
       <div class="contact-intro reveal">
-        {{ section_head(contact.title, 8) }}
+        {{ section_head(contact.title, sec.n) }}
         {% if contact.text %}<p class="statement">{{ contact.text }}</p>{% endif %}
         {% set details = ([contact.location] + (contact.work_style or [])) | select | list %}
         {% if details %}

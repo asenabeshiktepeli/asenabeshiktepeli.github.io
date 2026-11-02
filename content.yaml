@@ -11,16 +11,14 @@ meta:
 nav:
   brand: "Asena Beshiktepeli"
   items:
-    - label: "About"
-      href: "#about"
     - label: "Services"
       href: "#services"
-    - label: "Experience"
-      href: "#experience"
-    - label: "Portfolio"
+    - label: "Work"
       href: "#portfolio"
     - label: "Automation"
       href: "#case-study"
+    - label: "About"
+      href: "#about"
     - label: "Contact"
       href: "#contact"
 
@@ -109,7 +107,7 @@ experience:
         - "Entry-level Logo training for new colleagues"
 
 portfolio:
-  title: "Portfolio"
+  title: "Selected work"
   intro: "Sample projects built with sample data to show how I work."
   view_label: "View sample"  # button text (↗ is added by the template); the button only shows when an item has a link
   items:
