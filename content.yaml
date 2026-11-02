@@ -5,7 +5,8 @@ meta:
   title: "Asena Beshiktepeli – E-commerce Virtual Assistant & Customer Support"
   description: "I help e-commerce businesses answer customers faster, track orders clearly and keep their data clean."
   lang: en
-  url: ""  # e.g. https://asenabeshiktepeli.github.io (used for canonical link)
+  url: "https://asenabeshiktepeli.github.io"  # no trailing slash; used for canonical, Open Graph, sitemap and robots.txt
+  og_image: "static/og/og-image.png"  # link preview image, made by tools/make_og.py
 
 nav:
   brand: "Asena Beshiktepeli"
@@ -191,11 +192,13 @@ contact:
   location: "Kyrenia, Cyprus · EET (UTC+2)"
   work_style:
     - "Fully remote"
-    - "Flexible hours"
+    - "Full-time"
+    - "Flexible hours, can align with your time zone"
   languages:
     - "Turkish – Native"
     - "English – B2 (Upper-intermediate)"
   calls: "Available for calls on Zoom or Google Meet"
+  booking_url: ""  # e.g. a Calendly link – empty hides every "Book a call" button
 
 footer:
   cta: "Your customers, orders and data, in good hands."
@@ -214,3 +217,19 @@ ui:
   case_tech: "Built with"
   back_to_top: "Back to top"
   skip_to_content: "Skip to content"
+  book_call: "Book a call"
+  page_not_found: "Page not found"
+  back_to_homepage: "Back to homepage"
+  # Tool groups: group names are labels; tool names must match tools.items exactly.
+  # Any tool not listed in a group is still shown, in a final card.
+  tool_groups:
+    - label: "Communication"
+      tools: ["Gmail", "Slack", "Zoom", "Google Meet"]
+    - label: "Spreadsheets & documents"
+      tools: ["Microsoft Excel", "Google Sheets", "Google Docs", "Google Slides", "Google Drive", "Google Calendar"]
+    - label: "Business software"
+      tools: ["Logo Tiger 3"]
+    - label: "Project management"
+      tools: ["Trello", "Asana", "Notion"]
+    - label: "Automation & data"
+      tools: ["n8n", "Python", "VS Code", "SQLite", "Git & GitHub", "Claude & AI assistants"]

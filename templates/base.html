@@ -3,22 +3,43 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ meta.title }}</title>
+  {% block head_start %}{% endblock %}
+  <title>{% block title %}{{ meta.title }}{% endblock %}</title>
   <script>document.documentElement.classList.add("js");</script>
   <meta name="description" content="{{ meta.description }}">
-  {% if meta.url %}
+  {% if page == "home" and meta.url %}
   <link rel="canonical" href="{{ meta.url }}/">
-  <meta property="og:url" content="{{ meta.url }}/">
   {% endif %}
   <meta property="og:type" content="website">
   <meta property="og:title" content="{{ meta.title }}">
   <meta property="og:description" content="{{ meta.description }}">
+  {% if meta.url %}
+  <meta property="og:url" content="{{ meta.url }}/">
+  {% endif %}
+  {% if meta.url and meta.og_image %}
+  <meta property="og:image" content="{{ meta.url }}/{{ meta.og_image }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="{{ meta.title }}">
+  {% endif %}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ meta.title }}">
+  <meta name="twitter:description" content="{{ meta.description }}">
+  {% if meta.url and meta.og_image %}
+  <meta name="twitter:image" content="{{ meta.url }}/{{ meta.og_image }}">
+  {% endif %}
+  <link rel="icon" href="static/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="static/favicon.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="static/apple-touch-icon.png">
   <meta name="theme-color" content="#ffffff">
   <meta name="color-scheme" content="light">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Geist+Mono:wght@400..600&display=swap">
   <link rel="stylesheet" href="static/css/style.css">
+  {% if page == "home" and person_jsonld %}
+  <script type="application/ld+json">{{ person_jsonld }}</script>
+  {% endif %}
 </head>
 <body>
   {% block body %}{% endblock %}

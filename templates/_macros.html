@@ -1,0 +1,45 @@
+{# Shared macros. Import with context: {% import "_macros.html" as m with context %} #}
+
+{# Email button + small menu (Gmail / Outlook / default app / copy).
+   Without JS, or on touch devices, the button is a plain mailto: link. #}
+{% macro email_menu(label, id, btn_class="btn-primary", arrow=true, align="start") %}
+  {% if contact.email %}
+  <div class="email-menu" data-email-menu data-align="{{ align }}">
+    <a class="btn {{ btn_class }}" href="mailto:{{ contact.email }}" data-email-trigger
+       aria-expanded="false" aria-controls="{{ id }}">
+      {{ label }}
+      {% if arrow %}<span class="btn-arrow" aria-hidden="true">→</span>{% endif %}
+    </a>
+    <div class="email-menu-panel" id="{{ id }}" data-email-panel tabindex="-1" hidden
+         role="group" aria-label="{{ ui.email_options or label }}">
+      <p class="email-menu-address" translate="no">{{ contact.email }}</p>
+      {% if ui.open_gmail %}
+      <a class="email-menu-item" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to={{ contact.email }}" target="_blank" rel="noopener">
+        <span class="email-menu-icon" aria-hidden="true">G</span>{{ ui.open_gmail }}<span class="email-menu-ext" aria-hidden="true">↗</span>
+      </a>
+      {% endif %}
+      {% if ui.open_outlook %}
+      <a class="email-menu-item" href="https://outlook.live.com/mail/0/deeplink/compose?to={{ contact.email }}" target="_blank" rel="noopener">
+        <span class="email-menu-icon" aria-hidden="true">O</span>{{ ui.open_outlook }}<span class="email-menu-ext" aria-hidden="true">↗</span>
+      </a>
+      {% endif %}
+      {% if ui.default_mail %}
+      <a class="email-menu-item" href="mailto:{{ contact.email }}">
+        <span class="email-menu-icon" aria-hidden="true">@</span>{{ ui.default_mail }}
+      </a>
+      {% endif %}
+      {% if nav.palette.copy_email %}
+      <button class="email-menu-item" type="button" data-copy-email>
+        <span class="email-menu-icon" aria-hidden="true">⧉</span>{{ nav.palette.copy_email }}
+      </button>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+{% endmacro %}
+
+{# Toast for "Email address copied"; main.js reads the address from here. #}
+{% macro toast() %}
+<div class="toast" role="status" aria-live="polite" data-toast
+     data-email="{{ contact.email }}" data-copied="{{ nav.palette.copied }}"></div>
+{% endmacro %}

@@ -1233,10 +1233,7 @@ html:not(.js) .kbd-hint {
 }
 
 .job-head {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
-  gap: clamp(24px, 4vw, 56px);
-  align-items: start;
+  max-width: 46em;
 }
 
 .job-role {
@@ -1277,40 +1274,6 @@ html:not(.js) .kbd-hint {
 .job-summary {
   margin-top: 18px;
   color: var(--muted);
-}
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
-  gap: 12px;
-}
-
-.stat {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 24px;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  background: linear-gradient(180deg, var(--surface), var(--bg-soft));
-}
-
-.stat-value {
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
-  font-weight: 600;
-  line-height: 1;
-  letter-spacing: -0.05em;
-  font-variant-numeric: tabular-nums;
-  background: linear-gradient(160deg, var(--text) 40%, var(--accent-bright));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.stat-label {
-  color: var(--muted);
-  font-size: 0.9375rem;
-  line-height: 1.45;
 }
 
 .duties {
@@ -1597,8 +1560,7 @@ html:not(.js) .kbd-hint {
 }
 
 .chip {
-  display: inline-flex;
-  align-items: center;
+  display: inline-block;
   padding: 5px 12px;
   border: 1px solid var(--border);
   border-radius: 999px;
@@ -1905,75 +1867,32 @@ html:not(.js) .kbd-hint {
 
 /* ---------- Tools ---------- */
 
-.marquee {
-  overflow: hidden;
-  padding: 4px 0;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-}
-
-.marquee-track {
-  display: flex;
-  width: max-content;
-  /* duration scales with item count so the speed stays the same */
-  animation: marquee calc(var(--count, 10) * 3.4s) linear infinite;
-}
-
-.marquee:hover .marquee-track {
-  animation-play-state: paused;
-}
-
-.marquee-group {
-  display: flex;
-  align-items: center;
-}
-
-.marquee-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 28px;
-  padding-right: 28px;
-  color: var(--faint);
-  font-size: clamp(1.25rem, 2.4vw, 1.75rem);
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  white-space: nowrap;
-}
-
-.marquee-item::after {
-  content: "";
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent-line);
-}
-
-@keyframes marquee {
-  to { transform: translateX(-50%); }
-}
-
-.tool-grid {
+.tool-groups {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr));
-  gap: 8px;
-  margin-top: clamp(32px, 4vw, 48px);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  gap: 16px;
 }
 
-.tool-grid li {
+.tool-group {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  padding: clamp(20px, 2.6vw, 28px);
+}
+
+.tool-group:hover {
+  transform: none;
+}
+
+.tool-group-title {
   display: flex;
   align-items: center;
   gap: 10px;
-  min-height: 48px;
-  padding: 10px 14px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--surface);
-  font-size: 0.9375rem;
-  font-weight: 500;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
+  font-size: 1.0625rem;
+  letter-spacing: -0.015em;
 }
 
-.tool-grid li::before {
+.tool-group-title::before {
   content: "";
   flex: none;
   width: 8px;
@@ -1982,9 +1901,10 @@ html:not(.js) .kbd-hint {
   background: var(--gradient);
 }
 
-.tool-grid li:hover {
-  border-color: var(--accent-line);
-  background: var(--accent-soft);
+@media (max-width: 560px) {
+  .tool-groups {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ---------- Contact ---------- */
@@ -2366,6 +2286,70 @@ html:not(.js) .kbd-hint {
   transform: none;
 }
 
+/* ---------- 404 page ---------- */
+
+.bar-simple {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.not-found {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-items: center;
+  min-height: calc(100svh - 72px);
+  padding: calc(var(--header-h) + 48px) 0 64px;
+  overflow: hidden;
+}
+
+.not-found-inner {
+  display: grid;
+  justify-items: start;
+  gap: 20px;
+}
+
+.not-found-code {
+  font-size: clamp(6rem, 22vw, 14rem);
+  font-weight: 600;
+  line-height: 0.9;
+  letter-spacing: -0.07em;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(160deg, var(--text) 30%, var(--accent-bright));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.not-found-title {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  letter-spacing: -0.04em;
+}
+
+.not-found-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.btn:hover .btn-arrow-back {
+  transform: translateX(-3px);
+}
+
+.not-found-footer {
+  padding: 24px 0;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+@media (max-width: 480px) {
+  .not-found-actions > *,
+  .not-found-actions .btn {
+    width: 100%;
+  }
+}
+
 /* ---------- Reduced motion: everything still, everything visible ---------- */
 
 @media (prefers-reduced-motion: reduce) {
@@ -2391,10 +2375,5 @@ html:not(.js) .kbd-hint {
   .project:hover .pv,
   .js .card.reveal.is-visible:hover {
     transform: none;
-  }
-
-  /* The marquee becomes redundant; the tool grid below lists everything. */
-  .marquee {
-    display: none;
   }
 }

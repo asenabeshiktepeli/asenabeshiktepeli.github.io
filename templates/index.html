@@ -13,43 +13,7 @@
   {% for word in text.split() %}<span class="word" style="--i: {{ loop.index0 }}">{{ word }}</span>{% if not loop.last %} {% endif %}{% endfor %}
 {% endmacro %}
 
-{# Email button + small menu (Gmail / Outlook / default app / copy).
-   Without JS, or on touch devices, the button is a plain mailto: link. #}
-{% macro email_menu(label, id, btn_class="btn-primary", arrow=true, align="start") %}
-  {% if contact.email %}
-  <div class="email-menu" data-email-menu data-align="{{ align }}">
-    <a class="btn {{ btn_class }}" href="mailto:{{ contact.email }}" data-email-trigger
-       aria-expanded="false" aria-controls="{{ id }}">
-      {{ label }}
-      {% if arrow %}<span class="btn-arrow" aria-hidden="true">→</span>{% endif %}
-    </a>
-    <div class="email-menu-panel" id="{{ id }}" data-email-panel tabindex="-1" hidden
-         role="group" aria-label="{{ ui.email_options or label }}">
-      <p class="email-menu-address" translate="no">{{ contact.email }}</p>
-      {% if ui.open_gmail %}
-      <a class="email-menu-item" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to={{ contact.email }}" target="_blank" rel="noopener">
-        <span class="email-menu-icon" aria-hidden="true">G</span>{{ ui.open_gmail }}<span class="email-menu-ext" aria-hidden="true">↗</span>
-      </a>
-      {% endif %}
-      {% if ui.open_outlook %}
-      <a class="email-menu-item" href="https://outlook.live.com/mail/0/deeplink/compose?to={{ contact.email }}" target="_blank" rel="noopener">
-        <span class="email-menu-icon" aria-hidden="true">O</span>{{ ui.open_outlook }}<span class="email-menu-ext" aria-hidden="true">↗</span>
-      </a>
-      {% endif %}
-      {% if ui.default_mail %}
-      <a class="email-menu-item" href="mailto:{{ contact.email }}">
-        <span class="email-menu-icon" aria-hidden="true">@</span>{{ ui.default_mail }}
-      </a>
-      {% endif %}
-      {% if nav.palette.copy_email %}
-      <button class="email-menu-item" type="button" data-copy-email>
-        <span class="email-menu-icon" aria-hidden="true">⧉</span>{{ nav.palette.copy_email }}
-      </button>
-      {% endif %}
-    </div>
-  </div>
-  {% endif %}
-{% endmacro %}
+{% import "_macros.html" as m with context %}
 
 {# Simple line icons for the service cards, used in order. #}
 {% macro service_icon(index) %}
@@ -102,7 +66,7 @@
         <kbd>{{ palette.hint_mac }}</kbd>
       </button>
       {% endif %}
-      <div class="bar-email">{{ email_menu(email_label, "email-menu-header", "btn-primary btn-sm", false, "end") }}</div>
+      <div class="bar-email">{{ m.email_menu(email_label, "email-menu-header", "btn-primary btn-sm", false, "end") }}</div>
       {% if nav["items"] %}
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu" data-menu-toggle>
         <span></span><span></span>
@@ -163,7 +127,7 @@
         <div class="hero-actions">
           {% for button in buttons %}
           {% if button.href.startswith("mailto:") %}
-          {{ email_menu(button.label, "email-menu-hero", "btn-primary btn-lg") }}
+          {{ m.email_menu(button.label, "email-menu-hero", "btn-primary btn-lg") }}
           {% else %}
           <a class="btn btn-ghost btn-lg" href="{{ button.href }}"{% if button.href.endswith('.pdf') %} download="{{ button.href.split('/')[-1] }}"{% endif %}>
             {{ button.label }}
@@ -273,16 +237,6 @@
               </ul>
               {% if job.summary %}<p class="job-summary">{{ job.summary }}</p>{% endif %}
             </div>
-            {% if job.stats %}
-            <div class="stats">
-              {% for stat in job.stats %}
-              <div class="stat">
-                <span class="stat-value" data-count>{{ stat.value }}</span>
-                {% if stat.label %}<span class="stat-label">{{ stat.label }}</span>{% endif %}
-              </div>
-              {% endfor %}
-            </div>
-            {% endif %}
           </div>
           {% set duties = job.duties or job.highlights %}
           {% if duties %}
@@ -454,20 +408,31 @@
   <section class="section" id="tools">
     <div class="container">
       {{ section_head(tools.title, 7) }}
-    </div>
-    <div class="marquee" aria-hidden="true">
-      <div class="marquee-track" style="--count: {{ tools['items'] | length }}">
-        {% for copy in range(2) %}
-        <div class="marquee-group">
-          {% for tool in tools["items"] %}<span class="marquee-item" translate="no">{{ tool }}</span>{% endfor %}
-        </div>
+      {# Groups come from ui.tool_groups; only names that exist in tools.items are shown,
+         and any tool left out of every group still appears in a final card. #}
+      {% set groups = ui.tool_groups or [] %}
+      {% set grouped = groups | map(attribute="tools") | sum(start=[]) %}
+      {% set rest = tools["items"] | reject("in", grouped) | list %}
+      <div class="tool-groups">
+        {% for group in groups %}
+        {% set listed = (group.tools or []) | select("in", tools["items"]) | list %}
+        {% if listed %}
+        <section class="card tool-group reveal" style="--d: {{ loop.index0 }}" aria-labelledby="tools-{{ loop.index }}">
+          <h3 class="tool-group-title" id="tools-{{ loop.index }}">{{ group.label }}</h3>
+          <ul class="chips">
+            {% for tool in listed %}<li class="chip">{{ tool | no_translate }}</li>{% endfor %}
+          </ul>
+        </section>
+        {% endif %}
         {% endfor %}
+        {% if rest %}
+        <div class="card tool-group reveal">
+          <ul class="chips">
+            {% for tool in rest %}<li class="chip">{{ tool | no_translate }}</li>{% endfor %}
+          </ul>
+        </div>
+        {% endif %}
       </div>
-    </div>
-    <div class="container">
-      <ul class="tool-grid reveal">
-        {% for tool in tools["items"] %}<li>{{ tool | no_translate }}</li>{% endfor %}
-      </ul>
     </div>
   </section>
   {% endif %}
@@ -496,9 +461,14 @@
         {% if contact.email %}
         <p class="contact-email" translate="no">{{ contact.email }}</p>
         <div class="contact-actions">
-          {{ email_menu(email_label, "email-menu-contact", "btn-primary btn-lg") }}
+          {{ m.email_menu(email_label, "email-menu-contact", "btn-primary btn-lg") }}
           {% if palette.copy_email %}
           <button class="btn btn-ghost btn-lg js-only" type="button" data-copy-email>{{ palette.copy_email }}</button>
+          {% endif %}
+          {% if contact.booking_url and ui.book_call %}
+          <a class="btn btn-ghost btn-lg" href="{{ contact.booking_url }}" target="_blank" rel="noopener">
+            {{ ui.book_call }} <span aria-hidden="true">↗</span>
+          </a>
           {% endif %}
         </div>
         {% endif %}
@@ -525,7 +495,7 @@
     {% if footer.cta_button %}
     <div class="footer-action reveal">
       {% if footer.cta_link and footer.cta_link.startswith("mailto:") or not footer.cta_link %}
-      {{ email_menu(footer.cta_button, "email-menu-footer", "btn-light btn-xl") }}
+      {{ m.email_menu(footer.cta_button, "email-menu-footer", "btn-light btn-xl") }}
       {% else %}
       <a class="btn btn-light btn-xl" href="{{ footer.cta_link }}">{{ footer.cta_button }} <span class="btn-arrow" aria-hidden="true">→</span></a>
       {% endif %}
@@ -584,6 +554,12 @@
         <span class="palette-item-icon" aria-hidden="true">@</span>{{ palette.send_email }}
       </li>
       {% endif %}
+      {% if contact.booking_url and ui.book_call %}
+      <li class="palette-item" role="option" id="cmd-book" aria-selected="false" data-action="open"
+          data-href="{{ contact.booking_url }}">
+        <span class="palette-item-icon" aria-hidden="true">◷</span>{{ ui.book_call }}
+      </li>
+      {% endif %}
       {% if palette.copy_email %}
       <li class="palette-item" role="option" id="cmd-copy" aria-selected="false" data-action="copy">
         <span class="palette-item-icon" aria-hidden="true">⧉</span>{{ palette.copy_email }}
@@ -603,6 +579,5 @@
 </dialog>
 {% endif %}
 
-<div class="toast" role="status" aria-live="polite" data-toast
-     data-email="{{ contact.email }}" data-copied="{{ palette.copied }}"></div>
+{{ m.toast() }}
 {% endblock %}

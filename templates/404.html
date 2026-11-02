@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+
+{# GitHub Pages serves this page at any missing path, so links resolve from the site root. #}
+{% block head_start %}
+  {% if meta.url %}<base href="{{ meta.url }}/">{% endif %}
+  <meta name="robots" content="noindex">
+{% endblock %}
+
+{% block title %}{{ ui.page_not_found or "404" }} – {{ nav.brand or hero.name }}{% endblock %}
+
+{% block body %}
+{% set ns = namespace(email_label=footer.cta_button) %}
+{% for button in hero.buttons or [] %}{% if button.href and button.href.startswith("mailto:") %}{% set ns.email_label = button.label %}{% endif %}{% endfor %}
+{% set email_label = ns.email_label %}
+
+<header class="site-header is-scrolled">
+  <nav class="bar bar-simple container" aria-label="Main">
+    <a class="brand" href="./" translate="no">
+      <span class="brand-mark" aria-hidden="true">{{ (nav.brand or hero.name) | initials }}</span>
+      <span class="brand-name">{{ nav.brand }}</span>
+    </a>
+  </nav>
+</header>
+
+<main class="not-found">
+  <div class="hero-bg" aria-hidden="true"><span class="hero-glow"></span><span class="hero-grid-lines"></span></div>
+  <div class="container not-found-inner">
+    <p class="not-found-code" aria-hidden="true">404</p>
+    <h1 class="not-found-title">{{ ui.page_not_found }}</h1>
+    <div class="not-found-actions">
+      <a class="btn btn-primary btn-lg" href="./"><span class="btn-arrow btn-arrow-back" aria-hidden="true">←</span> {{ ui.back_to_homepage }}</a>
+      {{ m.email_menu(email_label, "email-menu-404", "btn-ghost btn-lg", false) }}
+    </div>
+  </div>
+</main>
+
+<footer class="not-found-footer">
+  <div class="container">
+    {% if footer.copyright %}<p>{{ footer.copyright | no_translate }}</p>{% endif %}
+  </div>
+</footer>
+
+{{ m.toast() }}
+{% endblock %}
