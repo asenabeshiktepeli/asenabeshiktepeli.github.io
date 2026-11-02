@@ -1,130 +1,203 @@
-# content.yaml – all site content lives here. Edit this file to update the site.
-# Rule: only verified, real information. Empty values marked TODO must be confirmed by Asena.
+# Site content. Edit values here, then run build.py.
+# Empty values ("") are hidden on the site.
 
 meta:
-  title: "Asena Beshiktepeli – E-commerce Customer Support & Virtual Assistant"
-  description: "Remote e-commerce customer support and virtual assistant based in Kyrenia, Cyprus. Eight years of sales and after-sales support experience."
+  title: "Asena Beshiktepeli – E-commerce Virtual Assistant & Customer Support"
+  description: "I help e-commerce businesses answer customers faster, track orders clearly and keep their data clean."
   lang: en
-  url: "https://asenabeshiktepeli.github.io"
+  url: ""  # e.g. https://asenabeshiktepeli.github.io (used for canonical link)
 
 nav:
-  - label: About
-    href: "#about"
-  - label: Services
-    href: "#services"
-  - label: Experience
-    href: "#experience"
-  - label: Portfolio
-    href: "#portfolio"
-  - label: Case study
-    href: "#case-study"
-  - label: Certifications
-    href: "#certifications"
-  - label: Contact
-    href: "#contact"
+  brand: "Asena Beshiktepeli"
+  items:
+    - label: "About"
+      href: "#about"
+    - label: "Services"
+      href: "#services"
+    - label: "Experience"
+      href: "#experience"
+    - label: "Portfolio"
+      href: "#portfolio"
+    - label: "Case study"
+      href: "#case-study"
+    - label: "Contact"
+      href: "#contact"
+  # Command palette (Ctrl+K / Cmd+K)
+  palette:
+    hint_mac: "⌘K"
+    hint_other: "Ctrl K"
+    placeholder: "Type a command or search…"
+    group_sections: "Sections"
+    group_actions: "Actions"
+    copy_email: "Copy email address"
+    send_email: "Send an email"
+    copied: "Email address copied"
+    empty: "No results found"
 
 hero:
   name: "Asena Beshiktepeli"
-  title: "E-commerce Customer Support & Virtual Assistant"
-  value_proposition: "I help online businesses keep customers informed, orders on track and data organised, so owners can focus on growth."
+  title: "E-commerce Virtual Assistant & Customer Support"
+  value_proposition: "I help e-commerce businesses answer customers faster, track orders clearly and keep their data clean."
+  availability: "Available for remote work"
+  local_time:
+    label: "Kyrenia, Cyprus · EET (UTC+2)"
+    timezone: "Europe/Nicosia"  # IANA time zone for the live clock (EET / UTC+2 in winter)
+    zone_label: ""
   buttons:
     - label: "Email me"
       href: "mailto:asenabeshiktepeli@gmail.com"
     - label: "Download CV"
-      href: ""  # TODO: Asena doğrulayacak (CV PDF dosyası, ör. static/cv.pdf)
-  photo: ""  # TODO: Asena doğrulayacak (profesyonel fotoğraf var mı? ör. static/img/photo.jpg)
+      href: ""  # CV link not ready yet – empty hides the button
+  photo: "static/img/profile.jpg"  # if the file is missing, build.py falls back to the monogram
   photo_alt: "Portrait of Asena Beshiktepeli"
 
 about:
-  text: >-
-    I spent eight years as a Sales Consultant at Cagra Co LTD, where I worked
-    directly with local and international customers and handled after-sales support.
-    I completed the ALX Virtual Assistant Programme and the Google Advanced Data
-    Analytics Certificate, and I hold a Marketing degree from Girne American University.
-    Today I work fully remotely from Kyrenia, Cyprus, supporting e-commerce businesses
-    with customer communication, order follow-up and data tasks.
+  title: "About"
+  text:  # one string, or a list of paragraphs
+    - "From 2018 to 2026 I worked as a Sales Consultant at Cagra Co LTD, handling the full customer journey: emails and phone calls, face-to-face sales, quotes and proformas, order tracking, shipping coordination, complaints and returns, and invoice and payment follow-up in Logo Tiger 3. I prepared tables and reports in Excel and trained new colleagues on Logo at entry level."
+    - "Now I bring that experience to remote work, supporting e-commerce businesses with customer support and order operations. I also build my own automations in Python, including a job-search pipeline I set up with an AI coding assistant."
 
 services:
-  - title: "Customer Support"
-    text: "Clear, friendly replies to customer emails and messages, from pre-sale questions to after-sales follow-up."
-  - title: "Order Tracking"
-    text: "Keeping order status organised in one shared sheet so nothing gets missed."
-  - title: "Email Templates"
-    text: "Ready-to-use reply templates that keep your customer communication consistent and fast."
-  - title: "Data Cleanup"
-    text: "Turning messy customer or product lists into clean, consistent and usable data."
+  title: "Services"
+  items:
+    - title: "Customer Support"
+      text: "Clear, friendly replies to customer emails and messages, including complaints and returns."
+    - title: "Order & Shipping Tracking"
+      text: "Keeping every order visible from purchase to delivery, and following up on delays."
+    - title: "Quotes, Invoices & Payment Follow-up"
+      text: "Preparing quotes and proformas and tracking invoices until they are paid."
+    - title: "Data Entry & Spreadsheet Reports"
+      text: "Clean, organised spreadsheets and simple reports in Excel and Google Sheets."
 
 experience:
-  - company: "Cagra Co LTD"
-    role: "Sales Consultant"
-    start: "2018"
-    end: "2026"  # TODO: Asena doğrulayacak (ayrılış ayı)
-    location: ""  # TODO: Asena doğrulayacak (şirketin şehri/ülkesi)
-    highlights:
-      - "Grew the foreign customer base by about 60%."
-      - "Reached 120% of the internal sales target."
-      - "Provided after-sales support to customers."
-    tools: []  # TODO: Asena doğrulayacak (ör. Logo Tiger 3, Excel/Sheets – plan dosyasındaki açık sorular)
+  title: "Experience"
+  items:
+    - role: "Sales Consultant"
+      company: "Cagra Co LTD"
+      dates: "2018 – 2026"
+      location: "Kyrenia, Cyprus"
+      summary: "Building materials and interior decoration supplies."
+      # value: a number like "60%" or "120%" counts up on scroll; any other text shows as-is
+      stats:
+        - value: "60%"
+          label: "About 60% growth in international clients"
+        - value: "120%"
+          label: "Reached 120% of internal sales targets in multiple years"
+      duties:
+        - "Customer communication by email, phone and face to face"
+        - "Quotes and proformas"
+        - "Order tracking and shipping coordination"
+        - "Complaints and returns"
+        - "Invoice and payment follow-up in Logo Tiger 3"
+        - "Tables and reports in Excel and Google Sheets"
+        - "Entry-level Logo training for new colleagues"
 
 portfolio:
-  - title: "Order Tracking Sheet"
-    label: "Sample project"
-    text: "A spreadsheet for tracking orders from purchase to delivery."
-    image: ""  # TODO: Asena doğrulayacak (ekran görüntüsü)
-    link: ""   # TODO: Asena doğrulayacak (dosya veya paylaşım linki)
-  - title: "Customer Email Templates"
-    label: "Sample project"
-    text: "A set of reply templates for common e-commerce customer requests."
-    image: ""  # TODO: Asena doğrulayacak (ekran görüntüsü)
-    link: ""   # TODO: Asena doğrulayacak (dosya veya paylaşım linki)
-  - title: "Data Cleanup Before/After"
-    label: "Sample project"
-    text: "A messy dataset cleaned and standardised, shown side by side."
-    image: ""  # TODO: Asena doğrulayacak (önce/sonra görselleri)
-    link: ""   # TODO: Asena doğrulayacak (dosya veya paylaşım linki)
+  title: "Portfolio"
+  intro: "Sample projects built with sample data to show how I work."
+  view_label: "View"  # button text; the button only shows when an item has a link
+  items:
+    - title: "Order Tracking Sheet"
+      label: "Sample project"
+      text: "A Google Sheets tracker that shows each order's status, shipping date and follow-up notes at a glance."
+      tools: ["Google Sheets"]
+      link: ""  # Google Sheets view link – to be added later
+      image: ""
+    - title: "Customer Email Templates"
+      label: "Sample project"
+      text: "Ready-to-use replies for common e-commerce situations: order updates, delays, returns and complaints."
+      tools: ["Google Docs"]
+      link: ""
+      image: ""
+    - title: "Data Cleanup Before/After"
+      label: "Sample project"
+      text: "A messy customer list turned into a clean, consistent sheet: duplicates removed, formats fixed, columns organised."
+      tools: ["Google Sheets"]
+      link: ""
+      image: ""
 
 case_study:
-  title: "Job-search automation pipeline"
-  summary: "A personal project that organises my job search: collecting listings, tracking applications and preparing emails for review."  # TODO: Asena doğrulayacak (özet doğru mu?)
-  built_with: "Built with the help of an AI coding assistant."
+  title: "Case study"
+  name: "Job-search automation pipeline"
+  summary: "A personal Python system I built with an AI coding assistant to run my own remote job search end to end, with a human approval step before anything is sent."
+  steps:
+    - "Collects job listings from multiple sources"
+    - "Scores and filters them against my criteria"
+    - "Checks ATS compatibility"
+    - "Drafts a tailored cover letter for each listing"
+    - "Tracks every application in a SQLite database"
+    - "Prepares email drafts and waits for my approval before sending"
+  highlights:
+    - "500+ automated tests"
+    - "Version-controlled with Git"
+    - "No email is sent without my approval"
   tech:
     - "Python"
     - "SQLite"
     - "Git"
-  highlights:
-    - "500+ automated tests."
-    - "No email is sent without my approval."
-    - "Version-controlled with Git."
-  link: ""  # TODO: Asena doğrulayacak (depo herkese açık mı? GitHub linki)
+    - "pytest"
+  note: ""  # empty – stays hidden
+  link: ""  # repository is not public – stays hidden
+  image: ""
 
 certifications:
-  - name: "ALX Virtual Assistant Programme"
-    issuer: "ALX"
-    date: "Nov 2025"
-    link: ""  # TODO: Asena doğrulayacak (sertifika doğrulama linki)
-  - name: "Google Advanced Data Analytics Certificate"
-    issuer: "Google"
-    date: "May 2026"
-    link: ""  # TODO: Asena doğrulayacak (sertifika doğrulama linki)
-  - name: "Marketing degree"
-    issuer: "Girne American University"
-    date: ""  # TODO: Asena doğrulayacak (mezuniyet yılı)
+  title: "Certifications & Education"
+  verify_label: "Verify"  # link text; only shows when an item has a link
+  items:
+    - name: "ALX Virtual Assistant Programme – Certificate of Achievement"
+      issuer: "ALX"
+      date: "Nov 2025"
+      note: "10-week programme in Virtual Assistance Skills in the Digital Age"
+      link: "https://savanna.alxafrica.com/certificates/zfN6epE3J2"
+    - name: "Google Advanced Data Analytics Certificate"
+      issuer: "Google (Coursera)"
+      date: "May 2026"
+      link: "https://www.coursera.org/account/accomplishments/professional-cert/YAONZADEFSOP"
+    - name: "Bachelor's degree in Marketing"
+      issuer: "Girne American University"
+      date: "2015"
+      link: ""
 
-working_style:
-  timezone: "EET (UTC+2)"
-  location_type: "Fully remote"
-  hours: "Flexible hours"
-  channels:
-    - "Email"
-    # TODO: Asena doğrulayacak (başka kanallar? ör. Slack, Google Meet, Zoom)
-  languages: []  # TODO: Asena doğrulayacak (konuşulan diller ve seviyeleri)
+tools:
+  title: "Tools I use"
+  items:
+    - "Logo Tiger 3"
+    - "Microsoft Excel"
+    - "Google Sheets"
+    - "Google Docs"
+    - "Google Slides"
+    - "Google Drive"
+    - "Google Calendar"
+    - "Gmail"
+    - "Trello"
+    - "Asana"
+    - "Notion"
+    - "Slack"
+    - "Zoom"
+    - "Google Meet"
+    - "n8n"
+    - "Python"
+    - "VS Code"
+    - "SQLite"
+    - "Git & GitHub"
+    - "Claude & AI assistants"
 
 contact:
+  title: "Contact"
   email: "asenabeshiktepeli@gmail.com"
   github: "https://github.com/asenabeshiktepeli"
-  upwork: ""  # TODO: Asena doğrulayacak (Upwork profil linki henüz yok)
-  location: "Kyrenia, Cyprus"
+  upwork: ""  # not yet – empty stays hidden
+  location: "Kyrenia, Cyprus · EET (UTC+2)"
+  work_style:
+    - "Fully remote"
+    - "Flexible hours"
+  languages:
+    - "Turkish – Native"
+    - "English – B2 (Upper-intermediate)"
+  calls: "Available for calls on Zoom or Google Meet"
 
 footer:
-  text: "© 2026 Asena Beshiktepeli"
-  note: "Built with Python and hosted on GitHub Pages."
+  cta: "Your customers, orders and data, in good hands."
+  cta_button: "Email me"
+  cta_link: "mailto:asenabeshiktepeli@gmail.com"
+  copyright: "© 2026 Asena Beshiktepeli"

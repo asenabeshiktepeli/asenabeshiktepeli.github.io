@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="{{ meta.lang or 'en' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ meta.title }}</title>
+  <script>document.documentElement.classList.add("js");</script>
+  <meta name="description" content="{{ meta.description }}">
+  {% if meta.url %}
+  <link rel="canonical" href="{{ meta.url }}/">
+  <meta property="og:url" content="{{ meta.url }}/">
+  {% endif %}
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ meta.title }}">
+  <meta property="og:description" content="{{ meta.description }}">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="color-scheme" content="light">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Geist+Mono:wght@400..600&display=swap">
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+  {% block body %}{% endblock %}
+  <script src="static/js/main.js" defer></script>
+</body>
+</html>

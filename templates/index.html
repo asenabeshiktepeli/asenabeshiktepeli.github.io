@@ -1,0 +1,425 @@
+{% extends "base.html" %}
+
+{% macro section_head(title, number) %}
+  {% if title %}
+  <div class="section-head reveal">
+    <span class="section-index" aria-hidden="true">{{ "%02d" | format(number) }}</span>
+    <h2 class="section-title">{{ title }}</h2>
+  </div>
+  {% endif %}
+{% endmacro %}
+
+{% macro words(text) %}
+  {% for word in text.split() %}<span class="word" style="--i: {{ loop.index0 }}">{{ word }}</span>{% if not loop.last %} {% endif %}{% endfor %}
+{% endmacro %}
+
+{% block body %}
+{% set palette = nav.palette %}
+
+{# ================= Header: floating pill nav ================= #}
+<header class="site-header" data-header>
+  <nav class="pill" aria-label="Main">
+    <a class="brand" href="#top" translate="no">
+      <span class="brand-mark" aria-hidden="true">{{ (nav.brand or hero.name) | initials }}</span>
+      <span class="brand-name">{{ nav.brand }}</span>
+    </a>
+    {% if nav["items"] %}
+    <ul class="pill-links">
+      {% for item in nav["items"] %}
+      <li><a href="{{ item.href }}">{{ item.label }}</a></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% if palette %}
+    <button class="kbd-hint" type="button" data-palette-open aria-haspopup="dialog" aria-controls="palette"
+            aria-label="Open command palette"
+            data-hint-mac="{{ palette.hint_mac }}" data-hint-other="{{ palette.hint_other }}">
+      <kbd>{{ palette.hint_mac }}</kbd>
+    </button>
+    {% endif %}
+    {% if nav["items"] %}
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu" data-menu-toggle>
+      <span></span><span></span>
+    </button>
+    {% endif %}
+  </nav>
+</header>
+
+{% if nav["items"] %}
+<div class="mobile-menu" id="mobile-menu" data-mobile-menu hidden>
+  <ul>
+    {% for item in nav["items"] %}
+    <li style="--i: {{ loop.index0 }}"><a href="{{ item.href }}">{{ item.label }}</a></li>
+    {% endfor %}
+  </ul>
+  {% if contact.email %}
+  <a class="mobile-menu-email" href="mailto:{{ contact.email }}">{{ contact.email }}</a>
+  {% endif %}
+</div>
+{% endif %}
+
+<main id="top">
+
+  {# ================= Hero ================= #}
+  <section class="hero">
+    <div class="aurora" aria-hidden="true">
+      <span class="blob blob-1"></span>
+      <span class="blob blob-2"></span>
+      <span class="blob blob-3"></span>
+      <span class="grain"></span>
+    </div>
+
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <div class="hero-meta">
+          {% if hero.availability %}
+          <span class="status">
+            <span class="status-dot" aria-hidden="true"></span>
+            {{ hero.availability }}
+          </span>
+          {% endif %}
+          {% if hero.local_time.timezone %}
+          <span class="clock js-only">
+            {% if hero.local_time.label %}<span class="clock-label">{{ hero.local_time.label | no_translate }}</span>{% endif %}
+            <time class="clock-time" data-clock data-tz="{{ hero.local_time.timezone }}">--:--</time>
+            {% if hero.local_time.zone_label %}<span class="clock-zone">{{ hero.local_time.zone_label }}</span>{% endif %}
+          </span>
+          {% endif %}
+        </div>
+
+        <h1 class="hero-name" translate="no">{{ words(hero.name) }}</h1>
+        {% if hero.title %}<p class="hero-title">{{ hero.title }}</p>{% endif %}
+        {% if hero.value_proposition %}<p class="hero-lead">{{ hero.value_proposition }}</p>{% endif %}
+
+        {% set buttons = (hero.buttons or []) | selectattr("href") | list %}
+        {% if buttons %}
+        <div class="hero-actions">
+          {% for button in buttons %}
+          <a class="btn {{ 'btn-primary' if loop.first else 'btn-ghost' }}" href="{{ button.href }}"{% if button.href.endswith('.pdf') %} download{% endif %}>
+            {{ button.label }}
+            {% if loop.first %}<span class="btn-arrow" aria-hidden="true">→</span>{% endif %}
+          </a>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="hero-visual">
+        <div class="orbit" aria-hidden="true"></div>
+        {% if hero.photo %}
+        <img class="avatar" src="{{ hero.photo }}" alt="{{ hero.photo_alt or hero.name }}" width="360" height="360">
+        {% else %}
+        <div class="avatar monogram" aria-hidden="true" translate="no">{{ hero.name | initials }}</div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  {# ================= About ================= #}
+  {% set about_paragraphs = ([about.text] if about.text is string else (about.text or [])) | select | list %}
+  {% if about_paragraphs %}
+  <section class="section" id="about">
+    <div class="container split">
+      {{ section_head(about.title, 1) }}
+      <div class="stack reveal">
+        {% for paragraph in about_paragraphs %}
+        <p class="statement{% if about_paragraphs | length > 1 %} statement-sm{% endif %}">{{ paragraph | no_translate }}</p>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  {# ================= Services (bento) ================= #}
+  {% if services["items"] %}
+  <section class="section" id="services">
+    <div class="container">
+      {{ section_head(services.title, 2) }}
+      <div class="bento bento-services">
+        {% for service in services["items"] %}
+        <article class="card spotlight reveal" style="--d: {{ loop.index0 }}">
+          <span class="card-index" aria-hidden="true">{{ "%02d" | format(loop.index) }}</span>
+          <h3 class="card-title">{{ service.title }}</h3>
+          {% if service.text %}<p class="card-text">{{ service.text }}</p>{% endif %}
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  {# ================= Experience ================= #}
+  {% if experience["items"] %}
+  <section class="section section-soft" id="experience">
+    <div class="container">
+      {{ section_head(experience.title, 3) }}
+      <ol class="timeline">
+        {% for job in experience["items"] %}
+        <li class="timeline-item reveal">
+          <div class="timeline-meta">
+            <span class="timeline-dates">{% if job.dates %}{{ job.dates }}{% else %}{{ job.start }}{% if job.end %} — {{ job.end }}{% endif %}{% endif %}</span>
+            {% if job.location %}<span class="timeline-location">{{ job.location | no_translate }}</span>{% endif %}
+          </div>
+          <div class="timeline-body">
+            <h3 class="timeline-role">{{ job.role }}</h3>
+            {% if job.company %}<p class="timeline-company" translate="no">{{ job.company }}</p>{% endif %}
+            {% if job.summary %}<p class="timeline-summary">{{ job.summary }}</p>{% endif %}
+            {% if job.stats %}
+            <div class="stats">
+              {% for stat in job.stats %}
+              <div class="stat spotlight">
+                <span class="stat-value" data-count>{{ stat.value }}</span>
+                {% if stat.label %}<span class="stat-label">{{ stat.label }}</span>{% endif %}
+              </div>
+              {% endfor %}
+            </div>
+            {% endif %}
+            {% set duties = job.duties or job.highlights %}
+            {% if duties %}
+            <ul class="bullets">
+              {% for text in duties %}<li>{{ text | no_translate }}</li>{% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+  </section>
+  {% endif %}
+
+  {# ================= Portfolio (bento) ================= #}
+  {% if portfolio["items"] %}
+  <section class="section" id="portfolio">
+    <div class="container">
+      {{ section_head(portfolio.title, 4) }}
+      {% if portfolio.intro %}<p class="section-intro reveal">{{ portfolio.intro }}</p>{% endif %}
+      <div class="bento bento-portfolio">
+        {% for item in portfolio["items"] %}
+        <article class="card project spotlight reveal" style="--d: {{ loop.index0 }}">
+          <div class="project-media" aria-hidden="{{ 'false' if item.image else 'true' }}">
+            {% if item.image %}
+            <img src="{{ item.image }}" alt="{{ item.title }}" loading="lazy">
+            {% else %}
+            <span class="project-pattern"></span>
+            {% endif %}
+          </div>
+          <div class="project-body">
+            {% if item.label %}<span class="badge">{{ item.label }}</span>{% endif %}
+            <h3 class="card-title">{{ item.title }}</h3>
+            {% if item.text %}<p class="card-text">{{ item.text }}</p>{% endif %}
+            {% if item.tools %}
+            <ul class="chips">
+              {% for tool in item.tools %}<li class="chip chip-sm">{{ tool }}</li>{% endfor %}
+            </ul>
+            {% endif %}
+            {% if item.link and portfolio.view_label %}
+            <a class="btn btn-ghost btn-sm" href="{{ item.link }}" target="_blank" rel="noopener">
+              {{ portfolio.view_label }} <span aria-hidden="true">↗</span>
+            </a>
+            {% endif %}
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  {# ================= Case study ================= #}
+  {% if case_study.name %}
+  <section class="section" id="case-study">
+    <div class="container">
+      {{ section_head(case_study.title, 5) }}
+      <article class="case spotlight reveal">
+        <div class="case-glow" aria-hidden="true"></div>
+        <div class="case-inner">
+          <h3 class="case-name">
+            {% if case_study.link %}<a class="card-link" href="{{ case_study.link }}" target="_blank" rel="noopener">{{ case_study.name }}</a>{% else %}{{ case_study.name }}{% endif %}
+          </h3>
+          {% if case_study.summary %}<p class="case-summary">{{ case_study.summary }}</p>{% endif %}
+          {% if case_study.steps %}
+          <ol class="case-steps">
+            {% for text in case_study.steps %}
+            <li><span class="case-step-index" aria-hidden="true">{{ "%02d" | format(loop.index) }}</span><span>{{ text }}</span></li>
+            {% endfor %}
+          </ol>
+          {% endif %}
+          {% if case_study.highlights %}
+          <ul class="case-points">
+            {% for text in case_study.highlights %}
+            <li><span class="case-point-index" aria-hidden="true">✓</span>{{ text }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+          <div class="case-footer">
+            {% if case_study.tech %}
+            <ul class="chips">
+              {% for tech in case_study.tech %}<li class="chip">{{ tech }}</li>{% endfor %}
+            </ul>
+            {% endif %}
+            {% if case_study.note %}<p class="case-note">{{ case_study.note }}</p>{% endif %}
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+  {% endif %}
+
+  {# ================= Certifications ================= #}
+  {% if certifications["items"] %}
+  <section class="section section-soft" id="certifications">
+    <div class="container">
+      {{ section_head(certifications.title, 6) }}
+      <ul class="certs">
+        {% for cert in certifications["items"] %}
+        <li class="card cert spotlight reveal" style="--d: {{ loop.index0 }}">
+          <div class="cert-head">
+            <h3 class="card-title">{{ cert.name }}</h3>
+            {% if cert.note %}<p class="cert-note">{{ cert.note }}</p>{% endif %}
+          </div>
+          <div class="cert-meta">
+            {% if cert.issuer %}<span>{{ cert.issuer }}</span>{% endif %}
+            {% if cert.date %}<span class="cert-date">{{ cert.date }}</span>{% endif %}
+          </div>
+          {% if cert.link and certifications.verify_label %}
+          <a class="cert-verify" href="{{ cert.link }}" target="_blank" rel="noopener" aria-label="{{ certifications.verify_label }}: {{ cert.name }}">
+            {{ certifications.verify_label }} <span aria-hidden="true">↗</span>
+          </a>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+  {% endif %}
+
+  {# ================= Tools (marquee) ================= #}
+  {% if tools["items"] %}
+  <section class="section section-tight" id="tools">
+    <div class="container">
+      {{ section_head(tools.title, 7) }}
+    </div>
+    <div class="marquee reveal">
+      <div class="marquee-track" style="--count: {{ tools['items'] | length }}">
+        <ul class="marquee-group">
+          {% for tool in tools["items"] %}<li class="chip chip-lg">{{ tool | no_translate }}</li>{% endfor %}
+        </ul>
+        <ul class="marquee-group" aria-hidden="true">
+          {% for tool in tools["items"] %}<li class="chip chip-lg">{{ tool | no_translate }}</li>{% endfor %}
+        </ul>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  {# ================= Contact ================= #}
+  <section class="section" id="contact">
+    <div class="container split">
+      {{ section_head(contact.title, 8) }}
+      <div class="contact-body reveal">
+        {% if contact.text %}<p class="statement statement-sm">{{ contact.text }}</p>{% endif %}
+        {% set details = ([contact.location] + (contact.work_style or [])) | select | list %}
+        {% if details %}
+        <ul class="chips">
+          {% for detail in details %}<li class="chip">{{ detail | no_translate }}</li>{% endfor %}
+        </ul>
+        {% endif %}
+        {% if contact.languages %}
+        <ul class="chips">
+          {% for language in contact.languages %}<li class="chip chip-soft">{{ language }}</li>{% endfor %}
+        </ul>
+        {% endif %}
+        {% if contact.calls %}<p class="contact-note">{{ contact.calls }}</p>{% endif %}
+        {% if contact.email %}
+        <div class="contact-actions">
+          <a class="btn btn-primary" href="mailto:{{ contact.email }}">{{ contact.email }}</a>
+          {% if palette.copy_email %}
+          <button class="btn btn-ghost js-only" type="button" data-copy-email>{{ palette.copy_email }}</button>
+          {% endif %}
+        </div>
+        {% endif %}
+        {% set profile_links = [contact.github, contact.upwork] | select | list %}
+        {% if profile_links %}
+        <ul class="contact-links">
+          {% for url in profile_links %}
+          <li><a href="{{ url }}" target="_blank" rel="noopener">{{ url | display_url }} <span aria-hidden="true">↗</span></a></li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+</main>
+
+{# ================= Footer CTA ================= #}
+<footer class="site-footer">
+  <div class="aurora aurora-footer" aria-hidden="true">
+    <span class="blob blob-1"></span>
+    <span class="blob blob-2"></span>
+  </div>
+  <div class="container">
+    {% if footer.cta %}
+    <p class="footer-cta reveal">{{ footer.cta }}</p>
+    {% endif %}
+    {% set cta_link = footer.cta_link or ("mailto:" ~ contact.email if contact.email else "") %}
+    {% if cta_link and footer.cta_button %}
+    <a class="btn btn-primary btn-xl reveal" href="{{ cta_link }}">
+      {{ footer.cta_button }} <span class="btn-arrow" aria-hidden="true">→</span>
+    </a>
+    {% endif %}
+    <div class="footer-bottom">
+      {% if footer.copyright %}<p>{{ footer.copyright | no_translate }}</p>{% endif %}
+      {% if footer.note %}<p>{{ footer.note }}</p>{% endif %}
+      {% set profile_links = [contact.github, contact.upwork] | select | list %}
+      {% if profile_links %}
+      <ul class="footer-links">
+        {% for url in profile_links %}<li><a href="{{ url }}" target="_blank" rel="noopener">{{ url | display_url }}</a></li>{% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+  </div>
+</footer>
+
+{# ================= Command palette ================= #}
+{% if palette %}
+<dialog class="palette" id="palette" aria-label="Command palette" data-palette
+        data-email="{{ contact.email }}" data-copied="{{ palette.copied }}">
+  <div class="palette-box">
+    <div class="palette-search">
+      <span class="palette-icon" aria-hidden="true"></span>
+      <input class="palette-input" type="text" autocomplete="off" spellcheck="false"
+             role="combobox" aria-expanded="true" aria-controls="palette-list" aria-autocomplete="list"
+             aria-label="Search commands" placeholder="{{ palette.placeholder }}" data-palette-input>
+    </div>
+    <ul class="palette-list" id="palette-list" role="listbox" aria-label="Commands" data-palette-list>
+      {% if nav["items"] %}
+      {% if palette.group_sections %}<li class="palette-group" role="presentation">{{ palette.group_sections }}</li>{% endif %}
+      {% for item in nav["items"] %}
+      <li class="palette-item" role="option" id="cmd-goto-{{ loop.index }}" aria-selected="false"
+          data-action="goto" data-target="{{ item.href }}">
+        <span class="palette-item-icon" aria-hidden="true">#</span>{{ item.label }}
+      </li>
+      {% endfor %}
+      {% endif %}
+      {% if contact.email %}
+      {% if palette.group_actions %}<li class="palette-group" role="presentation">{{ palette.group_actions }}</li>{% endif %}
+      {% if palette.copy_email %}
+      <li class="palette-item" role="option" id="cmd-copy" aria-selected="false" data-action="copy">
+        <span class="palette-item-icon" aria-hidden="true">⧉</span>{{ palette.copy_email }}
+      </li>
+      {% endif %}
+      {% if palette.send_email %}
+      <li class="palette-item" role="option" id="cmd-mail" aria-selected="false" data-action="mail">
+        <span class="palette-item-icon" aria-hidden="true">@</span>{{ palette.send_email }}
+      </li>
+      {% endif %}
+      {% endif %}
+    </ul>
+    {% if palette.empty %}<p class="palette-empty" data-palette-empty hidden>{{ palette.empty }}</p>{% endif %}
+  </div>
+</dialog>
+{% endif %}
+
+<div class="toast" role="status" aria-live="polite" data-toast></div>
+{% endblock %}
