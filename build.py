@@ -114,8 +114,18 @@ def person_jsonld(content):
     return Markup(data.replace("</", "<\\/"))
 
 
+def last_content_change():
+    """Newest modification date of content.yaml, templates/ and static/.
+
+    Used for the sitemap's lastmod, so rebuilding without edits gives the same file.
+    """
+    paths = [CONTENT, *TEMPLATES.rglob("*"), *STATIC.rglob("*")]
+    newest = max(p.stat().st_mtime for p in paths if p.is_file())
+    return date.fromtimestamp(newest).isoformat()
+
+
 def write_seo_files(meta):
-    """robots.txt (allow all) and a one-page sitemap.xml dated today."""
+    """robots.txt (allow all) and a one-page sitemap.xml dated by the last content change."""
     url = (meta.get("url") or "").rstrip("/")
     robots = "User-agent: *\nAllow: /\n"
     if url:
@@ -125,7 +135,7 @@ def write_seo_files(meta):
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
             "  <url>\n"
             f"    <loc>{escape(url)}/</loc>\n"
-            f"    <lastmod>{date.today().isoformat()}</lastmod>\n"
+            f"    <lastmod>{last_content_change()}</lastmod>\n"
             "  </url>\n"
             "</urlset>\n"
         )

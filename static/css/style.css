@@ -30,7 +30,7 @@
   --success: #15803d;
 
   --font-sans: "Geist", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 
   --radius-sm: 10px;
   --radius: 18px;
@@ -672,7 +672,7 @@ html:not(.js) .js-only {
 .hero {
   position: relative;
   isolation: isolate;
-  padding: calc(var(--header-h) + clamp(48px, 8vw, 104px)) 0 clamp(56px, 7vw, 88px);
+  padding: calc(var(--header-h) + clamp(40px, 7vw, 92px)) 0 clamp(56px, 7vw, 88px);
   overflow: hidden;
 }
 
@@ -780,7 +780,7 @@ html:not(.js) .js-only {
 
 .hero-name {
   display: block;
-  font-size: clamp(2.75rem, 7.6vw, 6.25rem);
+  font-size: clamp(2.5rem, 6.85vw, 5.625rem);
   font-weight: 600;
   letter-spacing: -0.055em;
   line-height: 0.96;
