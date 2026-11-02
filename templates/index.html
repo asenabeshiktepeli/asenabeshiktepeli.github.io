@@ -13,35 +13,102 @@
   {% for word in text.split() %}<span class="word" style="--i: {{ loop.index0 }}">{{ word }}</span>{% if not loop.last %} {% endif %}{% endfor %}
 {% endmacro %}
 
+{# Email button + small menu (Gmail / Outlook / default app / copy).
+   Without JS, or on touch devices, the button is a plain mailto: link. #}
+{% macro email_menu(label, id, btn_class="btn-primary", arrow=true, align="start") %}
+  {% if contact.email %}
+  <div class="email-menu" data-email-menu data-align="{{ align }}">
+    <a class="btn {{ btn_class }}" href="mailto:{{ contact.email }}" data-email-trigger
+       aria-expanded="false" aria-controls="{{ id }}">
+      {{ label }}
+      {% if arrow %}<span class="btn-arrow" aria-hidden="true">→</span>{% endif %}
+    </a>
+    <div class="email-menu-panel" id="{{ id }}" data-email-panel tabindex="-1" hidden
+         role="group" aria-label="{{ ui.email_options or label }}">
+      <p class="email-menu-address" translate="no">{{ contact.email }}</p>
+      {% if ui.open_gmail %}
+      <a class="email-menu-item" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to={{ contact.email }}" target="_blank" rel="noopener">
+        <span class="email-menu-icon" aria-hidden="true">G</span>{{ ui.open_gmail }}<span class="email-menu-ext" aria-hidden="true">↗</span>
+      </a>
+      {% endif %}
+      {% if ui.open_outlook %}
+      <a class="email-menu-item" href="https://outlook.live.com/mail/0/deeplink/compose?to={{ contact.email }}" target="_blank" rel="noopener">
+        <span class="email-menu-icon" aria-hidden="true">O</span>{{ ui.open_outlook }}<span class="email-menu-ext" aria-hidden="true">↗</span>
+      </a>
+      {% endif %}
+      {% if ui.default_mail %}
+      <a class="email-menu-item" href="mailto:{{ contact.email }}">
+        <span class="email-menu-icon" aria-hidden="true">@</span>{{ ui.default_mail }}
+      </a>
+      {% endif %}
+      {% if nav.palette.copy_email %}
+      <button class="email-menu-item" type="button" data-copy-email>
+        <span class="email-menu-icon" aria-hidden="true">⧉</span>{{ nav.palette.copy_email }}
+      </button>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+{% endmacro %}
+
+{# Simple line icons for the service cards, used in order. #}
+{% macro service_icon(index) %}
+  <svg class="icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+  {% set n = index % 4 %}
+  {% if n == 0 %}
+    <path d="M4 5.5h16v10H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/>
+  {% elif n == 1 %}
+    <path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5 12 12l9-4.5M12 12v9"/>
+  {% elif n == 2 %}
+    <path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 11.5h6M9 15h3"/>
+  {% else %}
+    <rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M3.5 9h17M3.5 14.5h17M9.5 4v16"/>
+  {% endif %}
+  </svg>
+{% endmacro %}
+
 {% block body %}
 {% set palette = nav.palette %}
+{% set ns = namespace(email_label="", cv="", cv_label="", sheets=0) %}
+{% for button in hero.buttons or [] %}
+  {% if button.href and button.href.startswith("mailto:") and not ns.email_label %}{% set ns.email_label = button.label %}{% endif %}
+  {% if button.href and button.href.endswith(".pdf") and not ns.cv %}{% set ns.cv = button.href %}{% set ns.cv_label = button.label %}{% endif %}
+{% endfor %}
+{% set email_label = ns.email_label or footer.cta_button %}
+{% set cv_file = ns.cv.split("/")[-1] if ns.cv else "" %}
+{% set job = (experience["items"] or [{}])[0] %}
 
-{# ================= Header: floating pill nav ================= #}
+{# ================= Header: thin glass bar ================= #}
+{% if ui.skip_to_content %}<a class="skip-link" href="#about">{{ ui.skip_to_content }}</a>{% endif %}
 <header class="site-header" data-header>
-  <nav class="pill" aria-label="Main">
+  <div class="progress" aria-hidden="true"><span data-progress></span></div>
+  <nav class="bar container" aria-label="Main">
     <a class="brand" href="#top" translate="no">
       <span class="brand-mark" aria-hidden="true">{{ (nav.brand or hero.name) | initials }}</span>
       <span class="brand-name">{{ nav.brand }}</span>
     </a>
     {% if nav["items"] %}
-    <ul class="pill-links">
+    <ul class="bar-links">
       {% for item in nav["items"] %}
-      <li><a href="{{ item.href }}">{{ item.label }}</a></li>
+      <li><a href="{{ item.href }}" data-nav-link>{{ item.label }}</a></li>
       {% endfor %}
     </ul>
     {% endif %}
-    {% if palette %}
-    <button class="kbd-hint" type="button" data-palette-open aria-haspopup="dialog" aria-controls="palette"
-            aria-label="Open command palette"
-            data-hint-mac="{{ palette.hint_mac }}" data-hint-other="{{ palette.hint_other }}">
-      <kbd>{{ palette.hint_mac }}</kbd>
-    </button>
-    {% endif %}
-    {% if nav["items"] %}
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu" data-menu-toggle>
-      <span></span><span></span>
-    </button>
-    {% endif %}
+    <div class="bar-actions">
+      {% if palette %}
+      <button class="kbd-hint" type="button" data-palette-open aria-haspopup="dialog" aria-controls="palette"
+              aria-label="Open command palette"
+              data-hint-mac="{{ palette.hint_mac }}" data-hint-other="{{ palette.hint_other }}">
+        <kbd>{{ palette.hint_mac }}</kbd>
+      </button>
+      {% endif %}
+      <div class="bar-email">{{ email_menu(email_label, "email-menu-header", "btn-primary btn-sm", false, "end") }}</div>
+      {% if nav["items"] %}
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu" data-menu-toggle>
+        <span></span><span></span>
+      </button>
+      {% endif %}
+    </div>
   </nav>
 </header>
 
@@ -52,9 +119,14 @@
     <li style="--i: {{ loop.index0 }}"><a href="{{ item.href }}">{{ item.label }}</a></li>
     {% endfor %}
   </ul>
-  {% if contact.email %}
-  <a class="mobile-menu-email" href="mailto:{{ contact.email }}">{{ contact.email }}</a>
-  {% endif %}
+  <div class="mobile-menu-foot">
+    {% if contact.email %}
+    <a class="mobile-menu-email" href="mailto:{{ contact.email }}" translate="no">{{ contact.email }}</a>
+    {% endif %}
+    {% if ns.cv %}
+    <a class="btn btn-ghost btn-sm" href="{{ ns.cv }}" download="{{ cv_file }}">{{ ns.cv_label }} <span aria-hidden="true">↓</span></a>
+    {% endif %}
+  </div>
 </div>
 {% endif %}
 
@@ -62,14 +134,9 @@
 
   {# ================= Hero ================= #}
   <section class="hero">
-    <div class="aurora" aria-hidden="true">
-      <span class="blob blob-1"></span>
-      <span class="blob blob-2"></span>
-      <span class="blob blob-3"></span>
-      <span class="grain"></span>
-    </div>
+    <div class="hero-bg" aria-hidden="true"><span class="hero-glow"></span><span class="hero-grid-lines"></span></div>
 
-    <div class="container hero-grid">
+    <div class="container hero-layout">
       <div class="hero-copy">
         <div class="hero-meta">
           {% if hero.availability %}
@@ -79,9 +146,9 @@
           </span>
           {% endif %}
           {% if hero.local_time.timezone %}
-          <span class="clock js-only">
+          <span class="clock">
             {% if hero.local_time.label %}<span class="clock-label">{{ hero.local_time.label | no_translate }}</span>{% endif %}
-            <time class="clock-time" data-clock data-tz="{{ hero.local_time.timezone }}">--:--</time>
+            <time class="clock-time js-only" data-clock data-tz="{{ hero.local_time.timezone }}">--:--</time>
             {% if hero.local_time.zone_label %}<span class="clock-zone">{{ hero.local_time.zone_label }}</span>{% endif %}
           </span>
           {% endif %}
@@ -95,24 +162,61 @@
         {% if buttons %}
         <div class="hero-actions">
           {% for button in buttons %}
-          <a class="btn {{ 'btn-primary' if loop.first else 'btn-ghost' }}" href="{{ button.href }}"{% if button.href.endswith('.pdf') %} download="{{ button.href.split('/')[-1] }}"{% endif %}>
+          {% if button.href.startswith("mailto:") %}
+          {{ email_menu(button.label, "email-menu-hero", "btn-primary btn-lg") }}
+          {% else %}
+          <a class="btn btn-ghost btn-lg" href="{{ button.href }}"{% if button.href.endswith('.pdf') %} download="{{ button.href.split('/')[-1] }}"{% endif %}>
             {{ button.label }}
-            {% if loop.first %}<span class="btn-arrow" aria-hidden="true">→</span>{% endif %}
+            {% if button.href.endswith('.pdf') %}<span class="btn-arrow btn-arrow-down" aria-hidden="true">↓</span>{% endif %}
           </a>
+          {% endif %}
           {% endfor %}
         </div>
         {% endif %}
       </div>
 
       <div class="hero-visual">
-        <div class="orbit" aria-hidden="true"></div>
-        {% if hero.photo %}
-        <img class="avatar" src="{{ hero.photo }}" alt="{{ hero.photo_alt or hero.name }}" width="360" height="360">
-        {% else %}
-        <div class="avatar monogram" aria-hidden="true" translate="no">{{ hero.name | initials }}</div>
-        {% endif %}
+        <div class="photo-card">
+          <div class="photo-frame">
+            {% if hero.photo %}
+            <img class="avatar" src="{{ hero.photo }}" alt="{{ hero.photo_alt or hero.name }}" width="460" height="460" fetchpriority="high">
+            {% else %}
+            <div class="avatar monogram" aria-hidden="true" translate="no">{{ hero.name | initials }}</div>
+            {% endif %}
+          </div>
+        </div>
       </div>
     </div>
+
+    {# At a glance: only values that already exist in content.yaml #}
+    {% set work_style = contact.work_style or [] %}
+    {% if job.stats or job.dates or work_style %}
+    <div class="container">
+      <div class="glance reveal">
+        {% if ui.at_a_glance %}<p class="glance-title">{{ ui.at_a_glance }}</p>{% endif %}
+        <dl class="glance-grid">
+          {% for stat in job.stats or [] %}
+          <div class="glance-item">
+            <dt class="glance-label">{{ stat.label }}</dt>
+            <dd class="glance-value" data-count>{{ stat.value }}</dd>
+          </div>
+          {% endfor %}
+          {% if job.dates %}
+          <div class="glance-item">
+            <dt class="glance-label">{{ job.role }}{% if job.company %} · <span translate="no">{{ job.company }}</span>{% endif %}</dt>
+            <dd class="glance-value glance-value-sm">{{ job.dates }}</dd>
+          </div>
+          {% endif %}
+          {% if work_style %}
+          <div class="glance-item">
+            <dt class="glance-label">{{ work_style[1:] | join(" · ") }}</dt>
+            <dd class="glance-value glance-value-sm">{{ work_style[0] }}</dd>
+          </div>
+          {% endif %}
+        </dl>
+      </div>
+    </div>
+    {% endif %}
   </section>
 
   {# ================= About ================= #}
@@ -121,24 +225,27 @@
   <section class="section" id="about">
     <div class="container split">
       {{ section_head(about.title, 1) }}
-      <div class="stack reveal">
+      <div class="about-copy reveal">
         {% for paragraph in about_paragraphs %}
-        <p class="statement{% if about_paragraphs | length > 1 %} statement-sm{% endif %}">{{ paragraph | no_translate }}</p>
+        <p class="{{ 'statement' if loop.first else 'body-lg' }}">{{ paragraph | no_translate }}</p>
         {% endfor %}
       </div>
     </div>
   </section>
   {% endif %}
 
-  {# ================= Services (bento) ================= #}
+  {# ================= Services ================= #}
   {% if services["items"] %}
   <section class="section" id="services">
     <div class="container">
       {{ section_head(services.title, 2) }}
-      <div class="bento bento-services">
+      <div class="services">
         {% for service in services["items"] %}
-        <article class="card spotlight reveal" style="--d: {{ loop.index0 }}">
-          <span class="card-index" aria-hidden="true">{{ "%02d" | format(loop.index) }}</span>
+        <article class="card service spotlight reveal" style="--d: {{ loop.index0 }}">
+          <div class="service-top">
+            <span class="icon-tile">{{ service_icon(loop.index0) }}</span>
+            <span class="card-index" aria-hidden="true">{{ "%02d" | format(loop.index) }}</span>
+          </div>
           <h3 class="card-title">{{ service.title }}</h3>
           {% if service.text %}<p class="card-text">{{ service.text }}</p>{% endif %}
         </article>
@@ -153,71 +260,104 @@
   <section class="section section-soft" id="experience">
     <div class="container">
       {{ section_head(experience.title, 3) }}
-      <ol class="timeline">
+      <div class="jobs">
         {% for job in experience["items"] %}
-        <li class="timeline-item reveal">
-          <div class="timeline-meta">
-            <span class="timeline-dates">{% if job.dates %}{{ job.dates }}{% else %}{{ job.start }}{% if job.end %} — {{ job.end }}{% endif %}{% endif %}</span>
-            {% if job.location %}<span class="timeline-location">{{ job.location | no_translate }}</span>{% endif %}
-          </div>
-          <div class="timeline-body">
-            <h3 class="timeline-role">{{ job.role }}</h3>
-            {% if job.company %}<p class="timeline-company" translate="no">{{ job.company }}</p>{% endif %}
-            {% if job.summary %}<p class="timeline-summary">{{ job.summary }}</p>{% endif %}
+        <article class="card job reveal">
+          <div class="job-head">
+            <div class="job-meta">
+              <h3 class="job-role">{{ job.role }}</h3>
+              {% if job.company %}<p class="job-company" translate="no">{{ job.company }}</p>{% endif %}
+              <ul class="job-facts">
+                <li class="job-dates">{% if job.dates %}{{ job.dates }}{% else %}{{ job.start }}{% if job.end %} — {{ job.end }}{% endif %}{% endif %}</li>
+                {% if job.location %}<li>{{ job.location | no_translate }}</li>{% endif %}
+              </ul>
+              {% if job.summary %}<p class="job-summary">{{ job.summary }}</p>{% endif %}
+            </div>
             {% if job.stats %}
             <div class="stats">
               {% for stat in job.stats %}
-              <div class="stat spotlight">
+              <div class="stat">
                 <span class="stat-value" data-count>{{ stat.value }}</span>
                 {% if stat.label %}<span class="stat-label">{{ stat.label }}</span>{% endif %}
               </div>
               {% endfor %}
             </div>
             {% endif %}
-            {% set duties = job.duties or job.highlights %}
-            {% if duties %}
-            <ul class="bullets">
-              {% for text in duties %}<li>{{ text | no_translate }}</li>{% endfor %}
-            </ul>
-            {% endif %}
           </div>
-        </li>
+          {% set duties = job.duties or job.highlights %}
+          {% if duties %}
+          <ul class="duties">
+            {% for text in duties %}<li>{{ text | no_translate }}</li>{% endfor %}
+          </ul>
+          {% endif %}
+        </article>
         {% endfor %}
-      </ol>
+      </div>
     </div>
   </section>
   {% endif %}
 
-  {# ================= Portfolio (bento) ================= #}
+  {# ================= Portfolio ================= #}
   {% if portfolio["items"] %}
   <section class="section" id="portfolio">
     <div class="container">
       {{ section_head(portfolio.title, 4) }}
       {% if portfolio.intro %}<p class="section-intro reveal">{{ portfolio.intro }}</p>{% endif %}
-      <div class="bento bento-portfolio">
+      <div class="projects">
         {% for item in portfolio["items"] %}
+        {% set tools_text = (item.tools or []) | join(" ") %}
         <article class="card project spotlight reveal" style="--d: {{ loop.index0 }}">
           <div class="project-media" aria-hidden="{{ 'false' if item.image else 'true' }}">
             {% if item.image %}
             <img src="{{ item.image }}" alt="{{ item.title }}" loading="lazy">
+            {% elif "Docs" in tools_text %}
+            <div class="pv pv-doc">
+              <div class="pv-page">
+                <i class="pv-h"></i><i></i><i></i><i class="pv-short"></i>
+                <i class="pv-h pv-h2"></i><i></i><i class="pv-short"></i>
+                <span class="pv-tag"></span><i></i><i class="pv-short"></i>
+              </div>
+            </div>
             {% else %}
-            <span class="project-pattern"></span>
+            {% set ns.sheets = ns.sheets + 1 %}
+            {% if ns.sheets == 1 %}
+            <div class="pv pv-sheet">
+              <div class="pv-table">
+                <div class="pv-row pv-row-head"><i></i><i></i><i></i><i></i></div>
+                {% for n in range(5) %}
+                <div class="pv-row"><i></i><i></i><i></i><b class="pv-pill pv-pill-{{ n % 3 }}"></b></div>
+                {% endfor %}
+              </div>
+            </div>
+            {% else %}
+            <div class="pv pv-split">
+              <div class="pv-table pv-messy">
+                {% for n in range(5) %}<div class="pv-row"><i></i><i></i><i></i></div>{% endfor %}
+              </div>
+              <span class="pv-arrow">→</span>
+              <div class="pv-table pv-clean">
+                {% for n in range(5) %}<div class="pv-row"><i></i><i></i><i></i></div>{% endfor %}
+              </div>
+            </div>
+            {% endif %}
             {% endif %}
           </div>
           <div class="project-body">
             {% if item.label %}<span class="badge">{{ item.label }}</span>{% endif %}
             <h3 class="card-title">{{ item.title }}</h3>
             {% if item.text %}<p class="card-text">{{ item.text }}</p>{% endif %}
-            {% if item.tools %}
-            <ul class="chips">
-              {% for tool in item.tools %}<li class="chip chip-sm">{{ tool }}</li>{% endfor %}
-            </ul>
-            {% endif %}
-            {% if item.link and portfolio.view_label %}
-            <a class="btn btn-ghost btn-sm" href="{{ item.link }}" target="_blank" rel="noopener">
-              {{ portfolio.view_label }} <span aria-hidden="true">↗</span>
-            </a>
-            {% endif %}
+            <div class="project-foot">
+              {% if item.tools %}
+              <ul class="chips">
+                {% for tool in item.tools %}<li class="chip chip-sm">{{ tool }}</li>{% endfor %}
+              </ul>
+              {% endif %}
+              {% if item.link and portfolio.view_label %}
+              <a class="btn btn-ghost btn-sm" href="{{ item.link }}" target="_blank" rel="noopener" aria-label="{{ portfolio.view_label }}: {{ item.title }} (opens in a new tab)">
+                {{ portfolio.view_label }} <span aria-hidden="true">↗</span>
+              </a>
+              {% endif %}
+            </div>
           </div>
         </article>
         {% endfor %}
@@ -226,40 +366,53 @@
   </section>
   {% endif %}
 
-  {# ================= Case study ================= #}
+  {# ================= Case study: pipeline ================= #}
   {% if case_study.name %}
   <section class="section" id="case-study">
     <div class="container">
       {{ section_head(case_study.title, 5) }}
       <article class="case spotlight reveal">
-        <div class="case-glow" aria-hidden="true"></div>
+        <div class="case-bg" aria-hidden="true"></div>
         <div class="case-inner">
           <h3 class="case-name">
             {% if case_study.link %}<a class="card-link" href="{{ case_study.link }}" target="_blank" rel="noopener">{{ case_study.name }}</a>{% else %}{{ case_study.name }}{% endif %}
           </h3>
           {% if case_study.summary %}<p class="case-summary">{{ case_study.summary }}</p>{% endif %}
           {% if case_study.steps %}
-          <ol class="case-steps">
+          <ol class="pipeline" style="--n: {{ case_study.steps | length }}">
             {% for text in case_study.steps %}
-            <li><span class="case-step-index" aria-hidden="true">{{ "%02d" | format(loop.index) }}</span><span>{{ text }}</span></li>
+            <li class="pipe-step" style="--d: {{ loop.index0 }}">
+              <span class="pipe-node" aria-hidden="true"></span>
+              <span class="pipe-index" aria-hidden="true">{{ "%02d" | format(loop.index) }}</span>
+              <span class="pipe-text">{{ text }}</span>
+            </li>
             {% endfor %}
           </ol>
           {% endif %}
-          {% if case_study.highlights %}
-          <ul class="case-points">
-            {% for text in case_study.highlights %}
-            <li><span class="case-point-index" aria-hidden="true">✓</span>{{ text }}</li>
-            {% endfor %}
-          </ul>
-          {% endif %}
           <div class="case-footer">
-            {% if case_study.tech %}
-            <ul class="chips">
-              {% for tech in case_study.tech %}<li class="chip">{{ tech }}</li>{% endfor %}
-            </ul>
+            {% if case_study.highlights %}
+            <div class="case-group">
+              {% if ui.case_highlights %}<p class="case-label">{{ ui.case_highlights }}</p>{% endif %}
+              <ul class="checks">
+                {% for text in case_study.highlights %}
+                <li class="check">
+                  <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M3.5 8.5 6.5 11.5 12.5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  {{ text }}
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
             {% endif %}
-            {% if case_study.note %}<p class="case-note">{{ case_study.note }}</p>{% endif %}
+            {% if case_study.tech %}
+            <div class="case-group">
+              {% if ui.case_tech %}<p class="case-label">{{ ui.case_tech }}</p>{% endif %}
+              <ul class="chips">
+                {% for tech in case_study.tech %}<li class="chip">{{ tech }}</li>{% endfor %}
+              </ul>
+            </div>
+            {% endif %}
           </div>
+          {% if case_study.note %}<p class="case-note">{{ case_study.note }}</p>{% endif %}
         </div>
       </article>
     </div>
@@ -278,15 +431,17 @@
             <h3 class="card-title">{{ cert.name }}</h3>
             {% if cert.note %}<p class="cert-note">{{ cert.note }}</p>{% endif %}
           </div>
-          <div class="cert-meta">
-            {% if cert.issuer %}<span>{{ cert.issuer }}</span>{% endif %}
-            {% if cert.date %}<span class="cert-date">{{ cert.date }}</span>{% endif %}
+          <div class="cert-foot">
+            <div class="cert-meta">
+              {% if cert.issuer %}<span>{{ cert.issuer }}</span>{% endif %}
+              {% if cert.date %}<span class="cert-date">{{ cert.date }}</span>{% endif %}
+            </div>
+            {% if cert.link and certifications.verify_label %}
+            <a class="cert-verify" href="{{ cert.link }}" target="_blank" rel="noopener" aria-label="{{ certifications.verify_label }}: {{ cert.name }} (opens in a new tab)">
+              {{ certifications.verify_label }} <span aria-hidden="true">↗</span>
+            </a>
+            {% endif %}
           </div>
-          {% if cert.link and certifications.verify_label %}
-          <a class="cert-verify" href="{{ cert.link }}" target="_blank" rel="noopener" aria-label="{{ certifications.verify_label }}: {{ cert.name }}">
-            {{ certifications.verify_label }} <span aria-hidden="true">↗</span>
-          </a>
-          {% endif %}
         </li>
         {% endfor %}
       </ul>
@@ -294,31 +449,35 @@
   </section>
   {% endif %}
 
-  {# ================= Tools (marquee) ================= #}
+  {# ================= Tools ================= #}
   {% if tools["items"] %}
-  <section class="section section-tight" id="tools">
+  <section class="section" id="tools">
     <div class="container">
       {{ section_head(tools.title, 7) }}
     </div>
-    <div class="marquee reveal">
+    <div class="marquee" aria-hidden="true">
       <div class="marquee-track" style="--count: {{ tools['items'] | length }}">
-        <ul class="marquee-group">
-          {% for tool in tools["items"] %}<li class="chip chip-lg">{{ tool | no_translate }}</li>{% endfor %}
-        </ul>
-        <ul class="marquee-group" aria-hidden="true">
-          {% for tool in tools["items"] %}<li class="chip chip-lg">{{ tool | no_translate }}</li>{% endfor %}
-        </ul>
+        {% for copy in range(2) %}
+        <div class="marquee-group">
+          {% for tool in tools["items"] %}<span class="marquee-item" translate="no">{{ tool }}</span>{% endfor %}
+        </div>
+        {% endfor %}
       </div>
+    </div>
+    <div class="container">
+      <ul class="tool-grid reveal">
+        {% for tool in tools["items"] %}<li>{{ tool | no_translate }}</li>{% endfor %}
+      </ul>
     </div>
   </section>
   {% endif %}
 
   {# ================= Contact ================= #}
-  <section class="section" id="contact">
-    <div class="container split">
-      {{ section_head(contact.title, 8) }}
-      <div class="contact-body reveal">
-        {% if contact.text %}<p class="statement statement-sm">{{ contact.text }}</p>{% endif %}
+  <section class="section contact" id="contact">
+    <div class="container contact-layout">
+      <div class="contact-intro reveal">
+        {{ section_head(contact.title, 8) }}
+        {% if contact.text %}<p class="statement">{{ contact.text }}</p>{% endif %}
         {% set details = ([contact.location] + (contact.work_style or [])) | select | list %}
         {% if details %}
         <ul class="chips">
@@ -331,22 +490,26 @@
         </ul>
         {% endif %}
         {% if contact.calls %}<p class="contact-note">{{ contact.calls }}</p>{% endif %}
+      </div>
+
+      <div class="contact-card card reveal">
         {% if contact.email %}
+        <p class="contact-email" translate="no">{{ contact.email }}</p>
         <div class="contact-actions">
-          <a class="btn btn-primary" href="mailto:{{ contact.email }}">{{ contact.email }}</a>
+          {{ email_menu(email_label, "email-menu-contact", "btn-primary btn-lg") }}
           {% if palette.copy_email %}
-          <button class="btn btn-ghost js-only" type="button" data-copy-email>{{ palette.copy_email }}</button>
+          <button class="btn btn-ghost btn-lg js-only" type="button" data-copy-email>{{ palette.copy_email }}</button>
           {% endif %}
         </div>
         {% endif %}
-        {% set profile_links = [contact.github, contact.upwork] | select | list %}
-        {% if profile_links %}
         <ul class="contact-links">
-          {% for url in profile_links %}
+          {% for url in [contact.github, contact.upwork] | select %}
           <li><a href="{{ url }}" target="_blank" rel="noopener">{{ url | display_url }} <span aria-hidden="true">↗</span></a></li>
           {% endfor %}
+          {% if ns.cv %}
+          <li><a href="{{ ns.cv }}" download="{{ cv_file }}">{{ ns.cv_label }} <span aria-hidden="true">↓</span></a></li>
+          {% endif %}
         </ul>
-        {% endif %}
       </div>
     </div>
   </section>
@@ -354,43 +517,42 @@
 
 {# ================= Footer CTA ================= #}
 <footer class="site-footer">
-  <div class="aurora aurora-footer" aria-hidden="true">
-    <span class="blob blob-1"></span>
-    <span class="blob blob-2"></span>
-  </div>
+  <div class="footer-glow" aria-hidden="true"></div>
   <div class="container">
     {% if footer.cta %}
     <p class="footer-cta reveal">{{ footer.cta }}</p>
     {% endif %}
-    {% set cta_link = footer.cta_link or ("mailto:" ~ contact.email if contact.email else "") %}
-    {% if cta_link and footer.cta_button %}
-    <a class="btn btn-primary btn-xl reveal" href="{{ cta_link }}">
-      {{ footer.cta_button }} <span class="btn-arrow" aria-hidden="true">→</span>
-    </a>
+    {% if footer.cta_button %}
+    <div class="footer-action reveal">
+      {% if footer.cta_link and footer.cta_link.startswith("mailto:") or not footer.cta_link %}
+      {{ email_menu(footer.cta_button, "email-menu-footer", "btn-light btn-xl") }}
+      {% else %}
+      <a class="btn btn-light btn-xl" href="{{ footer.cta_link }}">{{ footer.cta_button }} <span class="btn-arrow" aria-hidden="true">→</span></a>
+      {% endif %}
+    </div>
     {% endif %}
     <div class="footer-bottom">
       {% if footer.copyright %}<p>{{ footer.copyright | no_translate }}</p>{% endif %}
       {% if footer.note %}<p>{{ footer.note }}</p>{% endif %}
-      {% set profile_links = [contact.github, contact.upwork] | select | list %}
-      {% if profile_links %}
       <ul class="footer-links">
-        {% for url in profile_links %}<li><a href="{{ url }}" target="_blank" rel="noopener">{{ url | display_url }}</a></li>{% endfor %}
+        {% for url in [contact.github, contact.upwork] | select %}<li><a href="{{ url }}" target="_blank" rel="noopener">{{ url | display_url }}</a></li>{% endfor %}
+        {% if ns.cv %}<li><a href="{{ ns.cv }}" download="{{ cv_file }}">{{ ns.cv_label }}</a></li>{% endif %}
+        {% if ui.back_to_top %}<li><a href="#top">{{ ui.back_to_top }} <span aria-hidden="true">↑</span></a></li>{% endif %}
       </ul>
-      {% endif %}
     </div>
   </div>
 </footer>
 
 {# ================= Command palette ================= #}
 {% if palette %}
-<dialog class="palette" id="palette" aria-label="Command palette" data-palette
-        data-email="{{ contact.email }}" data-copied="{{ palette.copied }}">
+<dialog class="palette" id="palette" aria-label="Command palette" data-palette>
   <div class="palette-box">
     <div class="palette-search">
       <span class="palette-icon" aria-hidden="true"></span>
       <input class="palette-input" type="text" autocomplete="off" spellcheck="false"
              role="combobox" aria-expanded="true" aria-controls="palette-list" aria-autocomplete="list"
              aria-label="Search commands" placeholder="{{ palette.placeholder }}" data-palette-input>
+      <kbd class="palette-esc" aria-hidden="true">Esc</kbd>
     </div>
     <ul class="palette-list" id="palette-list" role="listbox" aria-label="Commands" data-palette-list>
       {% if nav["items"] %}
@@ -402,11 +564,19 @@
       </li>
       {% endfor %}
       {% endif %}
-      {% if contact.email %}
+      {% if contact.email or ns.cv %}
       {% if palette.group_actions %}<li class="palette-group" role="presentation">{{ palette.group_actions }}</li>{% endif %}
-      {% if palette.copy_email %}
-      <li class="palette-item" role="option" id="cmd-copy" aria-selected="false" data-action="copy">
-        <span class="palette-item-icon" aria-hidden="true">⧉</span>{{ palette.copy_email }}
+      {% if contact.email %}
+      {% if ui.open_gmail %}
+      <li class="palette-item" role="option" id="cmd-gmail" aria-selected="false" data-action="open"
+          data-href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to={{ contact.email }}">
+        <span class="palette-item-icon" aria-hidden="true">G</span>{{ ui.open_gmail }}
+      </li>
+      {% endif %}
+      {% if ui.open_outlook %}
+      <li class="palette-item" role="option" id="cmd-outlook" aria-selected="false" data-action="open"
+          data-href="https://outlook.live.com/mail/0/deeplink/compose?to={{ contact.email }}">
+        <span class="palette-item-icon" aria-hidden="true">O</span>{{ ui.open_outlook }}
       </li>
       {% endif %}
       {% if palette.send_email %}
@@ -414,11 +584,15 @@
         <span class="palette-item-icon" aria-hidden="true">@</span>{{ palette.send_email }}
       </li>
       {% endif %}
-      {% set cv = namespace(href="") %}
-      {% for button in hero.buttons or [] %}{% if button.href and button.href.endswith('.pdf') and not cv.href %}{% set cv.href = button.href %}{% endif %}{% endfor %}
-      {% if palette.download_cv and cv.href %}
+      {% if palette.copy_email %}
+      <li class="palette-item" role="option" id="cmd-copy" aria-selected="false" data-action="copy">
+        <span class="palette-item-icon" aria-hidden="true">⧉</span>{{ palette.copy_email }}
+      </li>
+      {% endif %}
+      {% endif %}
+      {% if palette.download_cv and ns.cv %}
       <li class="palette-item" role="option" id="cmd-cv" aria-selected="false" data-action="download"
-          data-href="{{ cv.href }}" data-filename="{{ cv.href.split('/')[-1] }}">
+          data-href="{{ ns.cv }}" data-filename="{{ cv_file }}">
         <span class="palette-item-icon" aria-hidden="true">↓</span>{{ palette.download_cv }}
       </li>
       {% endif %}
@@ -429,5 +603,6 @@
 </dialog>
 {% endif %}
 
-<div class="toast" role="status" aria-live="polite" data-toast></div>
+<div class="toast" role="status" aria-live="polite" data-toast
+     data-email="{{ contact.email }}" data-copied="{{ palette.copied }}"></div>
 {% endblock %}

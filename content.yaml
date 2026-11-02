@@ -202,3 +202,15 @@ footer:
   cta_button: "Email me"
   cta_link: "mailto:asenabeshiktepeli@gmail.com"
   copyright: "© 2026 Asena Beshiktepeli"
+
+# Interface labels only (buttons, menus, small headings) – no information claims.
+ui:
+  email_options: "Email options"
+  open_gmail: "Open in Gmail"
+  open_outlook: "Open in Outlook"
+  default_mail: "Default mail app"
+  at_a_glance: "At a glance"
+  case_highlights: "Highlights"
+  case_tech: "Built with"
+  back_to_top: "Back to top"
+  skip_to_content: "Skip to content"

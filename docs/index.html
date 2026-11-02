@@ -18,28 +18,54 @@
 </head>
 <body>
 
-<header class="site-header" data-header>
-  <nav class="pill" aria-label="Main">
+<a class="skip-link" href="#about">Skip to content</a><header class="site-header" data-header>
+  <div class="progress" aria-hidden="true"><span data-progress></span></div>
+  <nav class="bar container" aria-label="Main">
     <a class="brand" href="#top" translate="no">
       <span class="brand-mark" aria-hidden="true">AB</span>
       <span class="brand-name">Asena Beshiktepeli</span>
     </a>
-    <ul class="pill-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#portfolio">Portfolio</a></li>
-      <li><a href="#case-study">Case study</a></li>
-      <li><a href="#contact">Contact</a></li>
+    <ul class="bar-links">
+      <li><a href="#about" data-nav-link>About</a></li>
+      <li><a href="#services" data-nav-link>Services</a></li>
+      <li><a href="#experience" data-nav-link>Experience</a></li>
+      <li><a href="#portfolio" data-nav-link>Portfolio</a></li>
+      <li><a href="#case-study" data-nav-link>Case study</a></li>
+      <li><a href="#contact" data-nav-link>Contact</a></li>
     </ul>
-    <button class="kbd-hint" type="button" data-palette-open aria-haspopup="dialog" aria-controls="palette"
-            aria-label="Open command palette"
-            data-hint-mac="⌘K" data-hint-other="Ctrl K">
-      <kbd>⌘K</kbd>
-    </button>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu" data-menu-toggle>
-      <span></span><span></span>
-    </button>
+    <div class="bar-actions">
+      <button class="kbd-hint" type="button" data-palette-open aria-haspopup="dialog" aria-controls="palette"
+              aria-label="Open command palette"
+              data-hint-mac="⌘K" data-hint-other="Ctrl K">
+        <kbd>⌘K</kbd>
+      </button>
+      <div class="bar-email">  <div class="email-menu" data-email-menu data-align="end">
+    <a class="btn btn-primary btn-sm" href="mailto:asenabeshiktepeli@gmail.com" data-email-trigger
+       aria-expanded="false" aria-controls="email-menu-header">
+      Email me
+    </a>
+    <div class="email-menu-panel" id="email-menu-header" data-email-panel tabindex="-1" hidden
+         role="group" aria-label="Email options">
+      <p class="email-menu-address" translate="no">asenabeshiktepeli@gmail.com</p>
+      <a class="email-menu-item" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=asenabeshiktepeli@gmail.com" target="_blank" rel="noopener">
+        <span class="email-menu-icon" aria-hidden="true">G</span>Open in Gmail<span class="email-menu-ext" aria-hidden="true">↗</span>
+      </a>
+      <a class="email-menu-item" href="https://outlook.live.com/mail/0/deeplink/compose?to=asenabeshiktepeli@gmail.com" target="_blank" rel="noopener">
+        <span class="email-menu-icon" aria-hidden="true">O</span>Open in Outlook<span class="email-menu-ext" aria-hidden="true">↗</span>
+      </a>
+      <a class="email-menu-item" href="mailto:asenabeshiktepeli@gmail.com">
+        <span class="email-menu-icon" aria-hidden="true">@</span>Default mail app
+      </a>
+      <button class="email-menu-item" type="button" data-copy-email>
+        <span class="email-menu-icon" aria-hidden="true">⧉</span>Copy email address
+      </button>
+    </div>
+  </div>
+</div>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu" data-menu-toggle>
+        <span></span><span></span>
+      </button>
+    </div>
   </nav>
 </header>
 
@@ -52,46 +78,90 @@
     <li style="--i: 4"><a href="#case-study">Case study</a></li>
     <li style="--i: 5"><a href="#contact">Contact</a></li>
   </ul>
-  <a class="mobile-menu-email" href="mailto:asenabeshiktepeli@gmail.com">asenabeshiktepeli@gmail.com</a>
+  <div class="mobile-menu-foot">
+    <a class="mobile-menu-email" href="mailto:asenabeshiktepeli@gmail.com" translate="no">asenabeshiktepeli@gmail.com</a>
+    <a class="btn btn-ghost btn-sm" href="static/cv/Asena_Beshiktepeli_CV.pdf" download="Asena_Beshiktepeli_CV.pdf">Download CV <span aria-hidden="true">↓</span></a>
+  </div>
 </div>
 
 <main id="top">
 
   <section class="hero">
-    <div class="aurora" aria-hidden="true">
-      <span class="blob blob-1"></span>
-      <span class="blob blob-2"></span>
-      <span class="blob blob-3"></span>
-      <span class="grain"></span>
-    </div>
+    <div class="hero-bg" aria-hidden="true"><span class="hero-glow"></span><span class="hero-grid-lines"></span></div>
 
-    <div class="container hero-grid">
+    <div class="container hero-layout">
       <div class="hero-copy">
         <div class="hero-meta">
           <span class="status">
             <span class="status-dot" aria-hidden="true"></span>
             Available for remote work
           </span>
-          <span class="clock js-only">
-<span class="clock-label"><span translate="no">Kyrenia</span>, Cyprus · EET (UTC+2)</span>            <time class="clock-time" data-clock data-tz="Europe/Nicosia">--:--</time>
+          <span class="clock">
+<span class="clock-label"><span translate="no">Kyrenia</span>, Cyprus · EET (UTC+2)</span>            <time class="clock-time js-only" data-clock data-tz="Europe/Nicosia">--:--</time>
           </span>
         </div>
 
         <h1 class="hero-name" translate="no"><span class="word" style="--i: 0">Asena</span> <span class="word" style="--i: 1">Beshiktepeli</span></h1>
 <p class="hero-title">E-commerce Virtual Assistant &amp; Customer Support</p><p class="hero-lead">I help e-commerce businesses answer customers faster, track orders clearly and keep their data clean.</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="mailto:asenabeshiktepeli@gmail.com">
-            Email me
-<span class="btn-arrow" aria-hidden="true">→</span>          </a>
-          <a class="btn btn-ghost" href="static/cv/Asena_Beshiktepeli_CV.pdf" download="Asena_Beshiktepeli_CV.pdf">
+            <div class="email-menu" data-email-menu data-align="start">
+    <a class="btn btn-primary btn-lg" href="mailto:asenabeshiktepeli@gmail.com" data-email-trigger
+       aria-expanded="false" aria-controls="email-menu-hero">
+      Email me
+<span class="btn-arrow" aria-hidden="true">→</span>    </a>
+    <div class="email-menu-panel" id="email-menu-hero" data-email-panel tabindex="-1" hidden
+         role="group" aria-label="Email options">
+      <p class="email-menu-address" translate="no">asenabeshiktepeli@gmail.com</p>
+      <a class="email-menu-item" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=asenabeshiktepeli@gmail.com" target="_blank" rel="noopener">
+        <span class="email-menu-icon" aria-hidden="true">G</span>Open in Gmail<span class="email-menu-ext" aria-hidden="true">↗</span>
+      </a>
+      <a class="email-menu-item" href="https://outlook.live.com/mail/0/deeplink/compose?to=asenabeshiktepeli@gmail.com" target="_blank" rel="noopener">
+        <span class="email-menu-icon" aria-hidden="true">O</span>Open in Outlook<span class="email-menu-ext" aria-hidden="true">↗</span>
+      </a>
+      <a class="email-menu-item" href="mailto:asenabeshiktepeli@gmail.com">
+        <span class="email-menu-icon" aria-hidden="true">@</span>Default mail app
+      </a>
+      <button class="email-menu-item" type="button" data-copy-email>
+        <span class="email-menu-icon" aria-hidden="true">⧉</span>Copy email address
+      </button>
+    </div>
+  </div>
+
+          <a class="btn btn-ghost btn-lg" href="static/cv/Asena_Beshiktepeli_CV.pdf" download="Asena_Beshiktepeli_CV.pdf">
             Download CV
-          </a>
+<span class="btn-arrow btn-arrow-down" aria-hidden="true">↓</span>          </a>
         </div>
       </div>
 
       <div class="hero-visual">
-        <div class="orbit" aria-hidden="true"></div>
-        <img class="avatar" src="static/img/profile.jpg" alt="Portrait of Asena Beshiktepeli" width="360" height="360">
+        <div class="photo-card">
+          <div class="photo-frame">
+            <img class="avatar" src="static/img/profile.jpg" alt="Portrait of Asena Beshiktepeli" width="460" height="460" fetchpriority="high">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="glance reveal">
+<p class="glance-title">At a glance</p>        <dl class="glance-grid">
+          <div class="glance-item">
+            <dt class="glance-label">About 60% growth in international clients</dt>
+            <dd class="glance-value" data-count>60%</dd>
+          </div>
+          <div class="glance-item">
+            <dt class="glance-label">Reached 120% of internal sales targets in multiple years</dt>
+            <dd class="glance-value" data-count>120%</dd>
+          </div>
+          <div class="glance-item">
+            <dt class="glance-label">Sales Consultant · <span translate="no">Cagra Co LTD</span></dt>
+            <dd class="glance-value glance-value-sm">Nov 2018 – Aug 2026</dd>
+          </div>
+          <div class="glance-item">
+            <dt class="glance-label">Flexible hours</dt>
+            <dd class="glance-value glance-value-sm">Fully remote</dd>
+          </div>
+        </dl>
       </div>
     </div>
   </section>
@@ -103,9 +173,9 @@
     <h2 class="section-title">About</h2>
   </div>
 
-      <div class="stack reveal">
-        <p class="statement statement-sm">From November 2018 to August 2026 I worked as a Sales Consultant at <span translate="no">Cagra Co LTD</span>, handling the full customer journey: emails and phone calls, face-to-face sales, quotes and proformas, order tracking, shipping coordination, complaints and returns, and invoice and payment follow-up in <span translate="no">Logo Tiger 3</span>. I prepared tables and reports in Excel and trained new colleagues on <span translate="no">Logo</span> at entry level.</p>
-        <p class="statement statement-sm">Now I bring that experience to remote work, supporting e-commerce businesses with customer support and order operations. I also build my own automations in Python, including a job-search pipeline I set up with an AI coding assistant.</p>
+      <div class="about-copy reveal">
+        <p class="statement">From November 2018 to August 2026 I worked as a Sales Consultant at <span translate="no">Cagra Co LTD</span>, handling the full customer journey: emails and phone calls, face-to-face sales, quotes and proformas, order tracking, shipping coordination, complaints and returns, and invoice and payment follow-up in <span translate="no">Logo Tiger 3</span>. I prepared tables and reports in Excel and trained new colleagues on <span translate="no">Logo</span> at entry level.</p>
+        <p class="body-lg">Now I bring that experience to remote work, supporting e-commerce businesses with customer support and order operations. I also build my own automations in Python, including a job-search pipeline I set up with an AI coding assistant.</p>
       </div>
     </div>
   </section>
@@ -117,21 +187,45 @@
     <h2 class="section-title">Services</h2>
   </div>
 
-      <div class="bento bento-services">
-        <article class="card spotlight reveal" style="--d: 0">
-          <span class="card-index" aria-hidden="true">01</span>
+      <div class="services">
+        <article class="card service spotlight reveal" style="--d: 0">
+          <div class="service-top">
+            <span class="icon-tile">  <svg class="icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M4 5.5h16v10H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/>
+  </svg>
+</span>
+            <span class="card-index" aria-hidden="true">01</span>
+          </div>
           <h3 class="card-title">Customer Support</h3>
 <p class="card-text">Clear, friendly replies to customer emails and messages, including complaints and returns.</p>        </article>
-        <article class="card spotlight reveal" style="--d: 1">
-          <span class="card-index" aria-hidden="true">02</span>
+        <article class="card service spotlight reveal" style="--d: 1">
+          <div class="service-top">
+            <span class="icon-tile">  <svg class="icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5 12 12l9-4.5M12 12v9"/>
+  </svg>
+</span>
+            <span class="card-index" aria-hidden="true">02</span>
+          </div>
           <h3 class="card-title">Order &amp; Shipping Tracking</h3>
 <p class="card-text">Keeping every order visible from purchase to delivery, and following up on delays.</p>        </article>
-        <article class="card spotlight reveal" style="--d: 2">
-          <span class="card-index" aria-hidden="true">03</span>
+        <article class="card service spotlight reveal" style="--d: 2">
+          <div class="service-top">
+            <span class="icon-tile">  <svg class="icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 11.5h6M9 15h3"/>
+  </svg>
+</span>
+            <span class="card-index" aria-hidden="true">03</span>
+          </div>
           <h3 class="card-title">Quotes, Invoices &amp; Payment Follow-up</h3>
 <p class="card-text">Preparing quotes and proformas and tracking invoices until they are paid.</p>        </article>
-        <article class="card spotlight reveal" style="--d: 3">
-          <span class="card-index" aria-hidden="true">04</span>
+        <article class="card service spotlight reveal" style="--d: 3">
+          <div class="service-top">
+            <span class="icon-tile">  <svg class="icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M3.5 9h17M3.5 14.5h17M9.5 4v16"/>
+  </svg>
+</span>
+            <span class="card-index" aria-hidden="true">04</span>
+          </div>
           <h3 class="card-title">Data Entry &amp; Spreadsheet Reports</h3>
 <p class="card-text">Clean, organised spreadsheets and simple reports in Excel and Google Sheets.</p>        </article>
       </div>
@@ -145,26 +239,28 @@
     <h2 class="section-title">Experience</h2>
   </div>
 
-      <ol class="timeline">
-        <li class="timeline-item reveal">
-          <div class="timeline-meta">
-            <span class="timeline-dates">Nov 2018 – Aug 2026</span>
-<span class="timeline-location"><span translate="no">Kyrenia</span>, Cyprus</span>          </div>
-          <div class="timeline-body">
-            <h3 class="timeline-role">Sales Consultant</h3>
-<p class="timeline-company" translate="no">Cagra Co LTD</p><p class="timeline-summary">Building materials and interior decoration supplies.</p>            <div class="stats">
-              <div class="stat spotlight">
+      <div class="jobs">
+        <article class="card job reveal">
+          <div class="job-head">
+            <div class="job-meta">
+              <h3 class="job-role">Sales Consultant</h3>
+<p class="job-company" translate="no">Cagra Co LTD</p>              <ul class="job-facts">
+                <li class="job-dates">Nov 2018 – Aug 2026</li>
+<li><span translate="no">Kyrenia</span>, Cyprus</li>              </ul>
+<p class="job-summary">Building materials and interior decoration supplies.</p>            </div>
+            <div class="stats">
+              <div class="stat">
                 <span class="stat-value" data-count>60%</span>
 <span class="stat-label">About 60% growth in international clients</span>              </div>
-              <div class="stat spotlight">
+              <div class="stat">
                 <span class="stat-value" data-count>120%</span>
 <span class="stat-label">Reached 120% of internal sales targets in multiple years</span>              </div>
             </div>
-            <ul class="bullets">
-<li>Customer communication by email, phone and face to face</li><li>Quotes and proformas</li><li>Order tracking and shipping coordination</li><li>Complaints and returns</li><li>Invoice and payment follow-up in <span translate="no">Logo Tiger 3</span></li><li>Tables and reports in Excel and Google Sheets</li><li>Entry-level <span translate="no">Logo</span> training for new colleagues</li>            </ul>
           </div>
-        </li>
-      </ol>
+          <ul class="duties">
+<li>Customer communication by email, phone and face to face</li><li>Quotes and proformas</li><li>Order tracking and shipping coordination</li><li>Complaints and returns</li><li>Invoice and payment follow-up in <span translate="no">Logo Tiger 3</span></li><li>Tables and reports in Excel and Google Sheets</li><li>Entry-level <span translate="no">Logo</span> training for new colleagues</li>          </ul>
+        </article>
+      </div>
     </div>
   </section>
 
@@ -175,44 +271,71 @@
     <h2 class="section-title">Portfolio</h2>
   </div>
 
-<p class="section-intro reveal">Sample projects built with sample data to show how I work.</p>      <div class="bento bento-portfolio">
+<p class="section-intro reveal">Sample projects built with sample data to show how I work.</p>      <div class="projects">
         <article class="card project spotlight reveal" style="--d: 0">
           <div class="project-media" aria-hidden="true">
-            <span class="project-pattern"></span>
+            <div class="pv pv-sheet">
+              <div class="pv-table">
+                <div class="pv-row pv-row-head"><i></i><i></i><i></i><i></i></div>
+                <div class="pv-row"><i></i><i></i><i></i><b class="pv-pill pv-pill-0"></b></div>
+                <div class="pv-row"><i></i><i></i><i></i><b class="pv-pill pv-pill-1"></b></div>
+                <div class="pv-row"><i></i><i></i><i></i><b class="pv-pill pv-pill-2"></b></div>
+                <div class="pv-row"><i></i><i></i><i></i><b class="pv-pill pv-pill-0"></b></div>
+                <div class="pv-row"><i></i><i></i><i></i><b class="pv-pill pv-pill-1"></b></div>
+              </div>
+            </div>
           </div>
           <div class="project-body">
 <span class="badge">Sample project</span>            <h3 class="card-title">Order Tracking Sheet</h3>
-<p class="card-text">A Google Sheets tracker that shows each order&#39;s status, shipping date and follow-up notes at a glance.</p>            <ul class="chips">
-<li class="chip chip-sm">Google Sheets</li>            </ul>
-            <a class="btn btn-ghost btn-sm" href="https://docs.google.com/spreadsheets/d/1qmdii_crHkBCz38AoZM4wB0z7KvREubd9FTeGDE5Ieg/edit?usp=sharing" target="_blank" rel="noopener">
-              View sample <span aria-hidden="true">↗</span>
-            </a>
+<p class="card-text">A Google Sheets tracker that shows each order&#39;s status, shipping date and follow-up notes at a glance.</p>            <div class="project-foot">
+              <ul class="chips">
+<li class="chip chip-sm">Google Sheets</li>              </ul>
+              <a class="btn btn-ghost btn-sm" href="https://docs.google.com/spreadsheets/d/1qmdii_crHkBCz38AoZM4wB0z7KvREubd9FTeGDE5Ieg/edit?usp=sharing" target="_blank" rel="noopener" aria-label="View sample: Order Tracking Sheet (opens in a new tab)">
+                View sample <span aria-hidden="true">↗</span>
+              </a>
+            </div>
           </div>
         </article>
         <article class="card project spotlight reveal" style="--d: 1">
           <div class="project-media" aria-hidden="true">
-            <span class="project-pattern"></span>
+            <div class="pv pv-doc">
+              <div class="pv-page">
+                <i class="pv-h"></i><i></i><i></i><i class="pv-short"></i>
+                <i class="pv-h pv-h2"></i><i></i><i class="pv-short"></i>
+                <span class="pv-tag"></span><i></i><i class="pv-short"></i>
+              </div>
+            </div>
           </div>
           <div class="project-body">
 <span class="badge">Sample project</span>            <h3 class="card-title">Customer Support Response Library</h3>
-<p class="card-text">A support playbook for a small online shop: 10 reply templates for order updates, delays, returns and complaints, with response time targets, escalation rules and store policy fields.</p>            <ul class="chips">
-<li class="chip chip-sm">Google Docs</li>            </ul>
-            <a class="btn btn-ghost btn-sm" href="https://docs.google.com/document/d/1xYm1fliueMGKPDli2UzKeNNLda1rVmu8jLQrLuVwvgo/edit?usp=sharing" target="_blank" rel="noopener">
-              View sample <span aria-hidden="true">↗</span>
-            </a>
+<p class="card-text">A support playbook for a small online shop: 10 reply templates for order updates, delays, returns and complaints, with response time targets, escalation rules and store policy fields.</p>            <div class="project-foot">
+              <ul class="chips">
+<li class="chip chip-sm">Google Docs</li>              </ul>
+              <a class="btn btn-ghost btn-sm" href="https://docs.google.com/document/d/1xYm1fliueMGKPDli2UzKeNNLda1rVmu8jLQrLuVwvgo/edit?usp=sharing" target="_blank" rel="noopener" aria-label="View sample: Customer Support Response Library (opens in a new tab)">
+                View sample <span aria-hidden="true">↗</span>
+              </a>
+            </div>
           </div>
         </article>
         <article class="card project spotlight reveal" style="--d: 2">
           <div class="project-media" aria-hidden="true">
-            <span class="project-pattern"></span>
+            <div class="pv pv-split">
+              <div class="pv-table pv-messy">
+<div class="pv-row"><i></i><i></i><i></i></div><div class="pv-row"><i></i><i></i><i></i></div><div class="pv-row"><i></i><i></i><i></i></div><div class="pv-row"><i></i><i></i><i></i></div><div class="pv-row"><i></i><i></i><i></i></div>              </div>
+              <span class="pv-arrow">→</span>
+              <div class="pv-table pv-clean">
+<div class="pv-row"><i></i><i></i><i></i></div><div class="pv-row"><i></i><i></i><i></i></div><div class="pv-row"><i></i><i></i><i></i></div><div class="pv-row"><i></i><i></i><i></i></div><div class="pv-row"><i></i><i></i><i></i></div>              </div>
+            </div>
           </div>
           <div class="project-body">
 <span class="badge">Sample project</span>            <h3 class="card-title">Data Cleanup Before/After</h3>
-<p class="card-text">A messy customer export cleaned with reusable formulas: duplicates found automatically, names split, dates, countries and amounts standardised, every change logged and every row checked against the final list.</p>            <ul class="chips">
-<li class="chip chip-sm">Google Sheets</li>            </ul>
-            <a class="btn btn-ghost btn-sm" href="https://docs.google.com/spreadsheets/d/15lbhsX5VS6nrGrRYlrYHuI1Cgy2hru-fDLFgh4He9sY/edit?usp=sharing" target="_blank" rel="noopener">
-              View sample <span aria-hidden="true">↗</span>
-            </a>
+<p class="card-text">A messy customer export cleaned with reusable formulas: duplicates found automatically, names split, dates, countries and amounts standardised, every change logged and every row checked against the final list.</p>            <div class="project-foot">
+              <ul class="chips">
+<li class="chip chip-sm">Google Sheets</li>              </ul>
+              <a class="btn btn-ghost btn-sm" href="https://docs.google.com/spreadsheets/d/15lbhsX5VS6nrGrRYlrYHuI1Cgy2hru-fDLFgh4He9sY/edit?usp=sharing" target="_blank" rel="noopener" aria-label="View sample: Data Cleanup Before/After (opens in a new tab)">
+                View sample <span aria-hidden="true">↗</span>
+              </a>
+            </div>
           </div>
         </article>
       </div>
@@ -227,26 +350,63 @@
   </div>
 
       <article class="case spotlight reveal">
-        <div class="case-glow" aria-hidden="true"></div>
+        <div class="case-bg" aria-hidden="true"></div>
         <div class="case-inner">
           <h3 class="case-name">
 Job-search automation pipeline          </h3>
-<p class="case-summary">A personal Python system I built with an AI coding assistant to run my own remote job search end to end, with a human approval step before anything is sent.</p>          <ol class="case-steps">
-            <li><span class="case-step-index" aria-hidden="true">01</span><span>Collects job listings from multiple sources</span></li>
-            <li><span class="case-step-index" aria-hidden="true">02</span><span>Scores and filters them against my criteria</span></li>
-            <li><span class="case-step-index" aria-hidden="true">03</span><span>Checks ATS compatibility</span></li>
-            <li><span class="case-step-index" aria-hidden="true">04</span><span>Drafts a tailored cover letter for each listing</span></li>
-            <li><span class="case-step-index" aria-hidden="true">05</span><span>Tracks every application in a SQLite database</span></li>
-            <li><span class="case-step-index" aria-hidden="true">06</span><span>Prepares email drafts and waits for my approval before sending</span></li>
+<p class="case-summary">A personal Python system I built with an AI coding assistant to run my own remote job search end to end, with a human approval step before anything is sent.</p>          <ol class="pipeline" style="--n: 6">
+            <li class="pipe-step" style="--d: 0">
+              <span class="pipe-node" aria-hidden="true"></span>
+              <span class="pipe-index" aria-hidden="true">01</span>
+              <span class="pipe-text">Collects job listings from multiple sources</span>
+            </li>
+            <li class="pipe-step" style="--d: 1">
+              <span class="pipe-node" aria-hidden="true"></span>
+              <span class="pipe-index" aria-hidden="true">02</span>
+              <span class="pipe-text">Scores and filters them against my criteria</span>
+            </li>
+            <li class="pipe-step" style="--d: 2">
+              <span class="pipe-node" aria-hidden="true"></span>
+              <span class="pipe-index" aria-hidden="true">03</span>
+              <span class="pipe-text">Checks ATS compatibility</span>
+            </li>
+            <li class="pipe-step" style="--d: 3">
+              <span class="pipe-node" aria-hidden="true"></span>
+              <span class="pipe-index" aria-hidden="true">04</span>
+              <span class="pipe-text">Drafts a tailored cover letter for each listing</span>
+            </li>
+            <li class="pipe-step" style="--d: 4">
+              <span class="pipe-node" aria-hidden="true"></span>
+              <span class="pipe-index" aria-hidden="true">05</span>
+              <span class="pipe-text">Tracks every application in a SQLite database</span>
+            </li>
+            <li class="pipe-step" style="--d: 5">
+              <span class="pipe-node" aria-hidden="true"></span>
+              <span class="pipe-index" aria-hidden="true">06</span>
+              <span class="pipe-text">Prepares email drafts and waits for my approval before sending</span>
+            </li>
           </ol>
-          <ul class="case-points">
-            <li><span class="case-point-index" aria-hidden="true">✓</span>500+ automated tests</li>
-            <li><span class="case-point-index" aria-hidden="true">✓</span>Version-controlled with Git</li>
-            <li><span class="case-point-index" aria-hidden="true">✓</span>No email is sent without my approval</li>
-          </ul>
           <div class="case-footer">
-            <ul class="chips">
-<li class="chip">Python</li><li class="chip">SQLite</li><li class="chip">Git</li><li class="chip">pytest</li>            </ul>
+            <div class="case-group">
+<p class="case-label">Highlights</p>              <ul class="checks">
+                <li class="check">
+                  <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M3.5 8.5 6.5 11.5 12.5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  500+ automated tests
+                </li>
+                <li class="check">
+                  <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M3.5 8.5 6.5 11.5 12.5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Version-controlled with Git
+                </li>
+                <li class="check">
+                  <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M3.5 8.5 6.5 11.5 12.5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  No email is sent without my approval
+                </li>
+              </ul>
+            </div>
+            <div class="case-group">
+<p class="case-label">Built with</p>              <ul class="chips">
+<li class="chip">Python</li><li class="chip">SQLite</li><li class="chip">Git</li><li class="chip">pytest</li>              </ul>
+            </div>
           </div>
         </div>
       </article>
@@ -265,34 +425,40 @@ Job-search automation pipeline          </h3>
           <div class="cert-head">
             <h3 class="card-title">ALX Virtual Assistant Programme – Certificate of Achievement</h3>
 <p class="cert-note">10-week programme in Virtual Assistance Skills in the Digital Age</p>          </div>
-          <div class="cert-meta">
-<span>ALX</span><span class="cert-date">Nov 2025</span>          </div>
-          <a class="cert-verify" href="https://savanna.alxafrica.com/certificates/zfN6epE3J2" target="_blank" rel="noopener" aria-label="Verify: ALX Virtual Assistant Programme – Certificate of Achievement">
-            Verify <span aria-hidden="true">↗</span>
-          </a>
+          <div class="cert-foot">
+            <div class="cert-meta">
+<span>ALX</span><span class="cert-date">Nov 2025</span>            </div>
+            <a class="cert-verify" href="https://savanna.alxafrica.com/certificates/zfN6epE3J2" target="_blank" rel="noopener" aria-label="Verify: ALX Virtual Assistant Programme – Certificate of Achievement (opens in a new tab)">
+              Verify <span aria-hidden="true">↗</span>
+            </a>
+          </div>
         </li>
         <li class="card cert spotlight reveal" style="--d: 1">
           <div class="cert-head">
             <h3 class="card-title">Google Advanced Data Analytics Certificate</h3>
           </div>
-          <div class="cert-meta">
-<span>Google (Coursera)</span><span class="cert-date">May 2026</span>          </div>
-          <a class="cert-verify" href="https://www.coursera.org/account/accomplishments/professional-cert/YAONZADEFSOP" target="_blank" rel="noopener" aria-label="Verify: Google Advanced Data Analytics Certificate">
-            Verify <span aria-hidden="true">↗</span>
-          </a>
+          <div class="cert-foot">
+            <div class="cert-meta">
+<span>Google (Coursera)</span><span class="cert-date">May 2026</span>            </div>
+            <a class="cert-verify" href="https://www.coursera.org/account/accomplishments/professional-cert/YAONZADEFSOP" target="_blank" rel="noopener" aria-label="Verify: Google Advanced Data Analytics Certificate (opens in a new tab)">
+              Verify <span aria-hidden="true">↗</span>
+            </a>
+          </div>
         </li>
         <li class="card cert spotlight reveal" style="--d: 2">
           <div class="cert-head">
             <h3 class="card-title">Bachelor&#39;s degree in Marketing</h3>
           </div>
-          <div class="cert-meta">
-<span>Girne American University</span><span class="cert-date">2015</span>          </div>
+          <div class="cert-foot">
+            <div class="cert-meta">
+<span>Girne American University</span><span class="cert-date">2015</span>            </div>
+          </div>
         </li>
       </ul>
     </div>
   </section>
 
-  <section class="section section-tight" id="tools">
+  <section class="section" id="tools">
     <div class="container">
         <div class="section-head reveal">
     <span class="section-index" aria-hidden="true">07</span>
@@ -300,34 +466,65 @@ Job-search automation pipeline          </h3>
   </div>
 
     </div>
-    <div class="marquee reveal">
+    <div class="marquee" aria-hidden="true">
       <div class="marquee-track" style="--count: 20">
-        <ul class="marquee-group">
-<li class="chip chip-lg"><span translate="no">Logo Tiger 3</span></li><li class="chip chip-lg">Microsoft Excel</li><li class="chip chip-lg">Google Sheets</li><li class="chip chip-lg">Google Docs</li><li class="chip chip-lg">Google Slides</li><li class="chip chip-lg">Google Drive</li><li class="chip chip-lg">Google Calendar</li><li class="chip chip-lg">Gmail</li><li class="chip chip-lg">Trello</li><li class="chip chip-lg">Asana</li><li class="chip chip-lg">Notion</li><li class="chip chip-lg">Slack</li><li class="chip chip-lg">Zoom</li><li class="chip chip-lg">Google Meet</li><li class="chip chip-lg">n8n</li><li class="chip chip-lg">Python</li><li class="chip chip-lg">VS Code</li><li class="chip chip-lg">SQLite</li><li class="chip chip-lg">Git &amp; GitHub</li><li class="chip chip-lg">Claude &amp; AI assistants</li>        </ul>
-        <ul class="marquee-group" aria-hidden="true">
-<li class="chip chip-lg"><span translate="no">Logo Tiger 3</span></li><li class="chip chip-lg">Microsoft Excel</li><li class="chip chip-lg">Google Sheets</li><li class="chip chip-lg">Google Docs</li><li class="chip chip-lg">Google Slides</li><li class="chip chip-lg">Google Drive</li><li class="chip chip-lg">Google Calendar</li><li class="chip chip-lg">Gmail</li><li class="chip chip-lg">Trello</li><li class="chip chip-lg">Asana</li><li class="chip chip-lg">Notion</li><li class="chip chip-lg">Slack</li><li class="chip chip-lg">Zoom</li><li class="chip chip-lg">Google Meet</li><li class="chip chip-lg">n8n</li><li class="chip chip-lg">Python</li><li class="chip chip-lg">VS Code</li><li class="chip chip-lg">SQLite</li><li class="chip chip-lg">Git &amp; GitHub</li><li class="chip chip-lg">Claude &amp; AI assistants</li>        </ul>
+        <div class="marquee-group">
+<span class="marquee-item" translate="no">Logo Tiger 3</span><span class="marquee-item" translate="no">Microsoft Excel</span><span class="marquee-item" translate="no">Google Sheets</span><span class="marquee-item" translate="no">Google Docs</span><span class="marquee-item" translate="no">Google Slides</span><span class="marquee-item" translate="no">Google Drive</span><span class="marquee-item" translate="no">Google Calendar</span><span class="marquee-item" translate="no">Gmail</span><span class="marquee-item" translate="no">Trello</span><span class="marquee-item" translate="no">Asana</span><span class="marquee-item" translate="no">Notion</span><span class="marquee-item" translate="no">Slack</span><span class="marquee-item" translate="no">Zoom</span><span class="marquee-item" translate="no">Google Meet</span><span class="marquee-item" translate="no">n8n</span><span class="marquee-item" translate="no">Python</span><span class="marquee-item" translate="no">VS Code</span><span class="marquee-item" translate="no">SQLite</span><span class="marquee-item" translate="no">Git &amp; GitHub</span><span class="marquee-item" translate="no">Claude &amp; AI assistants</span>        </div>
+        <div class="marquee-group">
+<span class="marquee-item" translate="no">Logo Tiger 3</span><span class="marquee-item" translate="no">Microsoft Excel</span><span class="marquee-item" translate="no">Google Sheets</span><span class="marquee-item" translate="no">Google Docs</span><span class="marquee-item" translate="no">Google Slides</span><span class="marquee-item" translate="no">Google Drive</span><span class="marquee-item" translate="no">Google Calendar</span><span class="marquee-item" translate="no">Gmail</span><span class="marquee-item" translate="no">Trello</span><span class="marquee-item" translate="no">Asana</span><span class="marquee-item" translate="no">Notion</span><span class="marquee-item" translate="no">Slack</span><span class="marquee-item" translate="no">Zoom</span><span class="marquee-item" translate="no">Google Meet</span><span class="marquee-item" translate="no">n8n</span><span class="marquee-item" translate="no">Python</span><span class="marquee-item" translate="no">VS Code</span><span class="marquee-item" translate="no">SQLite</span><span class="marquee-item" translate="no">Git &amp; GitHub</span><span class="marquee-item" translate="no">Claude &amp; AI assistants</span>        </div>
       </div>
+    </div>
+    <div class="container">
+      <ul class="tool-grid reveal">
+<li><span translate="no">Logo Tiger 3</span></li><li>Microsoft Excel</li><li>Google Sheets</li><li>Google Docs</li><li>Google Slides</li><li>Google Drive</li><li>Google Calendar</li><li>Gmail</li><li>Trello</li><li>Asana</li><li>Notion</li><li>Slack</li><li>Zoom</li><li>Google Meet</li><li>n8n</li><li>Python</li><li>VS Code</li><li>SQLite</li><li>Git &amp; GitHub</li><li>Claude &amp; AI assistants</li>      </ul>
     </div>
   </section>
 
-  <section class="section" id="contact">
-    <div class="container split">
-        <div class="section-head reveal">
+  <section class="section contact" id="contact">
+    <div class="container contact-layout">
+      <div class="contact-intro reveal">
+          <div class="section-head reveal">
     <span class="section-index" aria-hidden="true">08</span>
     <h2 class="section-title">Contact</h2>
   </div>
 
-      <div class="contact-body reveal">
         <ul class="chips">
 <li class="chip"><span translate="no">Kyrenia</span>, Cyprus · EET (UTC+2)</li><li class="chip">Fully remote</li><li class="chip">Flexible hours</li>        </ul>
         <ul class="chips">
 <li class="chip chip-soft">Turkish – Native</li><li class="chip chip-soft">English – B2 (Upper-intermediate)</li>        </ul>
-<p class="contact-note">Available for calls on Zoom or Google Meet</p>        <div class="contact-actions">
-          <a class="btn btn-primary" href="mailto:asenabeshiktepeli@gmail.com">asenabeshiktepeli@gmail.com</a>
-          <button class="btn btn-ghost js-only" type="button" data-copy-email>Copy email address</button>
+<p class="contact-note">Available for calls on Zoom or Google Meet</p>      </div>
+
+      <div class="contact-card card reveal">
+        <p class="contact-email" translate="no">asenabeshiktepeli@gmail.com</p>
+        <div class="contact-actions">
+            <div class="email-menu" data-email-menu data-align="start">
+    <a class="btn btn-primary btn-lg" href="mailto:asenabeshiktepeli@gmail.com" data-email-trigger
+       aria-expanded="false" aria-controls="email-menu-contact">
+      Email me
+<span class="btn-arrow" aria-hidden="true">→</span>    </a>
+    <div class="email-menu-panel" id="email-menu-contact" data-email-panel tabindex="-1" hidden
+         role="group" aria-label="Email options">
+      <p class="email-menu-address" translate="no">asenabeshiktepeli@gmail.com</p>
+      <a class="email-menu-item" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=asenabeshiktepeli@gmail.com" target="_blank" rel="noopener">
+        <span class="email-menu-icon" aria-hidden="true">G</span>Open in Gmail<span class="email-menu-ext" aria-hidden="true">↗</span>
+      </a>
+      <a class="email-menu-item" href="https://outlook.live.com/mail/0/deeplink/compose?to=asenabeshiktepeli@gmail.com" target="_blank" rel="noopener">
+        <span class="email-menu-icon" aria-hidden="true">O</span>Open in Outlook<span class="email-menu-ext" aria-hidden="true">↗</span>
+      </a>
+      <a class="email-menu-item" href="mailto:asenabeshiktepeli@gmail.com">
+        <span class="email-menu-icon" aria-hidden="true">@</span>Default mail app
+      </a>
+      <button class="email-menu-item" type="button" data-copy-email>
+        <span class="email-menu-icon" aria-hidden="true">⧉</span>Copy email address
+      </button>
+    </div>
+  </div>
+
+          <button class="btn btn-ghost btn-lg js-only" type="button" data-copy-email>Copy email address</button>
         </div>
         <ul class="contact-links">
           <li><a href="https://github.com/asenabeshiktepeli" target="_blank" rel="noopener">github.com/asenabeshiktepeli <span aria-hidden="true">↗</span></a></li>
+          <li><a href="static/cv/Asena_Beshiktepeli_CV.pdf" download="Asena_Beshiktepeli_CV.pdf">Download CV <span aria-hidden="true">↓</span></a></li>
         </ul>
       </div>
     </div>
@@ -335,30 +532,49 @@ Job-search automation pipeline          </h3>
 </main>
 
 <footer class="site-footer">
-  <div class="aurora aurora-footer" aria-hidden="true">
-    <span class="blob blob-1"></span>
-    <span class="blob blob-2"></span>
-  </div>
+  <div class="footer-glow" aria-hidden="true"></div>
   <div class="container">
     <p class="footer-cta reveal">Your customers, orders and data, in good hands.</p>
-    <a class="btn btn-primary btn-xl reveal" href="mailto:asenabeshiktepeli@gmail.com">
-      Email me <span class="btn-arrow" aria-hidden="true">→</span>
-    </a>
+    <div class="footer-action reveal">
+        <div class="email-menu" data-email-menu data-align="start">
+    <a class="btn btn-light btn-xl" href="mailto:asenabeshiktepeli@gmail.com" data-email-trigger
+       aria-expanded="false" aria-controls="email-menu-footer">
+      Email me
+<span class="btn-arrow" aria-hidden="true">→</span>    </a>
+    <div class="email-menu-panel" id="email-menu-footer" data-email-panel tabindex="-1" hidden
+         role="group" aria-label="Email options">
+      <p class="email-menu-address" translate="no">asenabeshiktepeli@gmail.com</p>
+      <a class="email-menu-item" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=asenabeshiktepeli@gmail.com" target="_blank" rel="noopener">
+        <span class="email-menu-icon" aria-hidden="true">G</span>Open in Gmail<span class="email-menu-ext" aria-hidden="true">↗</span>
+      </a>
+      <a class="email-menu-item" href="https://outlook.live.com/mail/0/deeplink/compose?to=asenabeshiktepeli@gmail.com" target="_blank" rel="noopener">
+        <span class="email-menu-icon" aria-hidden="true">O</span>Open in Outlook<span class="email-menu-ext" aria-hidden="true">↗</span>
+      </a>
+      <a class="email-menu-item" href="mailto:asenabeshiktepeli@gmail.com">
+        <span class="email-menu-icon" aria-hidden="true">@</span>Default mail app
+      </a>
+      <button class="email-menu-item" type="button" data-copy-email>
+        <span class="email-menu-icon" aria-hidden="true">⧉</span>Copy email address
+      </button>
+    </div>
+  </div>
+
+    </div>
     <div class="footer-bottom">
 <p>© 2026 <span translate="no">Asena Beshiktepeli</span></p>      <ul class="footer-links">
-<li><a href="https://github.com/asenabeshiktepeli" target="_blank" rel="noopener">github.com/asenabeshiktepeli</a></li>      </ul>
+<li><a href="https://github.com/asenabeshiktepeli" target="_blank" rel="noopener">github.com/asenabeshiktepeli</a></li><li><a href="static/cv/Asena_Beshiktepeli_CV.pdf" download="Asena_Beshiktepeli_CV.pdf">Download CV</a></li><li><a href="#top">Back to top <span aria-hidden="true">↑</span></a></li>      </ul>
     </div>
   </div>
 </footer>
 
-<dialog class="palette" id="palette" aria-label="Command palette" data-palette
-        data-email="asenabeshiktepeli@gmail.com" data-copied="Email address copied">
+<dialog class="palette" id="palette" aria-label="Command palette" data-palette>
   <div class="palette-box">
     <div class="palette-search">
       <span class="palette-icon" aria-hidden="true"></span>
       <input class="palette-input" type="text" autocomplete="off" spellcheck="false"
              role="combobox" aria-expanded="true" aria-controls="palette-list" aria-autocomplete="list"
              aria-label="Search commands" placeholder="Type a command or search…" data-palette-input>
+      <kbd class="palette-esc" aria-hidden="true">Esc</kbd>
     </div>
     <ul class="palette-list" id="palette-list" role="listbox" aria-label="Commands" data-palette-list>
 <li class="palette-group" role="presentation">Sections</li>      <li class="palette-item" role="option" id="cmd-goto-1" aria-selected="false"
@@ -385,11 +601,19 @@ Job-search automation pipeline          </h3>
           data-action="goto" data-target="#contact">
         <span class="palette-item-icon" aria-hidden="true">#</span>Contact
       </li>
-<li class="palette-group" role="presentation">Actions</li>      <li class="palette-item" role="option" id="cmd-copy" aria-selected="false" data-action="copy">
-        <span class="palette-item-icon" aria-hidden="true">⧉</span>Copy email address
+<li class="palette-group" role="presentation">Actions</li>      <li class="palette-item" role="option" id="cmd-gmail" aria-selected="false" data-action="open"
+          data-href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=asenabeshiktepeli@gmail.com">
+        <span class="palette-item-icon" aria-hidden="true">G</span>Open in Gmail
+      </li>
+      <li class="palette-item" role="option" id="cmd-outlook" aria-selected="false" data-action="open"
+          data-href="https://outlook.live.com/mail/0/deeplink/compose?to=asenabeshiktepeli@gmail.com">
+        <span class="palette-item-icon" aria-hidden="true">O</span>Open in Outlook
       </li>
       <li class="palette-item" role="option" id="cmd-mail" aria-selected="false" data-action="mail">
         <span class="palette-item-icon" aria-hidden="true">@</span>Send an email
+      </li>
+      <li class="palette-item" role="option" id="cmd-copy" aria-selected="false" data-action="copy">
+        <span class="palette-item-icon" aria-hidden="true">⧉</span>Copy email address
       </li>
       <li class="palette-item" role="option" id="cmd-cv" aria-selected="false" data-action="download"
           data-href="static/cv/Asena_Beshiktepeli_CV.pdf" data-filename="Asena_Beshiktepeli_CV.pdf">
@@ -399,7 +623,8 @@ Job-search automation pipeline          </h3>
 <p class="palette-empty" data-palette-empty hidden>No results found</p>  </div>
 </dialog>
 
-<div class="toast" role="status" aria-live="polite" data-toast></div>
+<div class="toast" role="status" aria-live="polite" data-toast
+     data-email="asenabeshiktepeli@gmail.com" data-copied="Email address copied"></div>
   <script src="static/js/main.js" defer></script>
 </body>
 </html>

@@ -1,23 +1,56 @@
 // Small, dependency-free enhancements:
-// header shrink, mobile menu, live clock, spotlight cards, scroll reveal,
-// count-up stats, copy email and the Ctrl/Cmd+K command palette.
+// header + scroll progress, active nav link, mobile menu, live clock, spotlight cards,
+// scroll reveal, count-up stats, email menus, copy email and the Ctrl/Cmd+K command palette.
 (function () {
   "use strict";
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  var touchOnly = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
   var isMac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
 
   function $(selector, root) { return (root || document).querySelector(selector); }
   function $$(selector, root) { return Array.prototype.slice.call((root || document).querySelectorAll(selector)); }
 
-  // ---------- Header shrinks on scroll ----------
+  // ---------- Header state + reading progress ----------
   var header = $("[data-header]");
+  var progress = $("[data-progress]");
+  var ticking = false;
+
   function onScroll() {
-    if (header) header.classList.toggle("is-scrolled", window.scrollY > 24);
+    ticking = false;
+    var y = window.scrollY;
+    if (header) header.classList.toggle("is-scrolled", y > 8);
+    if (progress) {
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      progress.style.setProperty("--progress", max > 0 ? Math.min(y / max, 1).toFixed(4) : 0);
+    }
   }
-  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("scroll", function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
+  }, { passive: true });
+  window.addEventListener("resize", onScroll);
   onScroll();
+
+  // ---------- Active section in the top bar ----------
+  var navLinks = $$("[data-nav-link]");
+  if (navLinks.length && "IntersectionObserver" in window) {
+    var byId = {};
+    navLinks.forEach(function (link) {
+      var id = (link.getAttribute("href") || "").slice(1);
+      var section = id && document.getElementById(id);
+      if (section) byId[id] = link;
+    });
+    var sectionObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        navLinks.forEach(function (link) { link.removeAttribute("aria-current"); });
+        var link = byId[entry.target.id];
+        if (link) link.setAttribute("aria-current", "true");
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    Object.keys(byId).forEach(function (id) { sectionObserver.observe(document.getElementById(id)); });
+  }
 
   // ---------- Full-screen mobile menu ----------
   var menuToggle = $("[data-menu-toggle]");
@@ -93,7 +126,7 @@
   function prepareCount(element) {
     var final = element.textContent.trim();
     var match = final.match(NUMBER);
-    if (!match) return false; // placeholders and free text stay as they are
+    if (!match) return false; // free text stays as it is
     element.dataset.final = final;
     element.setAttribute("aria-label", final);
     element.textContent = match[1] + (0).toFixed((match[2].split(".")[1] || "").length) + match[3];
@@ -133,7 +166,7 @@
         entry.target.classList.add("is-visible");
         revealObserver.unobserve(entry.target);
       });
-    }, { rootMargin: "0px 0px -10% 0px", threshold: 0.1 });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
     revealItems.forEach(function (item) { revealObserver.observe(item); });
 
     var countObserver = new IntersectionObserver(function (entries) {
@@ -151,6 +184,9 @@
   // ---------- Toast + copy email ----------
   var toast = $("[data-toast]");
   var toastTimer;
+  var email = toast ? toast.dataset.email : "";
+  var copiedMessage = toast ? toast.dataset.copied : "";
+
   function showToast(message) {
     if (!toast || !message) return;
     toast.textContent = message;
@@ -158,10 +194,6 @@
     clearTimeout(toastTimer);
     toastTimer = setTimeout(function () { toast.classList.remove("is-visible"); }, 2200);
   }
-
-  var palette = $("[data-palette]");
-  var email = palette ? palette.dataset.email : "";
-  var copiedMessage = palette ? palette.dataset.copied : "";
 
   function copyEmail() {
     if (!email) return;
@@ -188,7 +220,108 @@
     button.addEventListener("click", copyEmail);
   });
 
+  // ---------- Email menus (Gmail / Outlook / default app / copy) ----------
+  // On touch-only devices the button stays a plain mailto: link.
+  var openEmail = null;
+
+  function emailParts(wrapper) {
+    return { trigger: $("[data-email-trigger]", wrapper), panel: $("[data-email-panel]", wrapper) };
+  }
+
+  function emailItems(panel) {
+    return $$(".email-menu-item", panel);
+  }
+
+  function closeEmailMenu(wrapper, restoreFocus) {
+    if (!wrapper) return;
+    var parts = emailParts(wrapper);
+    parts.panel.hidden = true;
+    parts.panel.classList.remove("is-up", "is-end");
+    parts.trigger.setAttribute("aria-expanded", "false");
+    if (openEmail === wrapper) openEmail = null;
+    if (restoreFocus) parts.trigger.focus();
+  }
+
+  function openEmailMenu(wrapper) {
+    if (openEmail && openEmail !== wrapper) closeEmailMenu(openEmail, false);
+    var parts = emailParts(wrapper);
+    parts.panel.hidden = false;
+    parts.trigger.setAttribute("aria-expanded", "true");
+    openEmail = wrapper;
+
+    // Keep the panel on screen: flip up near the bottom, align right near the edge.
+    var rect = parts.panel.getBoundingClientRect();
+    var triggerRect = parts.trigger.getBoundingClientRect();
+    if (rect.bottom > window.innerHeight - 8 && triggerRect.top > rect.height + 16) {
+      parts.panel.classList.add("is-up");
+    }
+    if (rect.right > window.innerWidth - 8) parts.panel.classList.add("is-end");
+
+    var first = emailItems(parts.panel)[0];
+    if (first) first.focus();
+  }
+
+  $$("[data-email-menu]").forEach(function (wrapper) {
+    var parts = emailParts(wrapper);
+    if (!parts.trigger || !parts.panel) return;
+
+    parts.trigger.addEventListener("click", function (event) {
+      if (touchOnly) return;
+      event.preventDefault();
+      if (openEmail === wrapper) closeEmailMenu(wrapper, false); else openEmailMenu(wrapper);
+    });
+
+    parts.trigger.addEventListener("keydown", function (event) {
+      if (touchOnly) return;
+      // Space activates it like a button; ArrowDown opens it.
+      if (event.key === " " || (event.key === "ArrowDown" && openEmail !== wrapper)) {
+        event.preventDefault();
+        openEmailMenu(wrapper);
+      }
+    });
+
+    parts.panel.addEventListener("keydown", function (event) {
+      var items = emailItems(parts.panel);
+      var index = items.indexOf(document.activeElement);
+      var next = null;
+      if (event.key === "ArrowDown") next = items[(index + 1) % items.length];
+      else if (event.key === "ArrowUp") next = items[(index - 1 + items.length) % items.length];
+      else if (event.key === "Home") next = items[0];
+      else if (event.key === "End") next = items[items.length - 1];
+      if (next) {
+        event.preventDefault();
+        next.focus();
+      }
+    });
+
+    // Choosing an option closes the menu; copy returns focus to the button.
+    emailItems(parts.panel).forEach(function (item) {
+      item.addEventListener("click", function () {
+        closeEmailMenu(wrapper, item.hasAttribute("data-copy-email"));
+      });
+    });
+
+    // Tabbing out closes it.
+    wrapper.addEventListener("focusout", function (event) {
+      if (openEmail === wrapper && event.relatedTarget && !wrapper.contains(event.relatedTarget)) {
+        closeEmailMenu(wrapper, false);
+      }
+    });
+  });
+
+  document.addEventListener("click", function (event) {
+    if (openEmail && !openEmail.contains(event.target)) closeEmailMenu(openEmail, false);
+  });
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && openEmail) {
+      event.preventDefault();
+      closeEmailMenu(openEmail, true);
+    }
+  });
+
   // ---------- Command palette ----------
+  var palette = $("[data-palette]");
   if (!palette || typeof palette.showModal !== "function") return;
 
   var input = $("[data-palette-input]", palette);
@@ -247,6 +380,7 @@
   function openPalette() {
     if (palette.open) return;
     if (menu && !menu.hidden) setMenu(false);
+    if (openEmail) closeEmailMenu(openEmail, false);
     lastFocus = document.activeElement;
     input.value = "";
     filter();
@@ -281,6 +415,8 @@
       copyEmail();
     } else if (action === "mail" && email) {
       window.location.href = "mailto:" + email;
+    } else if (action === "open" && item.dataset.href) {
+      window.open(item.dataset.href, "_blank", "noopener");
     } else if (action === "download" && item.dataset.href) {
       var link = document.createElement("a");
       link.href = item.dataset.href;
