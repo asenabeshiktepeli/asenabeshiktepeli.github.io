@@ -95,13 +95,13 @@ experience:
 portfolio:
   title: "Portfolio"
   intro: "Sample projects built with sample data to show how I work."
-  view_label: "View"  # button text; the button only shows when an item has a link
+  view_label: "View sample"  # button text (↗ is added by the template); the button only shows when an item has a link
   items:
     - title: "Order Tracking Sheet"
       label: "Sample project"
       text: "A Google Sheets tracker that shows each order's status, shipping date and follow-up notes at a glance."
       tools: ["Google Sheets"]
-      link: ""  # Google Sheets view link – to be added later
+      link: "https://docs.google.com/spreadsheets/d/1qmdii_crHkBCz38AoZM4wB0z7KvREubd9FTeGDE5Ieg/edit?usp=sharing"
       image: ""
     - title: "Customer Email Templates"
       label: "Sample project"
