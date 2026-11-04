@@ -4,8 +4,10 @@ static/img/portfolio/<name>.webp -> static/img/portfolio/<name>-800.webp
 Safe to run again: thumbnails are rebuilt from the full-size originals.
 
     .\\.venv\\Scripts\\python.exe tools\\make_thumbs.py
+    .\\.venv\\Scripts\\python.exe tools\\make_thumbs.py hubspot-support   (only this one)
 """
 
+import sys
 from pathlib import Path
 
 from PIL import Image
@@ -18,7 +20,12 @@ QUALITY = 82
 
 
 def main():
-    sources = sorted(p for p in FOLDER.glob("*.webp") if not p.stem.endswith(SUFFIX))
+    # Optional: pass names (e.g. hubspot-support) to rebuild only those thumbnails.
+    names = set(sys.argv[1:])
+    sources = sorted(
+        p for p in FOLDER.glob("*.webp")
+        if not p.stem.endswith(SUFFIX) and (not names or p.stem in names)
+    )
     if not sources:
         print(f"No .webp files in {FOLDER.relative_to(ROOT)}")
         return

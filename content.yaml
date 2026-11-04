@@ -132,6 +132,16 @@ portfolio:
       tools: ["Google Sheets"]
       link: "https://docs.google.com/spreadsheets/d/15lbhsX5VS6nrGrRYlrYHuI1Cgy2hru-fDLFgh4He9sY/edit?usp=sharing"
       image: "static/img/portfolio/data-cleanup.webp"
+    - title: "HubSpot Support Workflow"
+      id: "work-hubspot-support"
+      label: "Sample project"
+      text: "A practice HubSpot help desk for a fictional online shop: 8 support tickets for delays, returns, refunds and damaged items, answered with reply snippets and moved through a ticket pipeline (New, Waiting on contact, Waiting on us, Closed). Test data and replies were loaded with Python through the HubSpot API."
+      tools: ["HubSpot", "Python"]
+      link: ""  # no public link – View sample button stays hidden
+      image: "static/img/portfolio/hubspot-support.webp"
+      # optional: full-size image opened in a lightbox by the card image and the "View screenshot" button
+      screenshot: "static/img/portfolio/hubspot-support-full.webp"
+      screenshot_alt: "Screenshot of HubSpot ticket board (sample project, fictional data)"
 
 how_i_work:
   title: "How I work"  # empty steps list hides the section
@@ -188,6 +198,7 @@ tools:
   title: "Tools I use"
   items:
     - "Logo Tiger 3"
+    - "HubSpot (practice)"
     - "Microsoft Excel"
     - "Google Sheets"
     - "Google Docs"
@@ -249,7 +260,7 @@ faq:
         - text: "send me an email"
           href: "email"
     - question: "Can I see examples of your work?"
-      answer: "Yes. The Selected work section has three sample projects built with fictional data, each with a link you can open."
+      answer: "Yes. The Selected work section has four sample projects built with fictional data. Three include a link you can open, and the HubSpot workflow is shown with a screenshot."
       links:
         - text: "Selected work"
           href: "#portfolio"
@@ -273,6 +284,8 @@ ui:
   skip_to_content: "Skip to content"
   book_call: "Book a call"
   see_sample: "See sample"
+  view_screenshot: "View screenshot"
+  close_screenshot: "Close screenshot"
   book_call_hero: "Book a 15-min call"
   copy_email: "Copy email address"
   email_copied: "Email address copied"
@@ -286,7 +299,7 @@ ui:
     - label: "Spreadsheets & documents"
       tools: ["Microsoft Excel", "Google Sheets", "Google Docs", "Google Slides", "Google Drive", "Google Calendar"]
     - label: "Business software"
-      tools: ["Logo Tiger 3"]
+      tools: ["Logo Tiger 3", "HubSpot (practice)"]
     - label: "Project management"
       tools: ["Trello", "Asana", "Notion"]
     - label: "Automation & data"

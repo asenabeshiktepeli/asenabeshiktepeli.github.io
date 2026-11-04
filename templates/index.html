@@ -242,12 +242,16 @@
             {% if item.image %}
             {# <name>-800.webp is made by tools/make_thumbs.py.
                The image repeats the "View sample" link for mouse users only. #}
-            {% if item.link %}<a class="project-media-link" href="{{ item.link }}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">{% endif %}
+            {% if item.screenshot %}
+            {# Opens the full screenshot in the lightbox below; without JS it opens in a new tab.
+               tabindex -1: keyboard users get the "View screenshot" button instead. #}
+            <a class="project-media-link project-media-zoom" href="{{ item.screenshot }}" target="_blank" rel="noopener" tabindex="-1" data-lightbox-open="lightbox-{{ item.id }}" aria-label="{{ ui.view_screenshot or 'View screenshot' }}: {{ item.title }}">
+            {% elif item.link %}<a class="project-media-link" href="{{ item.link }}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">{% endif %}
             <img src="{{ item.image }}"{% if item.image.endswith(".webp") %}
                  srcset="{{ item.image[:-5] }}-800.webp 800w, {{ item.image }} 1600w"
                  sizes="(max-width: 860px) calc(100vw - 64px), 520px"{% endif %}
                  alt="Screenshot of {{ item.title }}{% if item.label %} ({{ item.label | lower }}){% endif %}" width="1600" height="1000" loading="lazy" decoding="async">
-            {% if item.link %}</a>{% endif %}
+            {% if item.screenshot or item.link %}</a>{% endif %}
             {% endif %}
           </div>
           <div class="project-body">
@@ -265,8 +269,20 @@
                 {{ portfolio.view_label }} <span aria-hidden="true">↗</span>
               </a>
               {% endif %}
+              {% if item.screenshot and ui.view_screenshot %}
+              <a class="btn btn-ghost btn-sm" href="{{ item.screenshot }}" target="_blank" rel="noopener" data-lightbox-open="lightbox-{{ item.id }}" aria-label="{{ ui.view_screenshot }}: {{ item.title }}">
+                {{ ui.view_screenshot }} <span aria-hidden="true">⤢</span>
+              </a>
+              {% endif %}
             </div>
           </div>
+          {% if item.screenshot %}
+          {# Native modal; opened by main.js. Stays closed (invisible) without JS. #}
+          <dialog class="lightbox" id="lightbox-{{ item.id }}" aria-label="{{ item.screenshot_alt or item.title }}">
+            <button class="lightbox-close" type="button" aria-label="{{ ui.close_screenshot or 'Close' }}" autofocus><span aria-hidden="true">×</span></button>
+            <img class="lightbox-img" src="{{ item.screenshot }}" alt="{{ item.screenshot_alt or item.title }}" loading="lazy" decoding="async">
+          </dialog>
+          {% endif %}
         </article>
         {% endfor %}
       </div>

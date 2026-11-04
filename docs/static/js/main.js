@@ -1,6 +1,6 @@
 // Small, dependency-free enhancements:
 // header + scroll progress, active nav link, mobile menu, live clock, spotlight cards,
-// scroll reveal, count-up stats, email menus and copy email.
+// scroll reveal, count-up stats, email menus, copy email and screenshot lightbox.
 (function () {
   "use strict";
 
@@ -336,5 +336,45 @@
       event.preventDefault();
       closeEmailMenu(openEmail, true);
     }
+  });
+
+  // ---------- Screenshot lightbox ----------
+  // Links with data-lightbox-open="<dialog id>" open that <dialog> as a modal.
+  // Without JS (or without <dialog> support) they stay normal links to the full image.
+  $$("[data-lightbox-open]").forEach(function (trigger) {
+    var dialog = document.getElementById(trigger.getAttribute("data-lightbox-open"));
+    if (!dialog || typeof dialog.showModal !== "function") return;
+    // Focus target after closing: the card's "View screenshot" button (the image link is not in the tab order).
+    var returnFocus = $(".btn[data-lightbox-open]", dialog.closest(".project")) || trigger;
+    trigger.setAttribute("aria-haspopup", "dialog");
+
+    trigger.addEventListener("click", function (event) {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.button === 1) return; // new-tab clicks
+      event.preventDefault();
+      dialog.classList.remove("is-zoomed");
+      dialog.showModal();
+    });
+
+    if (dialog.dataset.lightboxReady) return;
+    dialog.dataset.lightboxReady = "1";
+    var img = $(".lightbox-img", dialog);
+
+    $(".lightbox-close", dialog).addEventListener("click", function () { dialog.close(); });
+
+    dialog.addEventListener("click", function (event) {
+      if (event.target === dialog) dialog.close(); // dark area around the image
+    });
+
+    if (img) {
+      img.addEventListener("click", function () {
+        dialog.classList.toggle("is-zoomed");
+      });
+    }
+
+    // Esc closes natively; focus always goes back to the "View screenshot" button.
+    dialog.addEventListener("close", function () {
+      dialog.classList.remove("is-zoomed");
+      returnFocus.focus({ preventScroll: true });
+    });
   });
 })();
