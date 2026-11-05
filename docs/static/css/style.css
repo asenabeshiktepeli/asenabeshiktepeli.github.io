@@ -1562,10 +1562,31 @@ html:not(.js) .js-only {
   background: transparent;
 }
 
+/* One figure per screenshot; main.js shows one at a time (the others are [hidden]). */
+.lightbox-slide {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  max-width: 100%;
+  margin: 0;
+}
+
+.lightbox-slide[hidden] {
+  display: none;
+}
+
+.lightbox-caption {
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #fff;
+  text-align: center;
+}
+
 .lightbox-img {
   display: block;
   max-width: 100%;
-  max-height: calc(100dvh - 72px);
+  max-height: calc(100dvh - 110px);
   width: auto;
   height: auto;
   border-radius: 10px;
@@ -1580,10 +1601,74 @@ html:not(.js) .js-only {
   place-items: start;
 }
 
+.lightbox.is-zoomed .lightbox-slide {
+  max-width: none;
+  justify-items: start;
+}
+
 .lightbox.is-zoomed .lightbox-img {
   max-width: none;
   max-height: none;
   cursor: zoom-out;
+}
+
+/* Gallery: "1 / 2" counter (top left) and ‹ › buttons (middle of each side) */
+.lightbox-counter {
+  position: fixed;
+  top: 20px;
+  left: 16px;
+  z-index: 1;
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+}
+
+.lightbox-nav {
+  position: fixed;
+  top: 50%;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-top: -22px;
+  padding: 0 0 4px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  background: rgba(6, 10, 20, 0.6);
+  color: #fff;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.lightbox-prev {
+  left: 12px;
+}
+
+.lightbox-next {
+  right: 12px;
+}
+
+.lightbox-nav:hover {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.lightbox-nav:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* Wide screens: keep the image clear of the side buttons */
+@media (min-width: 861px) {
+  .lightbox:has(.lightbox-nav) {
+    padding-left: 72px;
+    padding-right: 72px;
+  }
 }
 
 .lightbox-close {

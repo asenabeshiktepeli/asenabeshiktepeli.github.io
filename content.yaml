@@ -135,13 +135,19 @@ portfolio:
     - title: "HubSpot Support Workflow"
       id: "work-hubspot-support"
       label: "Sample project"
-      text: "A practice HubSpot help desk for a fictional online shop: 8 support tickets for delays, returns, refunds and damaged items, answered with reply snippets and moved through a ticket pipeline (New, Waiting on contact, Waiting on us, Closed). Test data and replies were loaded with Python through the HubSpot API."
+      text: "A practice HubSpot help desk for a fictional online shop: 8 support tickets for delays, returns, refunds and damaged items, answered with reply snippets and moved through a ticket pipeline (New, Waiting on contact, Waiting on us, Closed), then tracked on a service dashboard by status, category and source. Test data and replies were loaded with Python through the HubSpot API."
       tools: ["HubSpot", "Python"]
       link: ""  # no public link – View sample button stays hidden
       image: "static/img/portfolio/hubspot-support.webp"
-      # optional: full-size image opened in a lightbox by the card image and the "View screenshot" button
-      screenshot: "static/img/portfolio/hubspot-support-full.webp"
-      screenshot_alt: "Screenshot of HubSpot ticket board (sample project, fictional data)"
+      # optional: full-size images shown as a gallery in a lightbox, opened (at the first one)
+      # by the card image and the "View screenshots" button
+      screenshots:
+        - src: "static/img/portfolio/hubspot-support-full.webp"
+          alt: "Screenshot of HubSpot ticket board (sample project, fictional data)"
+          caption: "Ticket board"
+        - src: "static/img/portfolio/hubspot-dashboard-full.webp"
+          alt: "Screenshot of HubSpot Service Overview dashboard: tickets by status, category and source (sample project, fictional data)"
+          caption: "Service dashboard"
 
 how_i_work:
   title: "How I work"  # empty steps list hides the section
@@ -260,7 +266,7 @@ faq:
         - text: "send me an email"
           href: "email"
     - question: "Can I see examples of your work?"
-      answer: "Yes. The Selected work section has four sample projects built with fictional data. Three include a link you can open, and the HubSpot workflow is shown with a screenshot."
+      answer: "Yes. The Selected work section has four sample projects built with fictional data. Three include a link you can open, and the HubSpot workflow is shown with screenshots."
       links:
         - text: "Selected work"
           href: "#portfolio"
@@ -284,8 +290,10 @@ ui:
   skip_to_content: "Skip to content"
   book_call: "Book a call"
   see_sample: "See sample"
-  view_screenshot: "View screenshot"
+  view_screenshot: "View screenshots"
   close_screenshot: "Close screenshot"
+  prev_screenshot: "Previous screenshot"
+  next_screenshot: "Next screenshot"
   book_call_hero: "Book a 15-min call"
   copy_email: "Copy email address"
   email_copied: "Email address copied"

@@ -338,40 +338,74 @@
     }
   });
 
-  // ---------- Screenshot lightbox ----------
-  // Links with data-lightbox-open="<dialog id>" open that <dialog> as a modal.
-  // Without JS (or without <dialog> support) they stay normal links to the full image.
+  // ---------- Screenshot lightbox (gallery) ----------
+  // Links with data-lightbox-open="<dialog id>" open that <dialog> as a modal at its first screenshot.
+  // Without JS (or without <dialog> support) they stay normal links to the first full image.
+  // Each screenshot is a .lightbox-slide <figure>; ‹ › buttons and the ←/→ keys switch between them.
+  function setupLightbox(dialog) {
+    var slides = $$(".lightbox-slide", dialog);
+    var current = $(".lightbox-current", dialog);
+    var index = 0;
+
+    function show(i) {
+      index = (i + slides.length) % slides.length;
+      slides.forEach(function (slide, k) { slide.hidden = k !== index; });
+      if (current) current.textContent = String(index + 1);
+      var img = $(".lightbox-img", slides[index]);
+      if (img && img.alt) dialog.setAttribute("aria-label", img.alt);
+      dialog.classList.remove("is-zoomed");
+      dialog.scrollTop = 0;
+      dialog.scrollLeft = 0;
+    }
+
+    $(".lightbox-close", dialog).addEventListener("click", function () { dialog.close(); });
+
+    dialog.addEventListener("click", function (event) {
+      // dark area around the image (the dialog itself or an empty part of a slide)
+      if (event.target === dialog || event.target.classList.contains("lightbox-slide")) dialog.close();
+    });
+
+    $$(".lightbox-img", dialog).forEach(function (img) {
+      img.addEventListener("click", function () {
+        dialog.classList.toggle("is-zoomed");
+      });
+    });
+
+    if (slides.length > 1) {
+      var prev = $(".lightbox-prev", dialog);
+      var next = $(".lightbox-next", dialog);
+      if (prev) prev.addEventListener("click", function () { show(index - 1); });
+      if (next) next.addEventListener("click", function () { show(index + 1); });
+      dialog.addEventListener("keydown", function (event) {
+        if (event.altKey || event.ctrlKey || event.metaKey) return;
+        if (event.key === "ArrowLeft") { event.preventDefault(); show(index - 1); }
+        else if (event.key === "ArrowRight") { event.preventDefault(); show(index + 1); }
+      });
+    }
+
+    return show;
+  }
+
   $$("[data-lightbox-open]").forEach(function (trigger) {
     var dialog = document.getElementById(trigger.getAttribute("data-lightbox-open"));
     if (!dialog || typeof dialog.showModal !== "function") return;
-    // Focus target after closing: the card's "View screenshot" button (the image link is not in the tab order).
+    // One setup per dialog (the card image and the button share it).
+    if (!dialog._lightboxShow) dialog._lightboxShow = setupLightbox(dialog);
+    // Focus target after closing: the card's "View screenshots" button (the image link is not in the tab order).
     var returnFocus = $(".btn[data-lightbox-open]", dialog.closest(".project")) || trigger;
     trigger.setAttribute("aria-haspopup", "dialog");
 
     trigger.addEventListener("click", function (event) {
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.button === 1) return; // new-tab clicks
       event.preventDefault();
-      dialog.classList.remove("is-zoomed");
+      dialog._lightboxShow(0);
       dialog.showModal();
     });
 
     if (dialog.dataset.lightboxReady) return;
     dialog.dataset.lightboxReady = "1";
-    var img = $(".lightbox-img", dialog);
 
-    $(".lightbox-close", dialog).addEventListener("click", function () { dialog.close(); });
-
-    dialog.addEventListener("click", function (event) {
-      if (event.target === dialog) dialog.close(); // dark area around the image
-    });
-
-    if (img) {
-      img.addEventListener("click", function () {
-        dialog.classList.toggle("is-zoomed");
-      });
-    }
-
-    // Esc closes natively; focus always goes back to the "View screenshot" button.
+    // Esc closes natively; focus always goes back to the "View screenshots" button.
     dialog.addEventListener("close", function () {
       dialog.classList.remove("is-zoomed");
       returnFocus.focus({ preventScroll: true });

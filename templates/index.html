@@ -237,21 +237,24 @@
       {% if portfolio.intro %}<p class="section-intro reveal">{{ portfolio.intro }}</p>{% endif %}
       <div class="projects">
         {% for item in portfolio["items"] %}
+        {# Screenshots for the lightbox gallery: a list of {src, alt, caption} from content.yaml. #}
+        {% set shots = item.screenshots or [] %}
+        {% set first_shot = shots[0].src if shots else "" %}
         <article class="card project spotlight reveal"{% if item.id %} id="{{ item.id }}"{% endif %} style="--d: {{ loop.index0 }}">
           <div class="project-media" aria-hidden="{{ 'false' if item.image else 'true' }}">
             {% if item.image %}
             {# <name>-800.webp is made by tools/make_thumbs.py.
                The image repeats the "View sample" link for mouse users only. #}
-            {% if item.screenshot %}
-            {# Opens the full screenshot in the lightbox below; without JS it opens in a new tab.
-               tabindex -1: keyboard users get the "View screenshot" button instead. #}
-            <a class="project-media-link project-media-zoom" href="{{ item.screenshot }}" target="_blank" rel="noopener" tabindex="-1" data-lightbox-open="lightbox-{{ item.id }}" aria-label="{{ ui.view_screenshot or 'View screenshot' }}: {{ item.title }}">
+            {% if shots %}
+            {# Opens the lightbox gallery below at the first screenshot; without JS the first one opens in a new tab.
+               tabindex -1: keyboard users get the "View screenshots" button instead. #}
+            <a class="project-media-link project-media-zoom" href="{{ first_shot }}" target="_blank" rel="noopener" tabindex="-1" data-lightbox-open="lightbox-{{ item.id }}" aria-label="{{ ui.view_screenshot or 'View screenshot' }}: {{ item.title }}">
             {% elif item.link %}<a class="project-media-link" href="{{ item.link }}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">{% endif %}
             <img src="{{ item.image }}"{% if item.image.endswith(".webp") %}
                  srcset="{{ item.image[:-5] }}-800.webp 800w, {{ item.image }} 1600w"
                  sizes="(max-width: 860px) calc(100vw - 64px), 520px"{% endif %}
                  alt="Screenshot of {{ item.title }}{% if item.label %} ({{ item.label | lower }}){% endif %}" width="1600" height="1000" loading="lazy" decoding="async">
-            {% if item.screenshot or item.link %}</a>{% endif %}
+            {% if shots or item.link %}</a>{% endif %}
             {% endif %}
           </div>
           <div class="project-body">
@@ -269,18 +272,29 @@
                 {{ portfolio.view_label }} <span aria-hidden="true">↗</span>
               </a>
               {% endif %}
-              {% if item.screenshot and ui.view_screenshot %}
-              <a class="btn btn-ghost btn-sm" href="{{ item.screenshot }}" target="_blank" rel="noopener" data-lightbox-open="lightbox-{{ item.id }}" aria-label="{{ ui.view_screenshot }}: {{ item.title }}">
+              {% if shots and ui.view_screenshot %}
+              <a class="btn btn-ghost btn-sm" href="{{ first_shot }}" target="_blank" rel="noopener" data-lightbox-open="lightbox-{{ item.id }}" aria-label="{{ ui.view_screenshot }}: {{ item.title }}">
                 {{ ui.view_screenshot }} <span aria-hidden="true">⤢</span>
               </a>
               {% endif %}
             </div>
           </div>
-          {% if item.screenshot %}
-          {# Native modal; opened by main.js. Stays closed (invisible) without JS. #}
-          <dialog class="lightbox" id="lightbox-{{ item.id }}" aria-label="{{ item.screenshot_alt or item.title }}">
+          {% if shots %}
+          {# Native modal gallery; opened by main.js. Stays closed (invisible) without JS.
+             One <figure> per screenshot; main.js shows one at a time. #}
+          <dialog class="lightbox" id="lightbox-{{ item.id }}" aria-label="{{ shots[0].alt or item.title }}">
             <button class="lightbox-close" type="button" aria-label="{{ ui.close_screenshot or 'Close' }}" autofocus><span aria-hidden="true">×</span></button>
-            <img class="lightbox-img" src="{{ item.screenshot }}" alt="{{ item.screenshot_alt or item.title }}" loading="lazy" decoding="async">
+            {% for shot in shots %}
+            <figure class="lightbox-slide"{% if not loop.first %} hidden{% endif %}>
+              <img class="lightbox-img" src="{{ shot.src }}" alt="{{ shot.alt or item.title }}" loading="lazy" decoding="async">
+              {% if shot.caption %}<figcaption class="lightbox-caption">{{ shot.caption }}</figcaption>{% endif %}
+            </figure>
+            {% endfor %}
+            {% if shots | length > 1 %}
+            <p class="lightbox-counter" aria-live="polite"><span class="lightbox-current">1</span> / {{ shots | length }}</p>
+            <button class="lightbox-nav lightbox-prev" type="button" aria-label="{{ ui.prev_screenshot or 'Previous' }}"><span aria-hidden="true">‹</span></button>
+            <button class="lightbox-nav lightbox-next" type="button" aria-label="{{ ui.next_screenshot or 'Next' }}"><span aria-hidden="true">›</span></button>
+            {% endif %}
           </dialog>
           {% endif %}
         </article>
