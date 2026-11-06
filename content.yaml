@@ -7,6 +7,8 @@ meta:
   lang: en
   url: "https://asenabeshiktepeli.github.io"  # no trailing slash; used for canonical, Open Graph, sitemap and robots.txt
   og_image: "static/og/og-image.png"  # link preview image, made by tools/make_og.py
+  og_image_alt: "Asena Beshiktepeli – E-commerce Virtual Assistant & Customer Support"  # empty = meta.title
+  site_name: "Asena Beshiktepeli"  # og:site_name; empty hides it
 
 nav:
   brand: "Asena Beshiktepeli"
