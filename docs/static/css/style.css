@@ -1436,6 +1436,22 @@ html:not(.js) .js-only {
   transform: translateY(-4px) scale(1.015);
 }
 
+/* Optional video instead of a screenshot: 16:9, scales with the card */
+.project-media .project-video {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #000;
+  box-shadow: var(--shadow);
+}
+
 /* Clickable screenshot (same link as "View sample") */
 .project-media-link {
   position: relative;

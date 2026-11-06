@@ -182,6 +182,15 @@ portfolio:
         - src: "static/img/portfolio/ai-drafting-top-full.webp"
           alt: "Rules for using AI in customer support (sample project)"
           caption: "My rules: no customer data in public AI tools, policy from the store, every draft reviewed."
+    - title: "Customer Request Automation (n8n)"
+      id: "work-request-automation"
+      label: "Sample project"
+      text: "A customer request form that runs itself. n8n creates an Asana task with priority and a due date, adds a follow-up reminder to Google Calendar and logs the request in Google Sheets. An hourly workflow marks the log as Done when the task is completed in Asana."
+      tools: ["n8n", "Asana", "Google Calendar", "Google Sheets"]
+      link: ""  # no public link – View sample button stays hidden
+      # optional: a video shown instead of an image (click to play, no autoplay)
+      video: "static/video/customer-request-automation.mp4"
+      poster: "static/img/portfolio/customer-request-automation-poster.jpg"
 
 how_i_work:
   title: "How I work"  # empty steps list hides the section
@@ -302,7 +311,7 @@ faq:
         - text: "send me an email"
           href: "email"
     - question: "Can I see examples of your work?"
-      answer: "Yes. The Selected work section has six sample projects built with fictional data. Four include a link you can open, and the HubSpot and Jira help desks are shown with screenshots."
+      answer: "Yes. The Selected work section has seven sample projects built with fictional data. Four include a link you can open, the HubSpot and Jira help desks are shown with screenshots, and the n8n automation is shown in a short video."
       links:
         - text: "Selected work"
           href: "#portfolio"
