@@ -96,7 +96,7 @@ def person_jsonld(content):
     if len(place) >= 2 and all(place):
         person["address"] = {"@type": "PostalAddress", "addressLocality": place[0], "addressCountry": place[-1]}
 
-    same_as = [url for url in (contact.get("github"), contact.get("upwork")) if url]
+    same_as = [url for url in (contact.get("github"), contact.get("linkedin"), contact.get("upwork")) if url]
     if same_as:
         person["sameAs"] = same_as
 

@@ -545,8 +545,8 @@
         </div>
         {% endif %}
         <ul class="contact-links">
-          {% for url in [contact.github, contact.upwork] | select %}
-          <li><a href="{{ url }}" target="_blank" rel="noopener">{{ url | display_url }} <span aria-hidden="true">↗</span></a></li>
+          {% for url, label in [(contact.github, contact.github | display_url), (contact.linkedin, "LinkedIn"), (contact.upwork, contact.upwork | display_url)] if url %}
+          <li><a href="{{ url }}" target="_blank" rel="noopener">{{ label }} <span aria-hidden="true">↗</span></a></li>
           {% endfor %}
           {% if ns.cv %}
           <li><a href="{{ ns.cv }}" download="{{ cv_file }}">{{ ns.cv_label }} <span aria-hidden="true">↓</span></a></li>
@@ -582,7 +582,7 @@
       {% if footer.copyright %}<p>{{ footer.copyright | no_translate }}</p>{% endif %}
       {% if footer.note %}<p>{{ footer.note }}</p>{% endif %}
       <ul class="footer-links">
-        {% for url in [contact.github, contact.upwork] | select %}<li><a href="{{ url }}" target="_blank" rel="noopener">{{ url | display_url }}</a></li>{% endfor %}
+        {% for url, label in [(contact.github, contact.github | display_url), (contact.linkedin, "LinkedIn"), (contact.upwork, contact.upwork | display_url)] if url %}<li><a href="{{ url }}" target="_blank" rel="noopener">{{ label }}</a></li>{% endfor %}
         {% if ns.cv %}<li><a href="{{ ns.cv }}" download="{{ cv_file }}">{{ ns.cv_label }}</a></li>{% endif %}
         {% if ui.back_to_top %}<li><a href="#top">{{ ui.back_to_top }} <span aria-hidden="true">↑</span></a></li>{% endif %}
       </ul>
