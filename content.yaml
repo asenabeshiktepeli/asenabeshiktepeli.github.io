@@ -118,7 +118,7 @@ portfolio:
       label: "Sample project"
       text: "A Google Sheets tracker that shows each order's status, shipping date and follow-up notes at a glance."
       tools: ["Google Sheets"]
-      link: "https://docs.google.com/spreadsheets/d/1qmdii_crHkBCz38AoZM4wB0z7KvREubd9FTeGDE5Ieg/edit?usp=sharing"
+      link: "https://docs.google.com/spreadsheets/d/1qmdii_crHkBCz38AoZM4wB0z7KvREubd9FTeGDE5Ieg/preview"
       image: "static/img/portfolio/order-tracking.webp"
     - title: "Customer Support Response Library"
       id: "work-response-library"
@@ -132,7 +132,7 @@ portfolio:
       label: "Sample project"
       text: "A messy customer export cleaned with reusable formulas: duplicates found automatically, names split, dates, countries and amounts standardised, every change logged and every row checked against the final list."
       tools: ["Google Sheets"]
-      link: "https://docs.google.com/spreadsheets/d/15lbhsX5VS6nrGrRYlrYHuI1Cgy2hru-fDLFgh4He9sY/edit?usp=sharing"
+      link: "https://docs.google.com/spreadsheets/d/15lbhsX5VS6nrGrRYlrYHuI1Cgy2hru-fDLFgh4He9sY/preview"
       image: "static/img/portfolio/data-cleanup.webp"
     - title: "HubSpot Support Workflow"
       id: "work-hubspot-support"
