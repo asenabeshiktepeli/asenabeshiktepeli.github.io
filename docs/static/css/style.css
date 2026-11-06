@@ -1484,6 +1484,24 @@ html:not(.js) .js-only {
   margin-top: 8px;
 }
 
+/* Wide cards (desktop): tags on their own row, buttons side by side below, left-aligned */
+@media (min-width: 861px) {
+  .project:first-child .project-foot,
+  .project:last-child:nth-child(even) .project-foot {
+    justify-content: flex-start;
+  }
+
+  .project:first-child .project-foot .chips,
+  .project:last-child:nth-child(even) .project-foot .chips {
+    flex-basis: 100%;
+  }
+
+  .project:first-child .project-foot .btn,
+  .project:last-child:nth-child(even) .project-foot .btn {
+    white-space: nowrap;
+  }
+}
+
 .badge {
   display: inline-flex;
   align-items: center;
