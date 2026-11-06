@@ -18,6 +18,7 @@ ROOT = Path(__file__).resolve().parent
 CONTENT = ROOT / "content.yaml"
 TEMPLATES = ROOT / "templates"
 STATIC = ROOT / "static"
+ROOT_FILES = ROOT / "root"  # copied as-is to the top of docs/ (e.g. search console verification)
 OUT = ROOT / "docs"
 
 # Proper names inside sentences that browser translation should leave alone.
@@ -178,6 +179,12 @@ def main():
     if out_static.exists():
         shutil.rmtree(out_static)
     shutil.copytree(STATIC, out_static)
+
+    # Files that must live at the site root, copied unchanged on every build.
+    if ROOT_FILES.is_dir():
+        for path in ROOT_FILES.iterdir():
+            if path.is_file():
+                shutil.copy2(path, OUT / path.name)
 
     (OUT / ".nojekyll").touch(exist_ok=True)
 
