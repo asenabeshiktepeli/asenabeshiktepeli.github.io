@@ -148,6 +148,23 @@ portfolio:
         - src: "static/img/portfolio/hubspot-dashboard-full.webp"
           alt: "Screenshot of HubSpot Service Overview dashboard: tickets by status, category and source (sample project, fictional data)"
           caption: "Service dashboard"
+    - title: "Jira Partner Support Desk"
+      id: "work-jira-support"
+      label: "Sample project"
+      text: "A practice Jira Service Management desk for fictional bank and payment partners: incidents and service requests with urgency and impact, internal notes kept separate from partner-facing replies, and SLA goals for first response and resolution that pause while waiting for the customer. The screenshots show a breached SLA, a paused SLA and an SLA met."
+      tools: ["Jira Service Management"]
+      link: ""  # no public link – View sample button stays hidden
+      image: "static/img/portfolio/jira-support.webp"
+      screenshots:
+        - src: "static/img/portfolio/jira-incident-full.webp"
+          alt: "Screenshot of a Jira incident with an internal note and a partner reply (sample project, fictional data)"
+          caption: "Incident with internal note and reply"
+        - src: "static/img/portfolio/jira-sla-paused-full.webp"
+          alt: "Screenshot of Jira SLA timers paused while waiting for the customer (sample project, fictional data)"
+          caption: "SLA breached and paused"
+        - src: "static/img/portfolio/jira-sla-met-full.webp"
+          alt: "Screenshot of a resolved Jira request with the resolution SLA met (sample project, fictional data)"
+          caption: "Resolved within SLA"
 
 how_i_work:
   title: "How I work"  # empty steps list hides the section
@@ -205,6 +222,7 @@ tools:
   items:
     - "Logo Tiger 3"
     - "HubSpot (practice)"
+    - "Jira Service Management (practice)"
     - "Microsoft Excel"
     - "Google Sheets"
     - "Google Docs"
@@ -266,7 +284,7 @@ faq:
         - text: "send me an email"
           href: "email"
     - question: "Can I see examples of your work?"
-      answer: "Yes. The Selected work section has four sample projects built with fictional data. Three include a link you can open, and the HubSpot workflow is shown with screenshots."
+      answer: "Yes. The Selected work section has five sample projects built with fictional data. Three include a link you can open, and the HubSpot and Jira help desks are shown with screenshots."
       links:
         - text: "Selected work"
           href: "#portfolio"
@@ -307,7 +325,7 @@ ui:
     - label: "Spreadsheets & documents"
       tools: ["Microsoft Excel", "Google Sheets", "Google Docs", "Google Slides", "Google Drive", "Google Calendar"]
     - label: "Business software"
-      tools: ["Logo Tiger 3", "HubSpot (practice)"]
+      tools: ["Logo Tiger 3", "HubSpot (practice)", "Jira Service Management (practice)"]
     - label: "Project management"
       tools: ["Trello", "Asana", "Notion"]
     - label: "Automation & data"
