@@ -62,6 +62,7 @@ services:
         - "Replies to email, chat and marketplace messages in your tone"
         - "Complaints and returns handled with clear next steps"
         - "Refunds and special cases escalated to you"
+        - "AI-assisted first drafts, always reviewed before sending"
       sample: "#work-response-library"  # optional: link to a portfolio card id
     - title: "Order & Shipping Tracking"
       text: "Keeping every order visible from purchase to delivery, and following up on delays."
@@ -184,7 +185,7 @@ how_i_work:
 case_study:
   title: "Automation case study"
   name: "Python workflow with a human approval step"
-  summary: "A personal system I built with an AI coding assistant to run my own remote job search: it collects listings, scores them, drafts tailored emails and waits for my approval before anything is sent. I can apply the same approach to repetitive business tasks such as order follow-ups or payment reminders."
+  summary: "A personal system I built with an AI coding assistant to run my own remote job search: it collects listings, scores them, drafts tailored emails and waits for my approval before anything is sent. I can apply the same approach to repetitive business tasks such as order follow-ups or payment reminders. AI does the repetitive part; a person approves every result."
   steps:
     - "Collects job listings from multiple sources"
     - "Scores and filters them against my criteria"
@@ -291,6 +292,8 @@ faq:
       links:
         - text: "Selected work"
           href: "#portfolio"
+    - question: "How do you use AI in your work?"
+      answer: "I use AI tools for first drafts, summaries and spreadsheet formulas, so routine work gets done faster. I review and edit every reply before it is sent, keep your brand's tone, and never paste customer names, emails or order details into public AI tools. I follow your company's rules on which tools are allowed."
 
 footer:
   cta: "Your customers, orders and data, in good hands."
