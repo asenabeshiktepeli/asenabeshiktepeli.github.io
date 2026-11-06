@@ -1,0 +1,247 @@
+{
+  "name": "Sample Store – Sync completed tasks",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "name": "Every hour",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -384,
+        80
+      ],
+      "id": "f645201d-840b-41c4-964a-5a46875bf2a2"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Requests",
+          "mode": "name"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Status",
+              "lookupValue": "Open"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Get open requests",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -144,
+        80
+      ],
+      "id": "60baec2a-bf4e-4cc6-bd3b-a540a984a065",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Jt5W4ZMzMjXcFxXG",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "get",
+        "id": "={{ $json['Asana task ID'] }}"
+      },
+      "name": "Get Asana task",
+      "type": "n8n-nodes-base.asana",
+      "typeVersion": 1,
+      "position": [
+        96,
+        80
+      ],
+      "id": "f4907d02-d89e-4115-8ab8-56273596f4da",
+      "credentials": {
+        "asanaOAuth2Api": {
+          "id": "Cu1HnrusJ77UY3TM",
+          "name": "Asana account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "0712552e-f572-427b-9347-2bc3ed567fe1",
+              "leftValue": "={{ $json.completed }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "name": "Task completed?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        336,
+        80
+      ],
+      "id": "68a6f1a7-cece-4e6e-8003-199c4af73048"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Requests",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Asana task ID": "={{ $json.gid }}",
+            "Status": "Done",
+            "Completed at": "={{ DateTime.fromISO($json.completed_at).setZone('Asia/Famagusta').toFormat('yyyy-MM-dd HH:mm') }}"
+          },
+          "matchingColumns": [
+            "Asana task ID"
+          ],
+          "schema": [
+            {
+              "id": "Asana task ID",
+              "displayName": "Asana task ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Completed at",
+              "displayName": "Completed at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Mark as Done in Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        576,
+        -32
+      ],
+      "id": "12b21327-4b86-46f5-bdc4-e19487c6d23e",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Jt5W4ZMzMjXcFxXG",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Every hour": {
+      "main": [
+        [
+          {
+            "node": "Get open requests",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get open requests": {
+      "main": [
+        [
+          {
+            "node": "Get Asana task",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Asana task": {
+      "main": [
+        [
+          {
+            "node": "Task completed?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Task completed?": {
+      "main": [
+        [
+          {
+            "node": "Mark as Done in Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": true
+  },
+  "versionId": "866c3fd0-381e-4866-bebb-7e879e14ea11",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": ""
+  },
+  "nodeGroups": [],
+  "id": "hO4qipkQOq1AcGD6",
+  "tags": []
+}
