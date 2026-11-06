@@ -243,7 +243,7 @@
           <div class="project-media" aria-hidden="{{ 'false' if item.image or item.video else 'true' }}">
             {% if item.video %}
             {# Optional video instead of an image: plays only when the visitor presses play. #}
-            <video class="project-video" src="{{ item.video }}" controls preload="none" playsinline{% if item.poster %} poster="{{ item.poster }}"{% endif %}
+            <video class="project-video" src="{{ item.video }}" controls preload="metadata" playsinline{% if item.poster %} poster="{{ item.poster }}"{% endif %}
                    width="1280" height="720" aria-label="Video: {{ item.title }}{% if item.label %} ({{ item.label | lower }}){% endif %}"></video>
             {% elif item.image %}
             {# <name>-800.webp is made by tools/make_thumbs.py.
