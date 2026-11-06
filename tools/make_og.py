@@ -4,9 +4,15 @@ Writes static/og/og-image.png (1200x630), static/favicon.png (32x32)
 and static/apple-touch-icon.png (180x180). Run before build.py:
 
     .\\.venv\\Scripts\\python.exe tools\\make_og.py
+    .\\.venv\\Scripts\\python.exe tools\\make_og.py --monogram   (AB monogram instead of the photo)
+
+The preview image uses hero.photo from content.yaml as a round portrait;
+if that file is missing (or --monogram is given) it falls back to the monogram.
+The icons always use the monogram.
 """
 
 import re
+import sys
 from pathlib import Path
 
 import yaml
@@ -72,7 +78,28 @@ def monogram(draw, box, letters, radius, size):
     draw.text((cx, cy), letters, font=face, fill=WHITE, anchor="mm")
 
 
-def og_image(name, title, url, path):
+def portrait(image, draw, center, diameter, photo_path):
+    """Paste the photo as a circle inside a white ring with a thin border."""
+    s = SCALE
+    cx, cy = center
+    ring = 10 * s
+    outer = diameter // 2 + ring
+    draw.ellipse([cx - outer - 2 * s, cy - outer - 2 * s, cx + outer + 2 * s, cy + outer + 2 * s], fill=BORDER)
+    draw.ellipse([cx - outer, cy - outer, cx + outer, cy + outer], fill=WHITE)
+
+    with Image.open(photo_path) as source:
+        photo = source.convert("RGB")
+    side = min(photo.size)
+    left = (photo.width - side) // 2
+    top = (photo.height - side) // 2
+    photo = photo.crop((left, top, left + side, top + side)).resize((diameter, diameter), Image.Resampling.LANCZOS)
+
+    mask = Image.new("L", (diameter, diameter), 0)
+    ImageDraw.Draw(mask).ellipse([0, 0, diameter - 1, diameter - 1], fill=255)
+    image.paste(photo, (cx - diameter // 2, cy - diameter // 2), mask)
+
+
+def og_image(name, title, url, path, photo_path=None):
     s = SCALE
     width, height = 1200 * s, 630 * s
     image = Image.new("RGB", (width, height), WHITE)
@@ -109,13 +136,16 @@ def og_image(name, title, url, path):
         draw.ellipse([left, uy + 12 * s, left + 12 * s, uy + 24 * s], fill=ACCENT)
         draw.text((left + 26 * s, uy), url, font=url_face, fill=ACCENT)
 
-    # Monogram card on the right
+    # Round photo (or monogram card) on the right
     size = 300 * s
     x0 = width - 96 * s - size
     y0 = (height - size) // 2
-    draw.rounded_rectangle([x0 - 2 * s, y0 - 2 * s, x0 + size + 2 * s, y0 + size + 2 * s],
-                           radius=64 * s, fill=BORDER)
-    monogram(draw, [x0, y0, x0 + size, y0 + size], initials(name), 62 * s, 132 * s)
+    if photo_path:
+        portrait(image, draw, (x0 + size // 2, y0 + size // 2), 320 * s, photo_path)
+    else:
+        draw.rounded_rectangle([x0 - 2 * s, y0 - 2 * s, x0 + size + 2 * s, y0 + size + 2 * s],
+                               radius=64 * s, fill=BORDER)
+        monogram(draw, [x0, y0, x0 + size, y0 + size], initials(name), 62 * s, 132 * s)
 
     image = image.resize((1200, 630), Image.Resampling.LANCZOS)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -143,7 +173,14 @@ def main():
     url = display_url(meta.get("url"))
 
     og_path = ROOT / (meta.get("og_image") or "static/og/og-image.png")
-    og_image(name, title, url, og_path)
+    photo_path = None
+    if "--monogram" not in sys.argv[1:] and hero.get("photo"):
+        candidate = ROOT / hero["photo"]
+        if candidate.is_file():
+            photo_path = candidate
+        else:
+            print(f"Photo not found ({hero['photo']}), using the monogram")
+    og_image(name, title, url, og_path, photo_path)
     icon(name, 32, STATIC / "favicon.png")
     # iOS rounds the corners itself, so the touch icon stays square.
     icon(name, 180, STATIC / "apple-touch-icon.png", rounded=False)

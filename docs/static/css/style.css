@@ -1693,6 +1693,7 @@ html:has(.lightbox[open]) {
 
   .project:first-child .project-media,
   .project:last-child:nth-child(even) .project-media {
+    min-height: 220px;
     border-right: 0;
     border-bottom: 1px solid var(--border);
     border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
