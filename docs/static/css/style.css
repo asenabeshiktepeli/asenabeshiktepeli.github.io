@@ -1047,30 +1047,7 @@ html:not(.js) .js-only {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 8px;
   margin-bottom: clamp(28px, 4vw, 48px);
-}
-
-/* Small, quiet section number with a short tick */
-.section-index {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--faint);
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-}
-
-.section-index::after {
-  content: "";
-  width: 12px;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.6;
 }
 
 .section-title {

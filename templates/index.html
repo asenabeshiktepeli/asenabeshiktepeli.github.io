@@ -1,9 +1,8 @@
 {% extends "base.html" %}
 
-{% macro section_head(title, number) %}
+{% macro section_head(title) %}
   {% if title %}
   <div class="section-head reveal">
-    <span class="section-index" aria-hidden="true">{{ "%02d" | format(number) }}</span>
     <h2 class="section-title">{{ title }}</h2>
   </div>
   {% endif %}
@@ -197,7 +196,7 @@
   {% set sec.n = sec.n + 1 %}
   <section class="section{% if sec.n is odd %} section-soft{% endif %}" id="services">
     <div class="container">
-      {{ section_head(services.title, sec.n) }}
+      {{ section_head(services.title) }}
       <div class="services">
         {% for service in services["items"] %}
         <article class="card service spotlight reveal" style="--d: {{ loop.index0 }}">
@@ -233,7 +232,7 @@
   {% set sec.n = sec.n + 1 %}
   <section class="section{% if sec.n is odd %} section-soft{% endif %}" id="portfolio">
     <div class="container">
-      {{ section_head(portfolio.title, sec.n) }}
+      {{ section_head(portfolio.title) }}
       {% if portfolio.intro %}<p class="section-intro reveal">{{ portfolio.intro }}</p>{% endif %}
       <div class="projects">
         {% for item in portfolio["items"] %}
@@ -310,7 +309,7 @@
   {% set sec.n = sec.n + 1 %}
   <section class="section{% if sec.n is odd %} section-soft{% endif %}" id="how-i-work">
     <div class="container">
-      {{ section_head(how_i_work.title, sec.n) }}
+      {{ section_head(how_i_work.title) }}
       <ol class="steps" style="--n: {{ hiw_steps | length }}">
         {% for step in hiw_steps %}
         <li class="card step reveal" style="--d: {{ loop.index0 }}">
@@ -337,7 +336,7 @@
   {% set sec.n = sec.n + 1 %}
   <section class="section{% if sec.n is odd %} section-soft{% endif %}" id="case-study">
     <div class="container">
-      {{ section_head(case_study.title, sec.n) }}
+      {{ section_head(case_study.title) }}
       <article class="case spotlight reveal">
         <div class="case-bg" aria-hidden="true"></div>
         <div class="case-inner">
@@ -392,7 +391,7 @@
   {% set sec.n = sec.n + 1 %}
   <section class="section{% if sec.n is odd %} section-soft{% endif %}" id="about">
     <div class="container">
-      {{ section_head(about.title, sec.n) }}
+      {{ section_head(about.title) }}
       {% if about_paragraphs %}
       <div class="background-intro reveal">
         {% for paragraph in about_paragraphs %}<p>{{ paragraph | no_translate }}</p>{% endfor %}
@@ -434,7 +433,7 @@
   {% set sec.n = sec.n + 1 %}
   <section class="section{% if sec.n is odd %} section-soft{% endif %}" id="certifications">
     <div class="container">
-      {{ section_head(certifications.title, sec.n) }}
+      {{ section_head(certifications.title) }}
       <ul class="certs">
         {% for cert in certifications["items"] %}
         <li class="card cert spotlight reveal" style="--d: {{ loop.index0 }}">
@@ -465,7 +464,7 @@
   {% set sec.n = sec.n + 1 %}
   <section class="section{% if sec.n is odd %} section-soft{% endif %}" id="tools">
     <div class="container">
-      {{ section_head(tools.title, sec.n) }}
+      {{ section_head(tools.title) }}
       {# Groups come from ui.tool_groups; only names that exist in tools.items are shown,
          and any tool left out of every group still appears in a final card. #}
       {% set groups = ui.tool_groups or [] %}
@@ -501,7 +500,7 @@
   {% set sec.n = sec.n + 1 %}
   <section class="section{% if sec.n is odd %} section-soft{% endif %}" id="faq">
     <div class="container">
-      {{ section_head(faq.title, sec.n) }}
+      {{ section_head(faq.title) }}
       <div class="faq card reveal">
         {% for item in faq_items %}
         <details class="faq-item">
@@ -519,7 +518,7 @@
   <section class="section contact{% if sec.n is odd %} section-soft{% endif %}" id="contact">
     <div class="container contact-layout">
       <div class="contact-intro reveal">
-        {{ section_head(contact.title, sec.n) }}
+        {{ section_head(contact.title) }}
         {% if contact.text %}<p class="statement">{{ contact.text }}</p>{% endif %}
         {# Location only; work style and languages are covered by At a glance and the FAQ #}
         {% if contact.location %}
