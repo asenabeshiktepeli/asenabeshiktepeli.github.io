@@ -270,9 +270,11 @@
                 {% for tool in item.tools %}<li class="chip chip-sm">{{ tool }}</li>{% endfor %}
               </ul>
               {% endif %}
-              {% if item.link and portfolio.view_label %}
-              <a class="btn btn-ghost btn-sm" href="{{ item.link }}" target="_blank" rel="noopener" aria-label="{{ portfolio.view_label }}: {{ item.title }} (opens in a new tab)">
-                {{ portfolio.view_label }} <span aria-hidden="true">↗</span>
+              {# Optional item.link_label replaces the shared "View sample" text for this card only. #}
+              {% set link_label = item.link_label or portfolio.view_label %}
+              {% if item.link and link_label %}
+              <a class="btn btn-ghost btn-sm" href="{{ item.link }}" target="_blank" rel="noopener" aria-label="{{ link_label }}: {{ item.title }} (opens in a new tab)">
+                {{ link_label }} <span aria-hidden="true">↗</span>
               </a>
               {% endif %}
               {% if shots and ui.view_screenshot %}
