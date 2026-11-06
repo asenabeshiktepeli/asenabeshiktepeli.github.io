@@ -168,6 +168,20 @@ portfolio:
         - src: "static/img/portfolio/jira-sla-met-full.webp"
           alt: "Screenshot of a resolved Jira request with the resolution SLA met (sample project, fictional data)"
           caption: "Resolved within SLA"
+    - title: "AI-Assisted Reply Drafting"
+      id: "work-ai-drafting"
+      label: "Sample project"
+      text: "How I use AI for first drafts of customer replies, and how I check every draft against store policy before it is sent. Four examples show the AI draft, the reviewed reply and what I changed and why."
+      tools: ["Google Docs", "AI assistant"]
+      link: "https://docs.google.com/document/d/1uEHgSsQIdq1cHJ-TXXhwg54oFaYkwxCzJ63wrU6IX64/edit?usp=sharing"
+      image: "static/img/portfolio/ai-drafting.webp"
+      screenshots:
+        - src: "static/img/portfolio/ai-drafting-example-full.webp"
+          alt: "AI first draft and reviewed reply for a damaged item (sample project)"
+          caption: "An AI draft that promised an unapproved refund, and the reviewed reply that was sent."
+        - src: "static/img/portfolio/ai-drafting-top-full.webp"
+          alt: "Rules for using AI in customer support (sample project)"
+          caption: "My rules: no customer data in public AI tools, policy from the store, every draft reviewed."
 
 how_i_work:
   title: "How I work"  # empty steps list hides the section
@@ -288,7 +302,7 @@ faq:
         - text: "send me an email"
           href: "email"
     - question: "Can I see examples of your work?"
-      answer: "Yes. The Selected work section has five sample projects built with fictional data. Three include a link you can open, and the HubSpot and Jira help desks are shown with screenshots."
+      answer: "Yes. The Selected work section has six sample projects built with fictional data. Four include a link you can open, and the HubSpot and Jira help desks are shown with screenshots."
       links:
         - text: "Selected work"
           href: "#portfolio"
