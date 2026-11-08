@@ -197,13 +197,16 @@
   <section class="section{% if sec.n is odd %} section-soft{% endif %}" id="services">
     <div class="container">
       {{ section_head(services.title) }}
+      {% set pkgs = (packages["items"] or []) | selectattr("title") | list if packages else [] %}
+      {% set pkgs_any = pkgs | length > 0 %}
       <div class="services">
         {% for service in services["items"] %}
         <article class="card service spotlight reveal" style="--d: {{ loop.index0 }}">
-          <div class="service-top">
+          {# Icon to the left of the title (saves a row; four cards fit in one line on desktop) #}
+          <div class="service-head">
             <span class="icon-tile">{{ service_icon(loop.index0) }}</span>
+            <h3 class="card-title">{{ service.title }}</h3>
           </div>
-          <h3 class="card-title">{{ service.title }}</h3>
           {% if service.text %}<p class="card-text">{{ service.text }}</p>{% endif %}
           {% if service.includes %}
           {# Phones: the list sits in a closed "What's included" <details> (main.js closes it under 640px).
@@ -219,27 +222,40 @@
           </ul>
           {% if ui.whats_included %}</details>{% endif %}
           {% endif %}
-          {% if service.sample and ui.see_sample %}
-          <a class="service-sample" href="{{ service.sample }}" aria-label="{{ ui.see_sample }}: {{ service.title }}">
-            {{ ui.see_sample }} <span class="btn-arrow" aria-hidden="true">→</span>
-          </a>
+          {# Bottom links: the matching sample, and (optional) the fixed-price setup below #}
+          {% set has_sample = service.sample and ui.see_sample %}
+          {% set has_package = service.package_link and pkgs_any %}
+          {% if has_sample or has_package %}
+          <div class="service-links">
+            {% if has_sample %}
+            <a class="service-sample" href="{{ service.sample }}" aria-label="{{ ui.see_sample }}: {{ service.title }}">
+              {{ ui.see_sample }} <span class="btn-arrow" aria-hidden="true">→</span>
+            </a>
+            {% endif %}
+            {% if has_package %}
+            <a class="service-package" href="#packages" aria-label="{{ service.package_link }}: {{ packages.title or 'Fixed-price setups' }}">
+              {{ service.package_link }} <span aria-hidden="true">↓</span>
+            </a>
+            {% endif %}
+          </div>
           {% endif %}
         </article>
         {% endfor %}
       </div>
 
-      {# Fixed-price setups: same card style as the services above.
+      {# Fixed-price setups: two compact cards (badge next to the title, sample link and buttons in one row).
          buy_url set -> one "Buy on Upwork" button; empty -> email (with subject) + booking link. #}
-      {% set pkgs = (packages["items"] or []) | selectattr("title") | list if packages else [] %}
       {% if pkgs %}
       <div class="packages" id="packages">
         {% if packages.title %}<p class="sub-label reveal">{{ packages.title }}</p>{% endif %}
         {% if packages.intro %}<p class="section-intro reveal">{{ packages.intro }}</p>{% endif %}
-        <div class="services">
+        <div class="package-grid">
           {% for pkg in pkgs %}
           <article class="card service package spotlight reveal" style="--d: {{ loop.index0 }}">
-            {% if pkg.badge %}<span class="badge">{{ pkg.badge }}</span>{% endif %}
-            <h3 class="card-title">{{ pkg.title }}</h3>
+            <div class="package-head">
+              <h3 class="card-title">{{ pkg.title }}</h3>
+              {% if pkg.badge %}<span class="badge">{{ pkg.badge }}</span>{% endif %}
+            </div>
             {% if pkg.price %}<p class="package-price">{{ pkg.price }}</p>{% endif %}
             {% if pkg.text %}<p class="card-text">{{ pkg.text }}</p>{% endif %}
             {% if pkg.includes %}
@@ -253,6 +269,7 @@
             </ul>
             {% endif %}
             {% if pkg.not_included %}<p class="package-note">{{ packages.not_included_label }} {{ pkg.not_included }}</p>{% endif %}
+            <div class="package-foot">
             {% if pkg.sample and ui.see_sample %}
             <a class="service-sample" href="{{ pkg.sample }}" aria-label="{{ ui.see_sample }}: {{ pkg.title }}">
               {{ ui.see_sample }} <span class="btn-arrow" aria-hidden="true">→</span>
@@ -273,6 +290,7 @@
               </a>
               {% endif %}
               {% endif %}
+            </div>
             </div>
           </article>
           {% endfor %}
