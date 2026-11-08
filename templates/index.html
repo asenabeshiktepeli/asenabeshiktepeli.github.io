@@ -146,13 +146,25 @@
           {% endfor %}
         </div>
         {% endif %}
+
+        {# Proof line under the buttons: the short trust points (hero.trust), real facts only #}
+        {% set trust = (hero.trust or []) | select | list %}
+        {% if trust %}
+        <ul class="hero-proof">
+          {% for point in trust %}<li>{{ point | no_translate }}</li>{% endfor %}
+        </ul>
+        {% endif %}
       </div>
 
       <div class="hero-visual">
         <div class="photo-card">
           <div class="photo-frame">
             {% if hero.photo %}
-            <img class="avatar" src="{{ hero.photo }}" alt="{{ hero.photo_alt or hero.name }}" width="460" height="460" fetchpriority="high">
+            {# WebP first (hero.photo_webp, optional), JPEG fallback (hero.photo) #}
+            <picture>
+              {% if hero.photo_webp %}<source srcset="{{ hero.photo_webp }}" type="image/webp">{% endif %}
+              <img class="avatar" src="{{ hero.photo }}" alt="{{ hero.photo_alt or hero.name }}" width="720" height="720" fetchpriority="high">
+            </picture>
             {% else %}
             <div class="avatar monogram" aria-hidden="true" translate="no">{{ hero.name | initials }}</div>
             {% endif %}
@@ -161,31 +173,20 @@
       </div>
     </div>
 
-    {# Proof block: "At a glance" title, trust points (hero.trust) and the experience stats.
-       Each part hides when its list is empty. #}
-    {% set trust = (hero.trust or []) | select | list %}
+    {# "At a glance": the experience stats only (the trust points sit in the hero above) #}
     {% set stats = job.stats or [] %}
-    {% if trust or stats %}
+    {% if stats %}
     <div class="container">
       <div class="glance reveal">
         {% if ui.at_a_glance %}<p class="glance-title">{{ ui.at_a_glance }}</p>{% endif %}
-        <div class="glance-body{% if not (trust and stats) %} glance-body-single{% endif %}">
-          {% if trust %}
-          <ul class="trust">
-            {% for point in trust %}<li>{{ point | no_translate }}</li>{% endfor %}
-          </ul>
-          {% endif %}
-          {% if stats %}
-          <dl class="glance-grid">
-            {% for stat in stats %}
-            <div class="glance-item">
-              <dt class="glance-label">{{ stat.label }}</dt>
-              <dd class="glance-value" data-count>{{ stat.value }}</dd>
-            </div>
-            {% endfor %}
-          </dl>
-          {% endif %}
-        </div>
+        <dl class="glance-grid">
+          {% for stat in stats %}
+          <div class="glance-item">
+            <dt class="glance-label">{{ stat.label }}</dt>
+            <dd class="glance-value" data-count>{{ stat.value }}</dd>
+          </div>
+          {% endfor %}
+        </dl>
       </div>
     </div>
     {% endif %}
