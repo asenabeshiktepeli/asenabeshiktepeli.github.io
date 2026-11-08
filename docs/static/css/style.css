@@ -521,8 +521,12 @@ html:not(.js) .js-only {
   transform: translateY(-1px);
 }
 
-/* Small text link next to the hero buttons (Download CV) */
+/* Small text link next to the hero buttons (Download CV).
+   Text links with an arrow (this one and .service-sample) draw their 2px underline as a
+   background line, so it runs in one piece under the text and the arrow
+   (text-decoration on an inline-flex link is drawn per piece and skips the gap). */
 .hero-text-link {
+  --link-line: color-mix(in oklab, var(--teal-ink) 55%, white);
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -531,16 +535,14 @@ html:not(.js) .js-only {
   color: var(--accent);  /* 9. */
   font-size: 0.9375rem;
   font-weight: 500;
-  text-decoration: underline;
-  text-decoration-color: color-mix(in oklab, var(--teal-ink) 55%, white);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 4px;
-  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+  text-decoration: none;
+  background: linear-gradient(var(--link-line), var(--link-line)) 4px calc(50% + 12px) / calc(100% - 8px) 2px no-repeat;
+  transition: color 0.2s ease;
 }
 
 .hero-text-link:hover {
+  --link-line: currentColor;
   color: var(--accent);
-  text-decoration-color: currentColor;
 }
 
 .btn-arrow {
@@ -1348,8 +1350,7 @@ html:not(.js) .js-only {
   }
 }
 
-/* Bottom of a service card: "See sample" and the small fixed-price link, pinned to the
-   bottom so cards in a row line up */
+/* Bottom of a service card: "See sample", pinned to the bottom so cards in a row line up */
 .service-links {
   display: flex;
   flex-wrap: wrap;
@@ -1364,39 +1365,11 @@ html:not(.js) .js-only {
   margin-top: 0;
 }
 
-/* Small teal pill that jumps to the fixed-price setups below */
-.service-package {
-  position: relative;
-  z-index: 2;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 32px;
-  padding: 4px 12px;
-  border: 1px solid color-mix(in oklab, var(--teal-ink) 30%, white);
-  border-radius: 999px;
-  background: var(--teal-soft);
-  color: var(--teal-ink);
-  font-size: 0.8125rem;
-  font-weight: 600;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
-}
-
-.service-package:hover {
-  border-color: var(--teal-ink);
-  background: var(--surface);
-}
-
-.service-package:focus-visible {
-  outline: 2px solid var(--accent-bright);
-  outline-offset: 2px;
-}
-
 /* Pinned to the bottom so cards in a row line up.
-   9. Coloured 2px underline; light teal background on hover. */
+   9. Coloured 2px underline in one piece under the text and the arrow (a background line,
+   see .hero-text-link); light teal background on hover. */
 .service-sample {
+  --link-line: color-mix(in oklab, var(--teal-ink) 55%, white);
   position: relative;
   z-index: 2;
   display: inline-flex;
@@ -1410,16 +1383,14 @@ html:not(.js) .js-only {
   color: var(--accent);
   font-size: 0.875rem;
   font-weight: 500;
-  text-decoration: underline;
-  text-decoration-color: color-mix(in oklab, var(--teal-ink) 55%, white);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 5px;
-  transition: background-color 0.2s ease, text-decoration-color 0.2s ease;
+  text-decoration: none;
+  background: linear-gradient(var(--link-line), var(--link-line)) 4px 100% / calc(100% - 8px) 2px no-repeat;
+  transition: background-color 0.2s ease;
 }
 
 .service-sample:hover {
-  background: var(--teal-soft);
-  text-decoration-color: var(--teal-ink);
+  --link-line: var(--teal-ink);
+  background-color: var(--teal-soft);
 }
 
 .service-sample:hover .btn-arrow {
@@ -1645,6 +1616,11 @@ html:not(.js) .js-only {
 }
 
 /* ---------- Portfolio ---------- */
+
+/* Less space at the bottom: the navy How I work band follows right after */
+#portfolio {
+  padding-bottom: clamp(48px, 5.6vw, 72px);
+}
 
 /* Featured card on its own row, then the other projects in a grid:
    3 columns from 1100px, 2 on tablets, 1 on phones */
@@ -2002,6 +1978,21 @@ html:not(.js) .js-only {
   background: currentColor;
 }
 
+/* Selected work: the "Sample project" label as small, quiet text (no pill); the dot stays.
+   The "Fixed price" badges on the package cards keep the pill. */
+.project .badge {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-size: 0.65625rem;
+  letter-spacing: 0.08em;
+}
+
+.project .badge::before {
+  background: var(--teal-ink);
+}
+
 /* ---------- Screenshot lightbox (native <dialog>) ---------- */
 
 .project-media-zoom {
@@ -2245,18 +2236,19 @@ html:has(.lightbox[open]) {
   background: var(--navy-text);
 }
 
-/* Shorter band than the other sections: less padding, title and button on one line */
+/* Shorter band than the other sections: less padding, a smaller space under the title */
 #how-i-work {
   padding: clamp(48px, 5vw, 64px) 0;
 }
 
-.steps-head {
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 16px 24px;
+#how-i-work .section-head {
   margin-bottom: clamp(28px, 3.4vw, 44px);
+}
+
+/* Booking button under the steps, left-aligned with the timeline */
+.steps-cta {
+  display: flex;
+  margin-top: clamp(28px, 3.4vw, 40px);
 }
 
 /* Timeline: no boxes, numbered dots on one line joined by a slow travelling light
@@ -2335,7 +2327,7 @@ html:has(.lightbox[open]) {
 }
 
 /* Phone: vertical timeline, dot on the left of each title, line running down;
-   the button sits under the title at full width */
+   the button under the steps is a quieter outline button at its natural width */
 @media (max-width: 639px) {
   .steps {
     --gap: 22px;
@@ -2371,13 +2363,19 @@ html:has(.lightbox[open]) {
     animation-name: flow-y;
   }
 
-  .steps-head {
-    flex-direction: column;
-    align-items: stretch;
+  #how-i-work .steps-cta .btn-primary {
+    min-height: 44px;
+    padding: 10px 20px;
+    border-color: rgba(255, 255, 255, 0.35);
+    background: transparent;
+    color: #fff;
+    box-shadow: none;
+    font-size: 0.9375rem;
   }
 
-  .steps-head .btn {
-    width: 100%;
+  #how-i-work .steps-cta .btn-primary:hover {
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.08);
   }
 }
 
@@ -2485,18 +2483,6 @@ html:has(.lightbox[open]) {
   to { background-position: 0 200%, 0 0; }
 }
 
-.pipe-node {
-  position: absolute;
-  top: 22px;
-  right: 14px;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  border: 2px solid #9db4ff;
-  background: var(--navy);
-  box-shadow: 0 0 0 4px rgba(157, 180, 255, 0.12);
-}
-
 .pipe-index {
   font-family: var(--font-mono);
   font-size: 0.75rem;
@@ -2520,12 +2506,7 @@ html:has(.lightbox[open]) {
     flex-direction: row;
     align-items: baseline;
     gap: 14px;
-    padding: 14px 44px 14px 16px;
-  }
-
-  .pipe-node {
-    top: 50%;
-    margin-top: -6px;
+    padding: 14px 16px;
   }
 
   .pipe-step:not(:last-child)::after {
@@ -2775,8 +2756,8 @@ html:has(.lightbox[open]) {
   }
 }
 
-/* Phone: one compact flow. Group names are small labels in the same line flow as the
-   tools, so the card is short; all tools stay visible. The chips are not links. */
+/* Phone: compact card. Each group starts on its own line (small label, chips under it),
+   with a little space between groups; all tools stay visible. The chips are not links. */
 @media (max-width: 639px) {
   /* Smaller space between the Experience card and the Tools card */
   .about-layout {
@@ -2793,13 +2774,11 @@ html:has(.lightbox[open]) {
   }
 
   .tool-groups {
-    display: block;
-    line-height: 1;
+    gap: 10px;
   }
 
-  .tool-group,
-  .tools-card .chips {
-    display: inline;
+  .tool-group {
+    gap: 6px;
   }
 
   .tool-group + .tool-group {
@@ -2808,16 +2787,9 @@ html:has(.lightbox[open]) {
   }
 
   .tool-group-title {
-    display: inline-flex;
     gap: 6px;
-    margin: 0 6px 5px 0;
-    vertical-align: middle;
     font-size: 0.6875rem;
     letter-spacing: 0.06em;
-  }
-
-  .tool-group + .tool-group .tool-group-title {
-    margin-left: 6px;
   }
 
   .tool-group-title::before {
@@ -2825,13 +2797,14 @@ html:has(.lightbox[open]) {
     height: 7px;
   }
 
+  .tools-card .chips {
+    gap: 4px;
+  }
+
   .tools-card .chip {
-    display: inline-block;
-    margin: 0 3px 5px 0;
     padding: 2px 8px;
     font-size: 0.75rem;
     line-height: 1.4;
-    vertical-align: middle;
   }
 }
 

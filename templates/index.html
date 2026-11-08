@@ -198,7 +198,6 @@
     <div class="container">
       {{ section_head(services.title) }}
       {% set pkgs = (packages["items"] or []) | selectattr("title") | list if packages else [] %}
-      {% set pkgs_any = pkgs | length > 0 %}
       <div class="services">
         {% for service in services["items"] %}
         <article class="card service spotlight reveal" style="--d: {{ loop.index0 }}">
@@ -222,21 +221,12 @@
           </ul>
           {% if ui.whats_included %}</details>{% endif %}
           {% endif %}
-          {# Bottom links: the matching sample, and (optional) the fixed-price setup below #}
-          {% set has_sample = service.sample and ui.see_sample %}
-          {% set has_package = service.package_link and pkgs_any %}
-          {% if has_sample or has_package %}
+          {# Bottom link: the matching sample, pinned to the bottom of the card #}
+          {% if service.sample and ui.see_sample %}
           <div class="service-links">
-            {% if has_sample %}
             <a class="service-sample" href="{{ service.sample }}" aria-label="{{ ui.see_sample }}: {{ service.title }}">
               {{ ui.see_sample }} <span class="btn-arrow" aria-hidden="true">→</span>
             </a>
-            {% endif %}
-            {% if has_package %}
-            <a class="service-package" href="#packages" aria-label="{{ service.package_link }}: {{ packages.title or 'Fixed-price setups' }}">
-              {{ service.package_link }} <span aria-hidden="true">↓</span>
-            </a>
-            {% endif %}
           </div>
           {% endif %}
         </article>
@@ -406,20 +396,9 @@
   {% set sec.n = sec.n + 1 %}
   <section class="section{% if sec.n is odd %} section-soft{% endif %}" id="how-i-work">
     <div class="container">
-      {# Compact timeline: title with the booking button on the right (under it on phones),
-         then the steps on one line with a flowing connector (vertical on phones). #}
-      {% set hiw_cta = how_i_work.cta and contact.booking_url %}
-      {% if how_i_work.title or hiw_cta %}
-      <div class="section-head steps-head reveal">
-        {% if how_i_work.title %}<h2 class="section-title">{{ how_i_work.title }}</h2>{% endif %}
-        {% if hiw_cta %}
-        <a class="btn btn-primary btn-lg" href="{{ contact.booking_url }}" target="_blank" rel="noopener">
-          {{ how_i_work.cta }}
-          <span class="btn-arrow" aria-hidden="true">↗</span>
-        </a>
-        {% endif %}
-      </div>
-      {% endif %}
+      {# Compact timeline: the steps on one line with a flowing connector (vertical on phones),
+         then the booking button under them (white on desktop, outline on phones). #}
+      {{ section_head(how_i_work.title) }}
       <ol class="steps" style="--n: {{ hiw_steps | length }}">
         {% for step in hiw_steps %}
         <li class="step reveal" style="--d: {{ loop.index0 }}">
@@ -429,6 +408,14 @@
         </li>
         {% endfor %}
       </ol>
+      {% if how_i_work.cta and contact.booking_url %}
+      <div class="steps-cta reveal">
+        <a class="btn btn-primary btn-lg" href="{{ contact.booking_url }}" target="_blank" rel="noopener">
+          {{ how_i_work.cta }}
+          <span class="btn-arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+      {% endif %}
     </div>
   </section>
   {% endif %}
@@ -450,7 +437,6 @@
           <ol class="pipeline" style="--n: {{ case_study.steps | length }}">
             {% for text in case_study.steps %}
             <li class="pipe-step" style="--d: {{ loop.index0 }}">
-              <span class="pipe-node" aria-hidden="true"></span>
               <span class="pipe-index" aria-hidden="true">{{ "%02d" | format(loop.index) }}</span>
               <span class="pipe-text">{{ text }}</span>
             </li>

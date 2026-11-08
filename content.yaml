@@ -71,7 +71,6 @@ services:
         - "Customers told about delays before they ask"
         - "Carrier follow-up on stalled parcels"
       sample: "#work-order-tracking"
-      package_link: "Fixed price · $65"  # optional: small link to the fixed-price setups (#packages); empty hides it
     - title: "Quotes & Invoices"
       text: "Preparing quotes and proformas, tracking invoices and following up on payments."
       includes:
@@ -86,7 +85,6 @@ services:
         - "Duplicates and inconsistent formats cleaned up"
         - "Simple reports in Excel or Google Sheets"
       sample: "#work-data-cleanup"
-      package_link: "Fixed price · from $40"
 
 # Fixed-price setups, shown under the Services cards. Empty items list hides the block.
 # buy_url empty = "Email me" + "Book a 15-min call" buttons; set it to the Upwork
