@@ -2581,6 +2581,11 @@ html:has(.lightbox[open]) {
 /* Phone: one compact flow. Group names are small labels in the same line flow as the
    tools, so the card is short; all tools stay visible. The chips are not links. */
 @media (max-width: 639px) {
+  /* Smaller space between the Experience card and the Tools card */
+  .about-layout {
+    row-gap: 16px;
+  }
+
   .tools-card {
     gap: 10px;
     padding: 16px 16px 11px;
