@@ -382,13 +382,11 @@
   </section>
 
   <section class="section" id="portfolio">
-    <div class="container" data-rail>
-      <div class="section-head section-head-rail reveal">
-<h2 class="section-title">Selected work</h2>        <div class="work-rail-nav js-only">
-          <button class="rail-btn" type="button" data-rail-prev aria-label="Previous project"><span aria-hidden="true">←</span></button>
-          <button class="rail-btn" type="button" data-rail-next aria-label="Next project"><span aria-hidden="true">→</span></button>
-        </div>
-      </div>
+    <div class="container">
+        <div class="section-head reveal">
+    <h2 class="section-title">Selected work</h2>
+  </div>
+
 <p class="section-intro reveal">Sample projects built with sample data to show how I work.</p>      <div class="projects">
         <article class="card project project-featured spotlight reveal" id="work-request-automation" style="--d: 0">
           <div class="project-media" aria-hidden="false">
@@ -411,16 +409,19 @@
             </div>
           </div>
         </article>
-        <div class="work-rail">
-          <div class="work-rail-track" data-rail-track tabindex="0" role="region" aria-label="Selected work">
-        <article class="card project spotlight reveal" id="work-order-tracking" style="--d: 0">
+        <article class="card project project-tile spotlight reveal" id="work-order-tracking" style="--d: 0">
           <div class="project-media" aria-hidden="false">
 <a class="project-media-link" href="https://docs.google.com/spreadsheets/d/1qmdii_crHkBCz38AoZM4wB0z7KvREubd9FTeGDE5Ieg/preview" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">            <img src="static/img/portfolio/order-tracking.webp"                 srcset="static/img/portfolio/order-tracking-800.webp 800w, static/img/portfolio/order-tracking.webp 1600w"
-                 sizes="(max-width: 860px) calc(100vw - 64px), 520px"                 alt="Screenshot of Order Tracking Sheet (sample project)" width="1600" height="1000" loading="lazy" decoding="async">
+                 sizes="(max-width: 639px) calc(100vw - 64px), (max-width: 1099px) 45vw, 340px"                 alt="Screenshot of Order Tracking Sheet (sample project)" width="1600" height="1000" loading="lazy" decoding="async">
 </a>          </div>
           <div class="project-body">
 <span class="badge">Sample project</span>            <h3 class="card-title">Order Tracking Sheet</h3>
-<p class="card-text">A Google Sheets tracker that shows each order&#39;s status, shipping date and follow-up notes at a glance.</p>            <div class="project-foot">
+            <p class="card-text">A Google Sheets tracker showing each order&#39;s status, shipping date and follow-up notes.</p>
+            <details class="project-details">
+              <summary class="project-details-summary">Details<span class="visually-hidden">: Order Tracking Sheet</span></summary>
+              <p class="card-text">A Google Sheets tracker that shows each order&#39;s status, shipping date and follow-up notes at a glance.</p>
+            </details>
+            <div class="project-foot">
               <ul class="chips">
 <li class="chip chip-sm">Google Sheets</li>              </ul>
               <a class="btn btn-ghost btn-sm" href="https://docs.google.com/spreadsheets/d/1qmdii_crHkBCz38AoZM4wB0z7KvREubd9FTeGDE5Ieg/preview" target="_blank" rel="noopener" aria-label="View sample: Order Tracking Sheet (opens in a new tab)">
@@ -429,15 +430,20 @@
             </div>
           </div>
         </article>
-        <article class="card project spotlight reveal" id="work-ai-drafting" style="--d: 0">
+        <article class="card project project-tile spotlight reveal" id="work-ai-drafting" style="--d: 1">
           <div class="project-media" aria-hidden="false">
             <a class="project-media-link project-media-zoom" href="static/img/portfolio/ai-drafting-example-full.webp" target="_blank" rel="noopener" tabindex="-1" data-lightbox-open="lightbox-work-ai-drafting" aria-label="View screenshots: AI-Assisted Reply Drafting">
             <img src="static/img/portfolio/ai-drafting.webp"                 srcset="static/img/portfolio/ai-drafting-800.webp 800w, static/img/portfolio/ai-drafting.webp 1600w"
-                 sizes="(max-width: 860px) calc(100vw - 64px), 520px"                 alt="Screenshot of AI-Assisted Reply Drafting (sample project)" width="1600" height="1000" loading="lazy" decoding="async">
+                 sizes="(max-width: 639px) calc(100vw - 64px), (max-width: 1099px) 45vw, 340px"                 alt="Screenshot of AI-Assisted Reply Drafting (sample project)" width="1600" height="1000" loading="lazy" decoding="async">
 </a>          </div>
           <div class="project-body">
 <span class="badge">Sample project</span>            <h3 class="card-title">AI-Assisted Reply Drafting</h3>
-<p class="card-text">How I use AI for first drafts of customer replies, and how I check every draft against store policy before it is sent. Four examples show the AI draft, the reviewed reply and what I changed and why.</p>            <div class="project-foot">
+            <p class="card-text">How I use AI for first drafts of customer replies, and check every draft against store policy before it is sent.</p>
+            <details class="project-details">
+              <summary class="project-details-summary">Details<span class="visually-hidden">: AI-Assisted Reply Drafting</span></summary>
+              <p class="card-text">How I use AI for first drafts of customer replies, and how I check every draft against store policy before it is sent. Four examples show the AI draft, the reviewed reply and what I changed and why.</p>
+            </details>
+            <div class="project-foot">
               <ul class="chips">
 <li class="chip chip-sm">Google Docs</li><li class="chip chip-sm">AI assistant</li>              </ul>
               <a class="btn btn-ghost btn-sm" href="https://docs.google.com/document/d/1uEHgSsQIdq1cHJ-TXXhwg54oFaYkwxCzJ63wrU6IX64/edit?usp=sharing" target="_blank" rel="noopener" aria-label="View sample: AI-Assisted Reply Drafting (opens in a new tab)">
@@ -461,14 +467,19 @@
             <button class="lightbox-nav lightbox-next" type="button" aria-label="Next screenshot"><span aria-hidden="true">›</span></button>
           </dialog>
         </article>
-        <article class="card project spotlight reveal" id="work-response-library" style="--d: 0">
+        <article class="card project project-tile spotlight reveal" id="work-response-library" style="--d: 2">
           <div class="project-media" aria-hidden="false">
 <a class="project-media-link" href="https://docs.google.com/document/d/1xYm1fliueMGKPDli2UzKeNNLda1rVmu8jLQrLuVwvgo/edit?usp=sharing" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">            <img src="static/img/portfolio/response-library.webp"                 srcset="static/img/portfolio/response-library-800.webp 800w, static/img/portfolio/response-library.webp 1600w"
-                 sizes="(max-width: 860px) calc(100vw - 64px), 520px"                 alt="Screenshot of Customer Support Response Library (sample project)" width="1600" height="1000" loading="lazy" decoding="async">
+                 sizes="(max-width: 639px) calc(100vw - 64px), (max-width: 1099px) 45vw, 340px"                 alt="Screenshot of Customer Support Response Library (sample project)" width="1600" height="1000" loading="lazy" decoding="async">
 </a>          </div>
           <div class="project-body">
 <span class="badge">Sample project</span>            <h3 class="card-title">Customer Support Response Library</h3>
-<p class="card-text">A support playbook for a small online shop: 10 reply templates for order updates, delays, returns and complaints, with response time targets, escalation rules and store policy fields.</p>            <div class="project-foot">
+            <p class="card-text">A support playbook for a small online shop: 10 reply templates with response time targets and escalation rules.</p>
+            <details class="project-details">
+              <summary class="project-details-summary">Details<span class="visually-hidden">: Customer Support Response Library</span></summary>
+              <p class="card-text">A support playbook for a small online shop: 10 reply templates for order updates, delays, returns and complaints, with response time targets, escalation rules and store policy fields.</p>
+            </details>
+            <div class="project-foot">
               <ul class="chips">
 <li class="chip chip-sm">Google Docs</li>              </ul>
               <a class="btn btn-ghost btn-sm" href="https://docs.google.com/document/d/1xYm1fliueMGKPDli2UzKeNNLda1rVmu8jLQrLuVwvgo/edit?usp=sharing" target="_blank" rel="noopener" aria-label="View sample: Customer Support Response Library (opens in a new tab)">
@@ -477,14 +488,19 @@
             </div>
           </div>
         </article>
-        <article class="card project spotlight reveal" id="work-data-cleanup" style="--d: 0">
+        <article class="card project project-tile spotlight reveal" id="work-data-cleanup" style="--d: 0">
           <div class="project-media" aria-hidden="false">
 <a class="project-media-link" href="https://docs.google.com/spreadsheets/d/15lbhsX5VS6nrGrRYlrYHuI1Cgy2hru-fDLFgh4He9sY/preview" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">            <img src="static/img/portfolio/data-cleanup.webp"                 srcset="static/img/portfolio/data-cleanup-800.webp 800w, static/img/portfolio/data-cleanup.webp 1600w"
-                 sizes="(max-width: 860px) calc(100vw - 64px), 520px"                 alt="Screenshot of Data Cleanup Before/After (sample project)" width="1600" height="1000" loading="lazy" decoding="async">
+                 sizes="(max-width: 639px) calc(100vw - 64px), (max-width: 1099px) 45vw, 340px"                 alt="Screenshot of Data Cleanup Before/After (sample project)" width="1600" height="1000" loading="lazy" decoding="async">
 </a>          </div>
           <div class="project-body">
 <span class="badge">Sample project</span>            <h3 class="card-title">Data Cleanup Before/After</h3>
-<p class="card-text">A messy customer export cleaned with reusable formulas: duplicates found automatically, names split, dates, countries and amounts standardised, every change logged and every row checked against the final list.</p>            <div class="project-foot">
+            <p class="card-text">A messy customer export cleaned with reusable formulas, with every change logged and checked.</p>
+            <details class="project-details">
+              <summary class="project-details-summary">Details<span class="visually-hidden">: Data Cleanup Before/After</span></summary>
+              <p class="card-text">A messy customer export cleaned with reusable formulas: duplicates found automatically, names split, dates, countries and amounts standardised, every change logged and every row checked against the final list.</p>
+            </details>
+            <div class="project-foot">
               <ul class="chips">
 <li class="chip chip-sm">Google Sheets</li>              </ul>
               <a class="btn btn-ghost btn-sm" href="https://docs.google.com/spreadsheets/d/15lbhsX5VS6nrGrRYlrYHuI1Cgy2hru-fDLFgh4He9sY/preview" target="_blank" rel="noopener" aria-label="View sample: Data Cleanup Before/After (opens in a new tab)">
@@ -493,15 +509,20 @@
             </div>
           </div>
         </article>
-        <article class="card project spotlight reveal" id="work-hubspot-support" style="--d: 0">
+        <article class="card project project-tile spotlight reveal" id="work-hubspot-support" style="--d: 1">
           <div class="project-media" aria-hidden="false">
             <a class="project-media-link project-media-zoom" href="static/img/portfolio/hubspot-support-full.webp" target="_blank" rel="noopener" tabindex="-1" data-lightbox-open="lightbox-work-hubspot-support" aria-label="View screenshots: HubSpot Support Workflow">
             <img src="static/img/portfolio/hubspot-support.webp"                 srcset="static/img/portfolio/hubspot-support-800.webp 800w, static/img/portfolio/hubspot-support.webp 1600w"
-                 sizes="(max-width: 860px) calc(100vw - 64px), 520px"                 alt="Screenshot of HubSpot Support Workflow (sample project)" width="1600" height="1000" loading="lazy" decoding="async">
+                 sizes="(max-width: 639px) calc(100vw - 64px), (max-width: 1099px) 45vw, 340px"                 alt="Screenshot of HubSpot Support Workflow (sample project)" width="1600" height="1000" loading="lazy" decoding="async">
 </a>          </div>
           <div class="project-body">
 <span class="badge">Sample project</span>            <h3 class="card-title">HubSpot Support Workflow</h3>
-<p class="card-text">A practice HubSpot help desk for a fictional online shop: 8 support tickets for delays, returns, refunds and damaged items, answered with reply snippets and moved through a ticket pipeline (New, Waiting on contact, Waiting on us, Closed), then tracked on a service dashboard by status, category and source. Test data and replies were loaded with Python through the HubSpot API.</p>            <div class="project-foot">
+            <p class="card-text">A practice HubSpot help desk for a fictional online shop: 8 tickets moved through a pipeline and tracked on a dashboard.</p>
+            <details class="project-details">
+              <summary class="project-details-summary">Details<span class="visually-hidden">: HubSpot Support Workflow</span></summary>
+              <p class="card-text">A practice HubSpot help desk for a fictional online shop: 8 support tickets for delays, returns, refunds and damaged items, answered with reply snippets and moved through a ticket pipeline (New, Waiting on contact, Waiting on us, Closed), then tracked on a service dashboard by status, category and source. Test data and replies were loaded with Python through the HubSpot API.</p>
+            </details>
+            <div class="project-foot">
               <ul class="chips">
 <li class="chip chip-sm">HubSpot</li><li class="chip chip-sm">Python</li>              </ul>
               <a class="btn btn-ghost btn-sm" href="static/img/portfolio/hubspot-support-full.webp" target="_blank" rel="noopener" data-lightbox-open="lightbox-work-hubspot-support" aria-label="View screenshots: HubSpot Support Workflow">
@@ -522,15 +543,20 @@
             <button class="lightbox-nav lightbox-next" type="button" aria-label="Next screenshot"><span aria-hidden="true">›</span></button>
           </dialog>
         </article>
-        <article class="card project spotlight reveal" id="work-jira-support" style="--d: 0">
+        <article class="card project project-tile spotlight reveal" id="work-jira-support" style="--d: 2">
           <div class="project-media" aria-hidden="false">
             <a class="project-media-link project-media-zoom" href="static/img/portfolio/jira-incident-full.webp" target="_blank" rel="noopener" tabindex="-1" data-lightbox-open="lightbox-work-jira-support" aria-label="View screenshots: Jira Partner Support Desk">
             <img src="static/img/portfolio/jira-support.webp"                 srcset="static/img/portfolio/jira-support-800.webp 800w, static/img/portfolio/jira-support.webp 1600w"
-                 sizes="(max-width: 860px) calc(100vw - 64px), 520px"                 alt="Screenshot of Jira Partner Support Desk (sample project)" width="1600" height="1000" loading="lazy" decoding="async">
+                 sizes="(max-width: 639px) calc(100vw - 64px), (max-width: 1099px) 45vw, 340px"                 alt="Screenshot of Jira Partner Support Desk (sample project)" width="1600" height="1000" loading="lazy" decoding="async">
 </a>          </div>
           <div class="project-body">
 <span class="badge">Sample project</span>            <h3 class="card-title">Jira Partner Support Desk</h3>
-<p class="card-text">A practice Jira Service Management desk for fictional bank and payment partners: incidents and service requests with urgency and impact, internal notes kept separate from partner-facing replies, and SLA goals for first response and resolution that pause while waiting for the customer. The screenshots show a breached SLA, a paused SLA and an SLA met.</p>            <div class="project-foot">
+            <p class="card-text">A practice Jira Service Management desk for fictional bank and payment partners, with SLA goals for first response and resolution.</p>
+            <details class="project-details">
+              <summary class="project-details-summary">Details<span class="visually-hidden">: Jira Partner Support Desk</span></summary>
+              <p class="card-text">A practice Jira Service Management desk for fictional bank and payment partners: incidents and service requests with urgency and impact, internal notes kept separate from partner-facing replies, and SLA goals for first response and resolution that pause while waiting for the customer. The screenshots show a breached SLA, a paused SLA and an SLA met.</p>
+            </details>
+            <div class="project-foot">
               <ul class="chips">
 <li class="chip chip-sm">Jira Service Management</li>              </ul>
               <a class="btn btn-ghost btn-sm" href="static/img/portfolio/jira-incident-full.webp" target="_blank" rel="noopener" data-lightbox-open="lightbox-work-jira-support" aria-label="View screenshots: Jira Partner Support Desk">
@@ -554,8 +580,6 @@
             <button class="lightbox-nav lightbox-next" type="button" aria-label="Next screenshot"><span aria-hidden="true">›</span></button>
           </dialog>
         </article>
-          </div>
-        </div>
       </div>
     </div>
   </section>

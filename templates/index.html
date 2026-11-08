@@ -305,35 +305,20 @@
   {# ================= Portfolio ================= #}
   {% if portfolio["items"] %}
   {% set sec.n = sec.n + 1 %}
-  {% set has_rail = portfolio["items"] | length > 1 %}
   <section class="section{% if sec.n is odd %} section-soft{% endif %}" id="portfolio">
-    <div class="container"{% if has_rail %} data-rail{% endif %}>
-      {% if has_rail %}
-      {# Title with the rail's ← → buttons on the right (under the title on phones). #}
-      <div class="section-head section-head-rail reveal">
-        {% if portfolio.title %}<h2 class="section-title">{{ portfolio.title }}</h2>{% endif %}
-        <div class="work-rail-nav js-only">
-          <button class="rail-btn" type="button" data-rail-prev aria-label="{{ ui.prev_project or 'Previous' }}"><span aria-hidden="true">←</span></button>
-          <button class="rail-btn" type="button" data-rail-next aria-label="{{ ui.next_project or 'Next' }}"><span aria-hidden="true">→</span></button>
-        </div>
-      </div>
-      {% else %}
+    <div class="container">
       {{ section_head(portfolio.title) }}
-      {% endif %}
       {% if portfolio.intro %}<p class="section-intro reveal">{{ portfolio.intro }}</p>{% endif %}
-      {# The first item is the featured card (full width). All other items sit in a horizontal
-         rail: swipe on phones, ← → buttons and arrow keys on desktop (main.js). Without JS the
-         rail still scrolls; every card stays in the HTML. #}
+      {# The first item is the featured card (full width). All other items sit in a grid below:
+         3 columns on desktop, 2 on tablets, 1 on phones. Each grid card shows item.short;
+         the full item.text sits in a "Details" <details> panel (no JS). #}
       <div class="projects">
         {% for item in portfolio["items"] %}
         {# Screenshots for the lightbox gallery: a list of {src, alt, caption} from content.yaml. #}
         {% set shots = item.screenshots or [] %}
         {% set first_shot = shots[0].src if shots else "" %}
-        {% if loop.index == 2 %}
-        <div class="work-rail">
-          <div class="work-rail-track" data-rail-track tabindex="0" role="region" aria-label="{{ portfolio.title }}">
-        {% endif %}
-        <article class="card project{% if loop.first %} project-featured{% endif %} spotlight reveal"{% if item.id %} id="{{ item.id }}"{% endif %} style="--d: {{ loop.index0 if loop.first else 0 }}">
+        {% set featured = loop.first %}
+        <article class="card project{% if featured %} project-featured{% else %} project-tile{% endif %} spotlight reveal"{% if item.id %} id="{{ item.id }}"{% endif %} style="--d: {{ 0 if featured else (loop.index0 - 1) % 3 }}">
           <div class="project-media" aria-hidden="{{ 'false' if item.image or item.video else 'true' }}">
             {% if item.video %}
             {# Optional video instead of an image: plays only when the visitor presses play. #}
@@ -349,7 +334,7 @@
             {% elif item.link %}<a class="project-media-link" href="{{ item.link }}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">{% endif %}
             <img src="{{ item.image }}"{% if item.image.endswith(".webp") %}
                  srcset="{{ item.image[:-5] }}-800.webp 800w, {{ item.image }} 1600w"
-                 sizes="(max-width: 860px) calc(100vw - 64px), 520px"{% endif %}
+                 sizes="{{ '(max-width: 860px) calc(100vw - 64px), 520px' if featured else '(max-width: 639px) calc(100vw - 64px), (max-width: 1099px) 45vw, 340px' }}"{% endif %}
                  alt="Screenshot of {{ item.title }}{% if item.label %} ({{ item.label | lower }}){% endif %}" width="1600" height="1000" loading="lazy" decoding="async">
             {% if shots or item.link %}</a>{% endif %}
             {% endif %}
@@ -357,7 +342,13 @@
           <div class="project-body">
             {% if item.label %}<span class="badge">{{ item.label }}</span>{% endif %}
             <h3 class="card-title">{{ item.title }}</h3>
-            {% if item.text %}<p class="card-text">{{ item.text }}</p>{% endif %}
+            {% if item.short and item.text and not featured %}
+            <p class="card-text">{{ item.short }}</p>
+            <details class="project-details">
+              <summary class="project-details-summary">{{ ui.details or "Details" }}<span class="visually-hidden">: {{ item.title }}</span></summary>
+              <p class="card-text">{{ item.text }}</p>
+            </details>
+            {% elif item.text %}<p class="card-text">{{ item.text }}</p>{% endif %}
             <div class="project-foot">
               {% if item.tools %}
               <ul class="chips">
@@ -403,10 +394,6 @@
           </dialog>
           {% endif %}
         </article>
-        {% if loop.last and loop.length > 1 %}
-          </div>
-        </div>
-        {% endif %}
         {% endfor %}
       </div>
     </div>

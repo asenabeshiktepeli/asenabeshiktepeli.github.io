@@ -1646,15 +1646,41 @@ html:not(.js) .js-only {
 
 /* ---------- Portfolio ---------- */
 
+/* Featured card on its own row, then the other projects in a grid:
+   3 columns from 1100px, 2 on tablets, 1 on phones */
 .projects {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
 }
 
+@media (min-width: 1100px) {
+  .projects {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 639px) {
+  .projects {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
 .project {
   display: flex;
   flex-direction: column;
+}
+
+/* Text for screen readers only (e.g. which card a "Details" toggle belongs to) */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 /* The featured (first) project spans the full row: preview left, text right. */
@@ -1688,8 +1714,8 @@ html:not(.js) .js-only {
   overflow: hidden;
 }
 
-/* Every other card in the rail swaps the lights, so the row does not look repetitive */
-.work-rail-track > .project:nth-child(even) .project-media {
+/* Every other grid card swaps the lights, so the grid does not look repetitive */
+.project-tile:nth-child(odd) .project-media {
   background:
     radial-gradient(55% 70% at 12% 8%, color-mix(in oklab, var(--teal) 18%, transparent), transparent 70%),
     radial-gradient(50% 65% at 92% 100%, color-mix(in oklab, var(--accent-bright) 14%, transparent), transparent 70%),
@@ -1803,6 +1829,153 @@ html:not(.js) .js-only {
   .project-featured .project-foot .btn {
     white-space: nowrap;
   }
+}
+
+/* Grid cards: small preview, short text, full text under "Details", buttons at the bottom */
+.project-tile .project-media {
+  min-height: 0;
+  padding: 14px;
+}
+
+.project-tile .project-media img {
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+}
+
+.project-tile .project-body {
+  flex: 1;
+  gap: 10px;
+  padding: 20px 22px 22px;
+}
+
+.project-tile .card-title {
+  font-size: 1.125rem;
+}
+
+.project-tile .card-text {
+  font-size: 0.9375rem;
+}
+
+/* Cards keep their own height, so an open "Details" panel does not stretch the
+   other cards in the row; buttons follow right after the text */
+.project-tile {
+  align-self: start;
+}
+
+.project-tile .project-foot {
+  justify-content: flex-start;
+  gap: 10px;
+  margin-top: 0;
+}
+
+.project-tile .project-foot .chips {
+  flex-basis: 100%;
+}
+
+/* Phones: compact row. A small square preview on the left of the badge and title;
+   the short text, "Details" and the buttons run full width below. */
+@media (max-width: 639px) {
+  .project-tile {
+    display: grid;
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: 8px 14px;
+    align-items: start;
+    padding: 16px;
+  }
+
+  .project-tile .project-body {
+    display: contents;
+  }
+
+  .project-tile .project-media {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    padding: 6px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+
+  .project-tile .project-media img {
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
+    box-shadow: none;
+  }
+
+  .project-tile .badge {
+    grid-column: 2;
+    align-self: end;
+    justify-self: start;
+  }
+
+  .project-tile .card-title {
+    grid-column: 2;
+  }
+
+  .project-tile .project-body > :not(.badge):not(.card-title) {
+    grid-column: 1 / -1;
+  }
+
+  .project-tile .project-body > .card-text {
+    margin-top: 4px;
+  }
+
+  .project-tile .project-foot {
+    padding-top: 0;
+  }
+}
+
+/* "Details +" toggle with the full project text */
+.project-details {
+  width: 100%;
+}
+
+.project-details-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  color: var(--accent);
+  font-size: 0.875rem;
+  font-weight: 500;
+  list-style: none;
+  cursor: pointer;
+}
+
+.project-details-summary::-webkit-details-marker {
+  display: none;
+}
+
+.project-details-summary::after {
+  content: "+";
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--accent-line);
+  border-radius: 50%;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1;
+}
+
+.project-details[open] .project-details-summary::after {
+  content: "−";
+}
+
+.project-details-summary:hover {
+  color: var(--accent-bright);
+}
+
+.project-details-summary:focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.project-details > .card-text {
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
 }
 
 .badge {
@@ -2003,10 +2176,6 @@ html:has(.lightbox[open]) {
 }
 
 @media (max-width: 860px) {
-  .projects {
-    grid-template-columns: 1fr;
-  }
-
   .project-featured {
     display: flex;
   }
@@ -2016,105 +2185,6 @@ html:has(.lightbox[open]) {
     border-right: 0;
     border-bottom: 1px solid var(--border);
     border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
-  }
-}
-
-/* Horizontal rail for every project after the featured one.
-   Desktop: two cards visible + ← → buttons. Phones: one card plus the edge of the next, swipe.
-   Without JS it is a normal scrollable row. */
-.work-rail {
-  grid-column: 1 / -1;
-  min-width: 0;
-}
-
-.work-rail-track {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: calc((100% - 20px) / 2);
-  gap: 20px;
-  overflow-x: auto;
-  padding: 4px 2px 18px;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  overscroll-behavior-x: contain;
-  scrollbar-width: thin;
-  scrollbar-color: var(--accent-line) transparent;
-}
-
-.work-rail-track:focus-visible {
-  outline: 2px solid var(--accent-bright);
-  outline-offset: 4px;
-  border-radius: var(--radius);
-}
-
-.work-rail-track > .project {
-  scroll-snap-align: start;
-}
-
-/* Equal-height cards on desktop: the text area fills the card, buttons sit at the bottom */
-.work-rail-track > .project .project-body {
-  flex: 1;
-}
-
-/* Section title with the rail buttons on the right; on phones the buttons sit under it, right-aligned */
-.section-head-rail {
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.work-rail-nav {
-  display: flex;
-  gap: 8px;
-}
-
-@media (max-width: 639px) {
-  .section-head-rail {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-  }
-
-  .section-head-rail .work-rail-nav {
-    align-self: flex-end;
-  }
-}
-
-.rail-btn {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border: 1px solid color-mix(in oklab, var(--accent) 30%, white);
-  border-radius: 50%;
-  background: color-mix(in oklab, var(--accent) 5%, white);
-  color: var(--accent);
-  font-size: 1.125rem;
-  cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
-}
-
-.rail-btn:hover:not(:disabled) {
-  border-color: var(--teal-ink);
-  background: var(--teal-soft);
-}
-
-.rail-btn:disabled {
-  opacity: 0.4;
-  cursor: default;
-}
-
-/* Phones/tablets: one card plus the edge of the next; each card keeps its own height (top-aligned).
-   main.js sets the rail height to the cards in view, so no empty band shows under a short card. */
-@media (max-width: 860px) {
-  .work-rail-track {
-    grid-auto-columns: 86%;
-    gap: 14px;
-    align-items: start;
-    overflow-y: hidden;
-    transition: height 0.35s var(--ease);
   }
 }
 
@@ -3189,8 +3259,7 @@ html:has(.lightbox[open]) {
 /* ---------- Reduced motion: everything still, everything visible ---------- */
 
 @media (prefers-reduced-motion: reduce) {
-  html,
-  .work-rail-track {
+  html {
     scroll-behavior: auto;
   }
 

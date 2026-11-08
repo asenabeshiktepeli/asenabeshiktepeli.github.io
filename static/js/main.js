@@ -1,6 +1,6 @@
 // Small, dependency-free enhancements:
 // header + scroll progress, active nav link, mobile menu, live clock, spotlight cards,
-// scroll reveal, count-up stats, email menus, copy email, Services toggles, Selected work rail and screenshot lightbox.
+// scroll reveal, count-up stats, email menus, copy email, Services toggles and screenshot lightbox.
 (function () {
   "use strict";
 
@@ -347,61 +347,6 @@
   }
   syncIncludes();
   if (phoneWidth.addEventListener) phoneWidth.addEventListener("change", syncIncludes);
-
-  // ---------- Selected work rail ----------
-  // The track scrolls by itself (swipe, trackpad, scrollbar), also without JS.
-  // Here: ← → buttons move one card, arrow keys work when the track has focus,
-  // and the buttons are disabled at either end.
-  $$("[data-rail]").forEach(function (rail) {
-    var track = $("[data-rail-track]", rail);
-    var prev = $("[data-rail-prev]", rail);
-    var next = $("[data-rail-next]", rail);
-    if (!track || !prev || !next) return;
-    var behavior = reduceMotion ? "auto" : "smooth";
-
-    function step() {
-      var card = track.firstElementChild;
-      var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
-      return card ? card.getBoundingClientRect().width + gap : track.clientWidth;
-    }
-    // Phones: the rail is as tall as the cards in view (incl. the peeking one), not the tallest card,
-    // so no empty band shows under a short card.
-    var phone = window.matchMedia("(max-width: 860px)");
-    function fitHeight() {
-      if (!phone.matches) { track.style.height = ""; return; }
-      var box = track.getBoundingClientRect();
-      var style = getComputedStyle(track);
-      var tallest = 0;
-      Array.prototype.forEach.call(track.children, function (card) {
-        var rect = card.getBoundingClientRect();
-        if (rect.right > box.left + 1 && rect.left < box.right - 1) tallest = Math.max(tallest, card.offsetHeight);
-      });
-      if (tallest) track.style.height = tallest + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom) + "px";
-    }
-
-    function update() {
-      prev.disabled = track.scrollLeft <= 2;
-      next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
-      fitHeight();
-    }
-    function go(direction) {
-      track.scrollBy({ left: direction * step(), behavior: behavior });
-      window.setTimeout(update, 400); // a smooth scroll can end after its last scroll event
-    }
-
-    prev.addEventListener("click", function () { go(-1); });
-    next.addEventListener("click", function () { go(1); });
-    track.addEventListener("keydown", function (event) {
-      if (event.target !== track) return;
-      if (event.key === "ArrowRight") { event.preventDefault(); go(1); }
-      if (event.key === "ArrowLeft") { event.preventDefault(); go(-1); }
-    });
-    track.addEventListener("scroll", function () { requestAnimationFrame(update); }, { passive: true });
-    track.addEventListener("scrollend", update);
-    track.addEventListener("load", fitHeight, true); // lazy images change card heights
-    window.addEventListener("resize", update);
-    update();
-  });
 
   // ---------- Screenshot lightbox (gallery) ----------
   // Links with data-lightbox-open="<dialog id>" open that <dialog> as a modal at its first screenshot.
