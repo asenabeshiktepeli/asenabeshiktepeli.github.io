@@ -627,12 +627,7 @@
 
       <div class="closing-card reveal">
         {% if contact.email %}
-        <div class="closing-email">
-          <p class="contact-email" translate="no">{{ contact.email }}</p>
-          {% if ui.copy_email %}
-          <button class="btn btn-outline-light btn-sm js-only" type="button" data-copy-email>{{ ui.copy_email }}</button>
-          {% endif %}
-        </div>
+        <p class="contact-email" translate="no">{{ contact.email }}</p>
         <div class="contact-actions">
           {{ m.email_menu(email_label, "email-menu-contact", "btn-light btn-lg") }}
           {% if contact.booking_url and ui.book_call %}

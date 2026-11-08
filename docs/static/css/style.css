@@ -3083,13 +3083,6 @@ html:has(.lightbox[open]) {
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
 }
 
-.closing-email {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px 14px;
-}
-
 .contact-email {
   color: #fff;
   font-size: clamp(1.25rem, 2.6vw, 1.875rem);
