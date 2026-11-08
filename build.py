@@ -19,6 +19,7 @@ CONTENT = ROOT / "content.yaml"
 TEMPLATES = ROOT / "templates"
 STATIC = ROOT / "static"
 ROOT_FILES = ROOT / "root"  # copied as-is to the top of docs/ (e.g. search console verification)
+N8N_FILES = ROOT / "automation" / "n8n"  # sample workflows, published to docs/static/n8n/ (source stays here)
 OUT = ROOT / "docs"
 
 # Proper names inside sentences that browser translation should leave alone.
@@ -179,6 +180,13 @@ def main():
     if out_static.exists():
         shutil.rmtree(out_static)
     shutil.copytree(STATIC, out_static)
+
+    # n8n sample workflows (JSON + README), served from the site itself.
+    if N8N_FILES.is_dir():
+        (out_static / "n8n").mkdir(exist_ok=True)
+        for path in N8N_FILES.iterdir():
+            if path.is_file():
+                shutil.copy2(path, out_static / "n8n" / path.name)
 
     # Files that must live at the site root, copied unchanged on every build.
     if ROOT_FILES.is_dir():

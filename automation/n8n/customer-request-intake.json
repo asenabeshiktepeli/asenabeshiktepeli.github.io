@@ -58,7 +58,6 @@
         -384,
         32
       ],
-      "webhookId": "0948294b-7712-4af0-8a44-9dae7576174e",
       "id": "d0ae3f62-77b6-4fd1-95b7-b6133c2298ef"
     },
     {
@@ -98,7 +97,6 @@
       "id": "85df4880-61e9-4dc6-beed-58b53b6b218d",
       "credentials": {
         "asanaOAuth2Api": {
-          "id": "Cu1HnrusJ77UY3TM",
           "name": "Asana account"
         }
       }
@@ -128,7 +126,6 @@
       "id": "be5669f8-86f2-4a1c-b6e4-fb76847c0933",
       "credentials": {
         "googleCalendarOAuth2Api": {
-          "id": "kRCcUmq2g07q0RLR",
           "name": "Google Calendar account"
         }
       }
@@ -276,7 +273,6 @@
       "id": "76cfbee1-9550-440c-85b3-930831887951",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "Jt5W4ZMzMjXcFxXG",
           "name": "Google Sheets account"
         }
       }
@@ -335,12 +331,10 @@
     "binaryMode": "separate",
     "availableInMCP": true
   },
-  "versionId": "b80378e2-9179-423e-9749-bfdcd8545652",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": ""
   },
   "nodeGroups": [],
-  "id": "cM1fxudiQDiwTd7s",
   "tags": []
 }

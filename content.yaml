@@ -157,7 +157,14 @@ portfolio:
       text: "A customer request form that runs itself. n8n creates an Asana task with priority and a due date, adds a follow-up reminder to Google Calendar and logs the request in Google Sheets. An hourly workflow marks the log as Done when the task is completed in Asana."
       tools: ["n8n", "Asana", "Google Calendar", "Google Sheets"]
       link: "https://github.com/asenabeshiktepeli/asenabeshiktepeli.github.io/tree/main/automation/n8n"
-      link_label: "View workflow files"  # optional: button text for this card instead of view_label
+      link_label: "View on GitHub"  # optional: button text for this card instead of view_label
+      # optional: files served from this site (build.py copies automation/n8n/ to static/n8n/).
+      # When set, they show as download buttons and the link above becomes a small text link.
+      downloads:
+        - label: "customer-request-intake.json"
+          href: "static/n8n/customer-request-intake.json"
+        - label: "sync-completed-tasks.json"
+          href: "static/n8n/sync-completed-tasks.json"
       # optional: a video shown instead of an image (click to play, no autoplay)
       video: "static/video/customer-request-automation.mp4"
       poster: "static/img/portfolio/customer-request-automation-poster.jpg"

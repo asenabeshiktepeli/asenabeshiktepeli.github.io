@@ -1,0 +1,340 @@
+{
+  "name": "Sample Store – Customer Request Automation",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Sample Store - Customer Request",
+        "formDescription": "Sample project. Fictional store, do not enter real personal data.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Customer name",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Customer email",
+              "fieldType": "email",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Order number",
+              "placeholder": "ORD-1021",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Request type",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Late delivery"
+                  },
+                  {
+                    "option": "Return"
+                  },
+                  {
+                    "option": "Damaged item"
+                  },
+                  {
+                    "option": "Other"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Details",
+              "fieldType": "textarea",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Customer request form",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -384,
+        32
+      ],
+      "id": "d0ae3f62-77b6-4fd1-95b7-b6133c2298ef"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Sample project: sets priority, request ID and follow-up date\nconst f = $input.first().json;\nconst type = f['Request type'];\nconst priority = type === 'Damaged item' ? 'High' : type === 'Late delivery' ? 'Medium' : 'Normal';\nconst now = $now.setZone('Asia/Famagusta');\nlet follow = now.plus({ days: priority === 'High' ? 1 : 2 }).set({ hour: 10, minute: 0, second: 0, millisecond: 0 });\nwhile (follow.weekday > 5) follow = follow.plus({ days: 1 }); // skip weekends\nreturn [{ json: {\n  requestId: 'REQ-' + now.toFormat('yyMMdd-HHmmss'),\n  submittedAt: now.toFormat('yyyy-MM-dd HH:mm'),\n  customerName: f['Customer name'],\n  customerEmail: f['Customer email'],\n  orderNumber: f['Order number'],\n  requestType: type,\n  details: f['Details'],\n  priority,\n  followUpDate: follow.toFormat('yyyy-MM-dd'),\n  followUpStart: follow.toISO(),\n  followUpEnd: follow.plus({ minutes: 15 }).toISO()\n} }];"
+      },
+      "name": "Set priority & follow-up date",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -144,
+        32
+      ],
+      "id": "ba10053b-bc51-4229-9978-fbe40ffde271"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "workspace": "YOUR_ASANA_ID",
+        "name": "=[{{ $json.priority }}] {{ $json.requestType }} - {{ $json.orderNumber }} - {{ $json.customerName }}",
+        "otherProperties": {
+          "assignee": "YOUR_ASANA_ID",
+          "due_on": "={{ $json.followUpDate }}",
+          "notes": "=Request ID: {{ $json.requestId }}\nCustomer: {{ $json.customerName }} ({{ $json.customerEmail }})\nOrder: {{ $json.orderNumber }}\nType: {{ $json.requestType }}\nPriority: {{ $json.priority }}\n\nDetails:\n{{ $json.details }}\n\nSample project - fictional data.",
+          "projects": [
+            "YOUR_ASANA_ID"
+          ]
+        }
+      },
+      "name": "Create Asana task",
+      "type": "n8n-nodes-base.asana",
+      "typeVersion": 1,
+      "position": [
+        96,
+        32
+      ],
+      "id": "85df4880-61e9-4dc6-beed-58b53b6b218d",
+      "credentials": {
+        "asanaOAuth2Api": {
+          "name": "Asana account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "YOUR_CALENDAR_ID",
+          "mode": "list",
+          "cachedResultName": "Sample Store – Follow-ups"
+        },
+        "start": "={{ $('Set priority & follow-up date').item.json.followUpStart }}",
+        "end": "={{ $('Set priority & follow-up date').item.json.followUpEnd }}",
+        "additionalFields": {
+          "description": "={{ $('Set priority & follow-up date').item.json.details }}\n\nAsana task: https://app.asana.com/0/0/{{ $json.gid }}\nSample project - fictional data.",
+          "summary": "=Follow up: {{ $('Set priority & follow-up date').item.json.requestType }} - {{ $('Set priority & follow-up date').item.json.orderNumber }}"
+        }
+      },
+      "name": "Add follow-up to Google Calendar",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        336,
+        32
+      ],
+      "id": "be5669f8-86f2-4a1c-b6e4-fb76847c0933",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Requests",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Request ID": "={{ $('Set priority & follow-up date').item.json.requestId }}",
+            "Submitted at": "={{ $('Set priority & follow-up date').item.json.submittedAt }}",
+            "Customer name": "={{ $('Set priority & follow-up date').item.json.customerName }}",
+            "Customer email": "={{ $('Set priority & follow-up date').item.json.customerEmail }}",
+            "Order number": "={{ $('Set priority & follow-up date').item.json.orderNumber }}",
+            "Request type": "={{ $('Set priority & follow-up date').item.json.requestType }}",
+            "Details": "={{ $('Set priority & follow-up date').item.json.details }}",
+            "Priority": "={{ $('Set priority & follow-up date').item.json.priority }}",
+            "Follow-up date": "={{ $('Set priority & follow-up date').item.json.followUpDate }}",
+            "Asana task ID": "={{ $('Create Asana task').item.json.gid }}",
+            "Status": "Open"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Request ID",
+              "displayName": "Request ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Submitted at",
+              "displayName": "Submitted at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Customer name",
+              "displayName": "Customer name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Customer email",
+              "displayName": "Customer email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Order number",
+              "displayName": "Order number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Request type",
+              "displayName": "Request type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Details",
+              "displayName": "Details",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Priority",
+              "displayName": "Priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Follow-up date",
+              "displayName": "Follow-up date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Asana task ID",
+              "displayName": "Asana task ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Log request in Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        576,
+        32
+      ],
+      "id": "76cfbee1-9550-440c-85b3-930831887951",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Customer request form": {
+      "main": [
+        [
+          {
+            "node": "Set priority & follow-up date",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set priority & follow-up date": {
+      "main": [
+        [
+          {
+            "node": "Create Asana task",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Asana task": {
+      "main": [
+        [
+          {
+            "node": "Add follow-up to Google Calendar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add follow-up to Google Calendar": {
+      "main": [
+        [
+          {
+            "node": "Log request in Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": true
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": ""
+  },
+  "nodeGroups": [],
+  "tags": []
+}

@@ -325,8 +325,14 @@
               {% endif %}
               {# Optional item.link_label replaces the shared "View sample" text for this card only. #}
               {% set link_label = item.link_label or portfolio.view_label %}
+              {# Optional item.downloads: files on this site as download buttons; the link then becomes a small text link. #}
+              {% for file in item.downloads or [] %}
+              <a class="btn btn-ghost btn-sm" href="{{ file.href }}" download aria-label="Download {{ file.label }}">
+                {{ file.label }} <span aria-hidden="true">↓</span>
+              </a>
+              {% endfor %}
               {% if item.link and link_label %}
-              <a class="btn btn-ghost btn-sm" href="{{ item.link }}" target="_blank" rel="noopener" aria-label="{{ link_label }}: {{ item.title }} (opens in a new tab)">
+              <a class="{{ 'service-sample' if item.downloads else 'btn btn-ghost btn-sm' }}" href="{{ item.link }}" target="_blank" rel="noopener" aria-label="{{ link_label }}: {{ item.title }} (opens in a new tab)">
                 {{ link_label }} <span aria-hidden="true">↗</span>
               </a>
               {% endif %}

@@ -52,7 +52,6 @@
       "id": "60baec2a-bf4e-4cc6-bd3b-a540a984a065",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "Jt5W4ZMzMjXcFxXG",
           "name": "Google Sheets account"
         }
       }
@@ -73,7 +72,6 @@
       "id": "f4907d02-d89e-4115-8ab8-56273596f4da",
       "credentials": {
         "asanaOAuth2Api": {
-          "id": "Cu1HnrusJ77UY3TM",
           "name": "Asana account"
         }
       }
@@ -177,7 +175,6 @@
       "id": "12b21327-4b86-46f5-bdc4-e19487c6d23e",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "Jt5W4ZMzMjXcFxXG",
           "name": "Google Sheets account"
         }
       }
@@ -236,12 +233,10 @@
     "binaryMode": "separate",
     "availableInMCP": true
   },
-  "versionId": "866c3fd0-381e-4866-bebb-7e879e14ea11",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": ""
   },
   "nodeGroups": [],
-  "id": "hO4qipkQOq1AcGD6",
   "tags": []
 }
