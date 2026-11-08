@@ -1239,6 +1239,14 @@ html:not(.js) .js-only {
   transform: translateX(3px);
 }
 
+/* Fixed-price setups under the services (existing tokens only) */
+.packages { display: grid; gap: 16px; margin-top: clamp(40px, 5vw, 64px); }
+.packages .section-intro { margin: 0; }
+.package .badge { align-self: flex-start; }
+.package-price { color: var(--text); font-weight: 600; }
+.package-note { color: var(--muted); font-size: 0.875rem; }
+.package-actions { display: flex; flex-wrap: wrap; gap: 10px; padding-top: 8px; }
+
 /* Portfolio card reached from a "See sample" link */
 .project:target {
   border-color: var(--accent-line);

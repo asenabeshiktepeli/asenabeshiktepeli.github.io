@@ -223,6 +223,59 @@
         </article>
         {% endfor %}
       </div>
+
+      {# Fixed-price setups: same card style as the services above.
+         buy_url set -> one "Buy on Upwork" button; empty -> email (with subject) + booking link. #}
+      {% set pkgs = (packages["items"] or []) | selectattr("title") | list if packages else [] %}
+      {% if pkgs %}
+      <div class="packages">
+        {% if packages.title %}<p class="sub-label reveal">{{ packages.title }}</p>{% endif %}
+        {% if packages.intro %}<p class="section-intro reveal">{{ packages.intro }}</p>{% endif %}
+        <div class="services">
+          {% for pkg in pkgs %}
+          <article class="card service package spotlight reveal" style="--d: {{ loop.index0 }}">
+            {% if pkg.badge %}<span class="badge">{{ pkg.badge }}</span>{% endif %}
+            <h3 class="card-title">{{ pkg.title }}</h3>
+            {% if pkg.price %}<p class="package-price">{{ pkg.price }}</p>{% endif %}
+            {% if pkg.text %}<p class="card-text">{{ pkg.text }}</p>{% endif %}
+            {% if pkg.includes %}
+            <ul class="includes">
+              {% for point in pkg.includes %}
+              <li>
+                <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M3.5 8.5 6.5 11.5 12.5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>{{ point | no_translate }}</span>
+              </li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+            {% if pkg.not_included %}<p class="package-note">{{ packages.not_included_label }} {{ pkg.not_included }}</p>{% endif %}
+            {% if pkg.sample and ui.see_sample %}
+            <a class="service-sample" href="{{ pkg.sample }}" aria-label="{{ ui.see_sample }}: {{ pkg.title }}">
+              {{ ui.see_sample }} <span class="btn-arrow" aria-hidden="true">→</span>
+            </a>
+            {% endif %}
+            <div class="package-actions">
+              {% if pkg.buy_url %}
+              <a class="btn btn-primary btn-sm" href="{{ pkg.buy_url }}" target="_blank" rel="noopener" aria-label="{{ packages.buy_label }}: {{ pkg.title }} (opens in a new tab)">
+                {{ packages.buy_label }} <span aria-hidden="true">↗</span>
+              </a>
+              {% else %}
+              {% if contact.email and packages.email_label %}
+              <a class="btn btn-primary btn-sm" href="mailto:{{ contact.email }}?subject={{ (pkg.title ~ ' enquiry') | urlencode }}" aria-label="{{ packages.email_label }} about {{ pkg.title }}">{{ packages.email_label }}</a>
+              {% endif %}
+              {% if contact.booking_url and ui.book_call_hero %}
+              <a class="btn btn-ghost btn-sm" href="{{ contact.booking_url }}" target="_blank" rel="noopener">
+                {{ ui.book_call_hero }} <span aria-hidden="true">↗</span>
+              </a>
+              {% endif %}
+              {% endif %}
+            </div>
+          </article>
+          {% endfor %}
+        </div>
+        {% if packages.note %}<p class="package-note reveal">{{ packages.note }}</p>{% endif %}
+      </div>
+      {% endif %}
     </div>
   </section>
   {% endif %}
