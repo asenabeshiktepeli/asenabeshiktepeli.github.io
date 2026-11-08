@@ -1,6 +1,6 @@
 # n8n workflows: Customer Request Automation (sample project)
 
-Two n8n workflows for a fictional online store. Demo video: https://asenabeshiktepeli.github.io/#work
+Two n8n workflows for a fictional online store. Demo video: https://asenabeshiktepeli.github.io/#work-request-automation
 
 ## customer-request-intake.json
 n8n Form -> Code (priority, request ID, follow-up date that skips weekends) -> Asana task -> Google Calendar follow-up -> Google Sheets log (Status: Open)
