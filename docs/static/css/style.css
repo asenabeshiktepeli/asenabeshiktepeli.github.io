@@ -2451,14 +2451,33 @@ html:has(.lightbox[open]) {
   border-top: 0;
 }
 
+/* Navy card with a clear edge: a thin teal line (an inset outline, so the height does not change)
+   and a soft teal glow around it. Same family as the n8n video frame, but calmer. No animation. */
 .case {
+  --case-edge: 65%;    /* the teal line */
+  --case-glow-1: 14%;  /* close glow */
+  --case-glow-2: 7%;   /* wide, faint glow */
   position: relative;
   isolation: isolate;
   overflow: hidden;
   border-radius: var(--radius-lg);
   background: linear-gradient(160deg, var(--navy-2), var(--navy) 60%);
   color: var(--navy-text);
-  box-shadow: var(--shadow-lg);
+  outline: 1px solid color-mix(in oklab, var(--teal) var(--case-edge), transparent);
+  outline-offset: -1px;
+  box-shadow:
+    0 0 16px color-mix(in oklab, var(--teal) var(--case-glow-1), transparent),
+    0 0 40px color-mix(in oklab, var(--teal) var(--case-glow-2), transparent),
+    var(--shadow-lg);
+}
+
+/* Phones: a little softer */
+@media (max-width: 639px) {
+  .case {
+    --case-edge: 55%;
+    --case-glow-1: 10%;
+    --case-glow-2: 5%;
+  }
 }
 
 .case.spotlight::before {
@@ -2479,28 +2498,32 @@ html:has(.lightbox[open]) {
 
 .case-inner {
   position: relative;
-  padding: clamp(24px, 5.5vw, 64px);
+  padding: clamp(20px, 3vw, 36px);
 }
 
+/* Compact card: fits under the header on 1366x768 and up (about 470 px tall on desktop).
+   Body text stays at 14 px or more; the small mono labels keep their size. */
 .case-name {
-  max-width: 18em;
-  font-size: clamp(1.75rem, 4.2vw, 3rem);
-  letter-spacing: -0.045em;
+  max-width: 28em;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  letter-spacing: -0.04em;
+  line-height: 1.2;
 }
 
 .case-summary {
-  margin-top: 18px;
-  max-width: 42em;
+  margin-top: 10px;
+  max-width: 62em;
   color: var(--navy-muted);
-  font-size: clamp(1.0625rem, 1.5vw, 1.1875rem);
+  font-size: 1rem;
+  line-height: 1.6;
 }
 
 .pipeline {
-  --gap: 18px;
+  --gap: 14px;
   display: grid;
   grid-template-columns: repeat(var(--n, 6), minmax(0, 1fr));
   gap: var(--gap);
-  margin-top: clamp(36px, 5vw, 56px);
+  margin-top: clamp(20px, 2.4vw, 28px);
   counter-reset: none;
 }
 
@@ -2508,10 +2531,10 @@ html:has(.lightbox[open]) {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 18px 16px 20px;
+  gap: 6px;
+  padding: 12px 14px 14px;
   border: 1px solid var(--navy-border);
-  border-radius: 14px;
+  border-radius: 12px;
   background: rgba(255, 255, 255, 0.04);
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
@@ -2523,11 +2546,11 @@ html:has(.lightbox[open]) {
   background: rgba(255, 255, 255, 0.07);
 }
 
-/* Connector to the next step, with a slow travelling pulse */
+/* Connector to the next step, level with the step number, with a slow travelling pulse */
 .pipe-step:not(:last-child)::after {
   content: "";
   position: absolute;
-  top: 27px;
+  top: 20px;
   left: 100%;
   width: var(--gap);
   height: 2px;
@@ -2556,27 +2579,27 @@ html:has(.lightbox[open]) {
 }
 
 .pipe-text {
-  font-size: 0.9375rem;
-  line-height: 1.45;
+  font-size: 0.875rem;
+  line-height: 1.4;
   color: var(--navy-text);
 }
 
 @media (max-width: 1100px) {
   .pipeline {
     grid-template-columns: 1fr;
-    --gap: 12px;
+    --gap: 8px;
   }
 
   .pipe-step {
     flex-direction: row;
     align-items: baseline;
-    gap: 14px;
-    padding: 14px 16px;
+    gap: 12px;
+    padding: 10px 14px;
   }
 
   .pipe-step:not(:last-child)::after {
     top: 100%;
-    left: 26px;
+    left: 24px;
     width: 2px;
     height: var(--gap);
     background:
@@ -2586,17 +2609,24 @@ html:has(.lightbox[open]) {
   }
 }
 
+/* Highlights and Built with: two short rows, each with its label on the same line */
 .case-footer {
   display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
-  gap: 24px 40px;
-  margin-top: clamp(32px, 4vw, 48px);
-  padding-top: 28px;
+  gap: 10px;
+  margin-top: clamp(18px, 2.2vw, 24px);
+  padding-top: 16px;
   border-top: 1px solid var(--navy-border);
 }
 
+.case-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+}
+
 .case-label {
-  margin-bottom: 12px;
+  min-width: 7.5em;
   color: var(--navy-muted);
   font-family: var(--font-mono);
   font-size: 0.75rem;
@@ -2613,13 +2643,13 @@ html:has(.lightbox[open]) {
 .check {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 7px 14px 7px 10px;
+  gap: 7px;
+  padding: 4px 12px 4px 9px;
   border: 1px solid rgba(134, 239, 172, 0.28);
   border-radius: 999px;
   background: rgba(134, 239, 172, 0.08);
   color: var(--navy-text);
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
 }
 
 .check svg {
@@ -2636,14 +2666,21 @@ html:has(.lightbox[open]) {
 }
 
 .case-note {
-  margin-top: 20px;
+  margin-top: 14px;
   color: var(--navy-muted);
   font-size: 0.9375rem;
 }
 
-@media (max-width: 800px) {
+/* Phones: the label sits above its items */
+@media (max-width: 639px) {
+  .case-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
   .case-footer {
-    grid-template-columns: 1fr;
+    gap: 14px;
   }
 }
 
