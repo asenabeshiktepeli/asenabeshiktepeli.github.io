@@ -1659,11 +1659,11 @@ html:not(.js) .js-only {
   white-space: nowrap;
 }
 
-/* The featured (first) project spans the full row: preview left, text right. */
+/* The featured (first) project spans the full row: preview left (a bit wider), text right. */
 .project-featured {
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
 }
 
 .project-featured .project-media {
@@ -1698,18 +1698,83 @@ html:not(.js) .js-only {
     linear-gradient(200deg, color-mix(in oklab, var(--teal) 6%, white), color-mix(in oklab, var(--accent-bright) 6%, white));
 }
 
-/* The featured (n8n) card stays navy, with two soft lights instead of lines */
+/* The featured (n8n) card: the column keeps the light tint of the other cards; the video sits
+   in a compact navy frame (soft gradient, thin teal edge, faint glow), centred vertically */
 .project-featured .project-media {
-  background:
-    radial-gradient(60% 80% at 90% 0%, color-mix(in oklab, var(--accent-bright) 50%, transparent), transparent 70%),
-    radial-gradient(50% 70% at 0% 100%, color-mix(in oklab, var(--teal) 22%, transparent), transparent 70%),
-    linear-gradient(160deg, var(--navy-2), var(--navy));
-  border-right-color: transparent;
+  --frame-glow: 30%;  /* teal light behind the frame; lower on phones */
+  padding: clamp(16px, 2.4vw, 28px);
 }
 
-@media (max-width: 860px) {
+/* Soft, blurred teal glow behind the video frame, spreading into the light column (no animation) */
+.project-featured .project-media::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in oklab, var(--teal) var(--frame-glow), transparent) 60%, transparent);
+  filter: blur(24px);
+  transform: translate(-50%, -50%) scale(1.16);
+  pointer-events: none;
+}
+
+@media (max-width: 639px) {
   .project-featured .project-media {
-    border-bottom-color: transparent;
+    --frame-glow: 22%;
+  }
+
+  .project-featured .project-media::before {
+    filter: blur(20px);
+  }
+}
+
+/* Navy inside, a thin bright teal edge; the light spreads out from the edge in layers
+   (strong close to it, fading further out) on top of the radial glow behind. No animation. */
+.video-frame {
+  --edge-1: 70%;   /* tight glow right at the edge */
+  --edge-2: 34%;   /* middle layer */
+  --edge-3: 16%;   /* wide, faint outer layer */
+  --edge-in: 18%;  /* soft light just inside the edge */
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: clamp(8px, 1vw, 12px);
+  border: 1px solid var(--teal);
+  border-radius: 18px;
+  background:
+    radial-gradient(70% 90% at 100% 0%, color-mix(in oklab, var(--accent-bright) 45%, transparent), transparent 70%),
+    radial-gradient(60% 80% at 0% 100%, color-mix(in oklab, var(--teal) 24%, transparent), transparent 70%),
+    linear-gradient(160deg, var(--navy-2), var(--navy));
+  box-shadow:
+    inset 0 0 14px color-mix(in oklab, var(--teal) var(--edge-in), transparent),
+    0 0 4px color-mix(in oklab, var(--teal) var(--edge-1), transparent),
+    0 0 14px color-mix(in oklab, var(--teal) var(--edge-2), transparent),
+    0 0 32px color-mix(in oklab, var(--teal) var(--edge-3), transparent);
+}
+
+/* The video keeps its own thin light border inside the teal edge.
+   Extra .project-media so this wins over the general .project-media .project-video rule below. */
+.project-media .video-frame .project-video {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: none;
+}
+
+/* Phones: a little softer, and the outer layer reaches less far (less padding around it) */
+@media (max-width: 639px) {
+  .video-frame {
+    --edge-1: 60%;
+    --edge-2: 26%;
+    --edge-3: 12%;
+    --edge-in: 14%;
+    box-shadow:
+      inset 0 0 10px color-mix(in oklab, var(--teal) var(--edge-in), transparent),
+      0 0 3px color-mix(in oklab, var(--teal) var(--edge-1), transparent),
+      0 0 10px color-mix(in oklab, var(--teal) var(--edge-2), transparent),
+      0 0 22px color-mix(in oklab, var(--teal) var(--edge-3), transparent);
   }
 }
 
@@ -2172,7 +2237,7 @@ html:has(.lightbox[open]) {
   }
 
   .project-featured .project-media {
-    min-height: 220px;
+    min-height: 0;
     border-right: 0;
     border-bottom: 1px solid var(--border);
     border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;

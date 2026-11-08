@@ -311,9 +311,12 @@
         <article class="card project{% if featured %} project-featured{% else %} project-tile{% endif %} spotlight reveal"{% if item.id %} id="{{ item.id }}"{% endif %} style="--d: {{ 0 if featured else (loop.index0 - 1) % 3 }}">
           <div class="project-media" aria-hidden="{{ 'false' if item.image or item.video else 'true' }}">
             {% if item.video %}
-            {# Optional video instead of an image: plays only when the visitor presses play. #}
-            <video class="project-video" src="{{ item.video }}" controls preload="metadata" playsinline{% if item.poster %} poster="{{ item.poster }}"{% endif %}
-                   width="1280" height="720" aria-label="Video: {{ item.title }}{% if item.label %} ({{ item.label | lower }}){% endif %}"></video>
+            {# Optional video instead of an image: plays only when the visitor presses play.
+               .video-frame is the compact navy frame around it. #}
+            <div class="video-frame">
+              <video class="project-video" src="{{ item.video }}" controls preload="metadata" playsinline{% if item.poster %} poster="{{ item.poster }}"{% endif %}
+                     width="1280" height="720" aria-label="Video: {{ item.title }}{% if item.label %} ({{ item.label | lower }}){% endif %}"></video>
+            </div>
             {% elif item.image %}
             {# <name>-800.webp is made by tools/make_thumbs.py.
                The image repeats the "View sample" link for mouse users only. #}
