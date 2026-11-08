@@ -2020,7 +2020,7 @@ html:has(.lightbox[open]) {
   background: var(--bg-soft);
 }
 
-/* ---------- 7. How I work: full-width navy band, glass steps, flowing connectors ---------- */
+/* ---------- 7. How I work: full-width navy band, compact timeline, flowing connectors ---------- */
 
 #how-i-work {
   border-top: 0;
@@ -2048,44 +2048,44 @@ html:has(.lightbox[open]) {
   background: var(--navy-text);
 }
 
+/* Shorter band than the other sections: less padding, title and button on one line */
+#how-i-work {
+  padding: clamp(48px, 5vw, 64px) 0;
+}
+
+.steps-head {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px 24px;
+  margin-bottom: clamp(28px, 3.4vw, 44px);
+}
+
+/* Timeline: no boxes, numbered dots on one line joined by a slow travelling light
+   (same as the case study pipeline) */
 .steps {
-  --gap: 20px;
+  --gap: 32px;
+  --dot: 34px;
   display: grid;
   grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr));
   gap: var(--gap);
 }
 
 .step {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: clamp(20px, 2.4vw, 28px);
-  border-color: var(--navy-border);
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: none;
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
+  gap: 6px;
 }
 
-.step:hover {
-  transform: none;
-  border-color: color-mix(in oklab, var(--teal) 55%, transparent);
-  background: rgba(255, 255, 255, 0.08);
-}
-
-/* The light-background gradient frame on card hover is not needed on navy */
-.step::after {
-  content: none;
-}
-
-/* Line from each step to the next, level with the number: a slow travelling light
-   (same as the case study pipeline) */
+/* From this dot to the next one, level with the dot centres */
 .step:not(:last-child)::before {
   content: "";
   position: absolute;
-  top: calc(clamp(20px, 2.4vw, 28px) + 17px);
-  left: 100%;
-  width: var(--gap);
+  top: calc(var(--dot) / 2 - 1px);
+  left: calc(var(--dot) + 12px);
+  right: calc(12px - var(--gap));
   height: 2px;
   background:
     linear-gradient(90deg, transparent, var(--teal), transparent) 0 0 / 50% 100% no-repeat,
@@ -2097,9 +2097,9 @@ html:has(.lightbox[open]) {
 .step-index {
   display: grid;
   place-items: center;
-  width: 34px;
-  height: 34px;
-  margin-bottom: 8px;
+  width: var(--dot);
+  height: var(--dot);
+  margin-bottom: 10px;
   border: 1px solid color-mix(in oklab, var(--teal) 60%, transparent);
   border-radius: 50%;
   background: rgba(34, 211, 238, 0.08);
@@ -2113,7 +2113,7 @@ html:has(.lightbox[open]) {
 
 .step-title {
   color: #fff;
-  font-size: 1.125rem;
+  font-size: 1.0625rem;
   letter-spacing: -0.02em;
   line-height: 1.3;
 }
@@ -2121,46 +2121,65 @@ html:has(.lightbox[open]) {
 .step-text {
   color: var(--navy-muted);
   font-size: 0.9375rem;
-  line-height: 1.6;
+  line-height: 1.55;
+  text-wrap: pretty;
 }
 
-.steps-cta {
-  display: flex;
-  justify-content: center;
-  margin-top: clamp(28px, 4vw, 44px);
-}
-
-/* Tablet: 2 x 2, no connectors (they would point the wrong way) */
+/* Tablet: 2 x 2, connectors only inside a row */
 @media (max-width: 1023px) {
   .steps {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 28px;
   }
 
-  .step:not(:last-child)::before {
+  .step:nth-child(2n)::before {
     content: none;
   }
 }
 
-/* Phone: one column with a short vertical connector */
+/* Phone: vertical timeline, dot on the left of each title, line running down;
+   the button sits under the title at full width */
 @media (max-width: 639px) {
   .steps {
-    --gap: 14px;
+    --gap: 22px;
+    --dot: 30px;
     grid-template-columns: 1fr;
+    row-gap: var(--gap);
   }
 
-  .step:not(:last-child)::before {
+  .step {
+    gap: 4px;
+    padding-left: calc(var(--dot) + 16px);
+  }
+
+  .step-index {
+    position: absolute;
+    top: -4px;
+    left: 0;
+    margin: 0;
+  }
+
+  .step:not(:last-child)::before,
+  .step:nth-child(2n):not(:last-child)::before {
     content: "";
-    top: 100%;
-    left: calc(clamp(20px, 2.4vw, 28px) + 17px);
+    top: calc(var(--dot) + 2px);
+    bottom: calc(6px - var(--gap));
+    left: calc(var(--dot) / 2 - 1px);
+    right: auto;
     width: 2px;
-    height: var(--gap);
+    height: auto;
     background:
       linear-gradient(180deg, transparent, var(--teal), transparent) 0 0 / 100% 50% no-repeat,
       rgba(34, 211, 238, 0.3);
     animation-name: flow-y;
   }
 
-  .steps-cta .btn {
+  .steps-head {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .steps-head .btn {
     width: 100%;
   }
 }
@@ -2927,8 +2946,7 @@ html:not(.js) .tab-panel + .tab-panel {
   transition-delay: 0s;
 }
 
-.js .job.reveal.is-visible:hover,
-.js .step.reveal.is-visible:hover {
+.js .job.reveal.is-visible:hover {
   transform: none;
 }
 

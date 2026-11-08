@@ -243,12 +243,12 @@ how_i_work:
     - title: "Intro call"
       text: "A 15-minute call about your tasks, tools and priorities."
     - title: "Access & setup"
-      text: "You share access to the tools I need, with the permissions you choose. I write down your policies and tone of voice in a short guide, so every reply sounds like your business."
+      text: "You share access with the permissions you choose. I note your policies and tone of voice in a short guide, so every reply sounds like your business."
     - title: "Daily work"
-      text: "I handle customer messages, order follow-ups and data tasks during our agreed hours. Refunds and special cases come to you before I reply."
+      text: "I handle customer messages, order follow-ups and data tasks in our agreed hours. Refunds and special cases come to you before I reply."
     - title: "Updates"
       text: "A short end-of-day summary by email or Slack, so you always know what's done and what's open."
-  cta: "Book a 15-min call"  # button under the steps; links to contact.booking_url (hidden if that is empty)
+  cta: "Book a 15-min call"  # button next to the title (under it on phones); links to contact.booking_url (hidden if that is empty)
 
 case_study:
   title: "Automation case study"

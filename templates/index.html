@@ -401,24 +401,29 @@
   {% set sec.n = sec.n + 1 %}
   <section class="section{% if sec.n is odd %} section-soft{% endif %}" id="how-i-work">
     <div class="container">
-      {{ section_head(how_i_work.title) }}
+      {# Compact timeline: title with the booking button on the right (under it on phones),
+         then the steps on one line with a flowing connector (vertical on phones). #}
+      {% set hiw_cta = how_i_work.cta and contact.booking_url %}
+      {% if how_i_work.title or hiw_cta %}
+      <div class="section-head steps-head reveal">
+        {% if how_i_work.title %}<h2 class="section-title">{{ how_i_work.title }}</h2>{% endif %}
+        {% if hiw_cta %}
+        <a class="btn btn-primary btn-lg" href="{{ contact.booking_url }}" target="_blank" rel="noopener">
+          {{ how_i_work.cta }}
+          <span class="btn-arrow" aria-hidden="true">↗</span>
+        </a>
+        {% endif %}
+      </div>
+      {% endif %}
       <ol class="steps" style="--n: {{ hiw_steps | length }}">
         {% for step in hiw_steps %}
-        <li class="card step reveal" style="--d: {{ loop.index0 }}">
+        <li class="step reveal" style="--d: {{ loop.index0 }}">
           <span class="step-index" aria-hidden="true">{{ "%02d" | format(loop.index) }}</span>
           <h3 class="step-title">{{ step.title }}</h3>
           {% if step.text %}<p class="step-text">{{ step.text }}</p>{% endif %}
         </li>
         {% endfor %}
       </ol>
-      {% if how_i_work.cta and contact.booking_url %}
-      <div class="steps-cta reveal">
-        <a class="btn btn-primary btn-lg" href="{{ contact.booking_url }}" target="_blank" rel="noopener">
-          {{ how_i_work.cta }}
-          <span class="btn-arrow" aria-hidden="true">↗</span>
-        </a>
-      </div>
-      {% endif %}
     </div>
   </section>
   {% endif %}
