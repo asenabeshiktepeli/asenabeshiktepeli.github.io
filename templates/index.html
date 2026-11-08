@@ -36,7 +36,7 @@
   {% if button.href and button.href.startswith("mailto:") and not ns.email_label %}{% set ns.email_label = button.label %}{% endif %}
   {% if button.href and button.href.endswith(".pdf") and not ns.cv %}{% set ns.cv = button.href %}{% set ns.cv_label = button.label %}{% endif %}
 {% endfor %}
-{% set email_label = ns.email_label or footer.cta_button %}
+{% set email_label = ns.email_label %}
 {% set cv_file = ns.cv.split("/")[-1] if ns.cv else "" %}
 {% set job = (experience["items"] or [{}])[0] %}
 {# Section number and soft background follow the rendered order #}
@@ -283,16 +283,35 @@
   {# ================= Portfolio ================= #}
   {% if portfolio["items"] %}
   {% set sec.n = sec.n + 1 %}
+  {% set has_rail = portfolio["items"] | length > 1 %}
   <section class="section{% if sec.n is odd %} section-soft{% endif %}" id="portfolio">
-    <div class="container">
+    <div class="container"{% if has_rail %} data-rail{% endif %}>
+      {% if has_rail %}
+      {# Title with the rail's ← → buttons on the right (under the title on phones). #}
+      <div class="section-head section-head-rail reveal">
+        {% if portfolio.title %}<h2 class="section-title">{{ portfolio.title }}</h2>{% endif %}
+        <div class="work-rail-nav js-only">
+          <button class="rail-btn" type="button" data-rail-prev aria-label="{{ ui.prev_project or 'Previous' }}"><span aria-hidden="true">←</span></button>
+          <button class="rail-btn" type="button" data-rail-next aria-label="{{ ui.next_project or 'Next' }}"><span aria-hidden="true">→</span></button>
+        </div>
+      </div>
+      {% else %}
       {{ section_head(portfolio.title) }}
+      {% endif %}
       {% if portfolio.intro %}<p class="section-intro reveal">{{ portfolio.intro }}</p>{% endif %}
+      {# The first item is the featured card (full width). All other items sit in a horizontal
+         rail: swipe on phones, ← → buttons and arrow keys on desktop (main.js). Without JS the
+         rail still scrolls; every card stays in the HTML. #}
       <div class="projects">
         {% for item in portfolio["items"] %}
         {# Screenshots for the lightbox gallery: a list of {src, alt, caption} from content.yaml. #}
         {% set shots = item.screenshots or [] %}
         {% set first_shot = shots[0].src if shots else "" %}
-        <article class="card project spotlight reveal"{% if item.id %} id="{{ item.id }}"{% endif %} style="--d: {{ loop.index0 }}">
+        {% if loop.index == 2 %}
+        <div class="work-rail">
+          <div class="work-rail-track" data-rail-track tabindex="0" role="region" aria-label="{{ portfolio.title }}">
+        {% endif %}
+        <article class="card project{% if loop.first %} project-featured{% endif %} spotlight reveal"{% if item.id %} id="{{ item.id }}"{% endif %} style="--d: {{ loop.index0 if loop.first else 0 }}">
           <div class="project-media" aria-hidden="{{ 'false' if item.image or item.video else 'true' }}">
             {% if item.video %}
             {# Optional video instead of an image: plays only when the visitor presses play. #}
@@ -362,6 +381,10 @@
           </dialog>
           {% endif %}
         </article>
+        {% if loop.last and loop.length > 1 %}
+          </div>
+        </div>
+        {% endif %}
         {% endfor %}
       </div>
     </div>

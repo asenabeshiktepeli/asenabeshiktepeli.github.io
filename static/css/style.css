@@ -1483,17 +1483,14 @@ html:not(.js) .js-only {
   flex-direction: column;
 }
 
-/* First project spans the full row: preview left, text right.
-   A last project left alone on its row (even count) gets the same wide layout. */
-.project:first-child,
-.project:last-child:nth-child(even) {
+/* The featured (first) project spans the full row: preview left, text right. */
+.project-featured {
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
 }
 
-.project:first-child .project-media,
-.project:last-child:nth-child(even) .project-media {
+.project-featured .project-media {
   min-height: 100%;
   border-bottom: 0;
   border-right: 1px solid var(--border);
@@ -1517,8 +1514,8 @@ html:not(.js) .js-only {
   overflow: hidden;
 }
 
-/* Every other card swaps the lights, so the grid does not look repetitive */
-.project:nth-child(odd):not(:first-child) .project-media {
+/* Every other card in the rail swaps the lights, so the row does not look repetitive */
+.work-rail-track > .project:nth-child(even) .project-media {
   background:
     radial-gradient(55% 70% at 12% 8%, color-mix(in oklab, var(--teal) 18%, transparent), transparent 70%),
     radial-gradient(50% 65% at 92% 100%, color-mix(in oklab, var(--accent-bright) 14%, transparent), transparent 70%),
@@ -1526,7 +1523,7 @@ html:not(.js) .js-only {
 }
 
 /* The featured (n8n) card stays navy, with two soft lights instead of lines */
-.project:first-child .project-media {
+.project-featured .project-media {
   background:
     radial-gradient(60% 80% at 90% 0%, color-mix(in oklab, var(--accent-bright) 50%, transparent), transparent 70%),
     radial-gradient(50% 70% at 0% 100%, color-mix(in oklab, var(--teal) 22%, transparent), transparent 70%),
@@ -1535,7 +1532,7 @@ html:not(.js) .js-only {
 }
 
 @media (max-width: 860px) {
-  .project:first-child .project-media {
+  .project-featured .project-media {
     border-bottom-color: transparent;
   }
 }
@@ -1596,12 +1593,11 @@ html:not(.js) .js-only {
   padding: clamp(22px, 3vw, 36px);
 }
 
-.project:first-child .project-body,
-.project:last-child:nth-child(even) .project-body {
+.project-featured .project-body {
   justify-content: center;
 }
 
-.project:first-child .card-title {
+.project-featured .card-title {
   font-size: clamp(1.5rem, 2.6vw, 2rem);
 }
 
@@ -1616,25 +1612,21 @@ html:not(.js) .js-only {
   padding-top: 8px;
 }
 
-.project:first-child .project-foot,
-.project:last-child:nth-child(even) .project-foot {
+.project-featured .project-foot {
   margin-top: 8px;
 }
 
 /* Wide cards (desktop): tags on their own row, buttons side by side below, left-aligned */
 @media (min-width: 861px) {
-  .project:first-child .project-foot,
-  .project:last-child:nth-child(even) .project-foot {
+  .project-featured .project-foot {
     justify-content: flex-start;
   }
 
-  .project:first-child .project-foot .chips,
-  .project:last-child:nth-child(even) .project-foot .chips {
+  .project-featured .project-foot .chips {
     flex-basis: 100%;
   }
 
-  .project:first-child .project-foot .btn,
-  .project:last-child:nth-child(even) .project-foot .btn {
+  .project-featured .project-foot .btn {
     white-space: nowrap;
   }
 }
@@ -1841,17 +1833,114 @@ html:has(.lightbox[open]) {
     grid-template-columns: 1fr;
   }
 
-  .project:first-child,
-  .project:last-child:nth-child(even) {
+  .project-featured {
     display: flex;
   }
 
-  .project:first-child .project-media,
-  .project:last-child:nth-child(even) .project-media {
+  .project-featured .project-media {
     min-height: 220px;
     border-right: 0;
     border-bottom: 1px solid var(--border);
     border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
+  }
+}
+
+/* Horizontal rail for every project after the featured one.
+   Desktop: two cards visible + ← → buttons. Phones: one card plus the edge of the next, swipe.
+   Without JS it is a normal scrollable row. */
+.work-rail {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+
+.work-rail-track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - 20px) / 2);
+  gap: 20px;
+  overflow-x: auto;
+  padding: 4px 2px 18px;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-line) transparent;
+}
+
+.work-rail-track:focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 4px;
+  border-radius: var(--radius);
+}
+
+.work-rail-track > .project {
+  scroll-snap-align: start;
+}
+
+/* Equal-height cards on desktop: the text area fills the card, buttons sit at the bottom */
+.work-rail-track > .project .project-body {
+  flex: 1;
+}
+
+/* Section title with the rail buttons on the right; on phones the buttons sit under it, right-aligned */
+.section-head-rail {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.work-rail-nav {
+  display: flex;
+  gap: 8px;
+}
+
+@media (max-width: 639px) {
+  .section-head-rail {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .section-head-rail .work-rail-nav {
+    align-self: flex-end;
+  }
+}
+
+.rail-btn {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid color-mix(in oklab, var(--accent) 30%, white);
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--accent) 5%, white);
+  color: var(--accent);
+  font-size: 1.125rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.rail-btn:hover:not(:disabled) {
+  border-color: var(--teal-ink);
+  background: var(--teal-soft);
+}
+
+.rail-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* Phones/tablets: one card plus the edge of the next; each card keeps its own height (top-aligned).
+   main.js sets the rail height to the cards in view, so no empty band shows under a short card. */
+@media (max-width: 860px) {
+  .work-rail-track {
+    grid-auto-columns: 86%;
+    gap: 14px;
+    align-items: start;
+    overflow-y: hidden;
+    transition: height 0.35s var(--ease);
   }
 }
 
@@ -2788,7 +2877,8 @@ html:has(.lightbox[open]) {
 /* ---------- Reduced motion: everything still, everything visible ---------- */
 
 @media (prefers-reduced-motion: reduce) {
-  html {
+  html,
+  .work-rail-track {
     scroll-behavior: auto;
   }
 

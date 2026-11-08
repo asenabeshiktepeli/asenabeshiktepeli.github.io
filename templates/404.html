@@ -10,7 +10,7 @@
 {% block title %}{{ ui.page_not_found or "404" }} – {{ nav.brand or hero.name }}{% endblock %}
 
 {% block body %}
-{% set ns = namespace(email_label=footer.cta_button) %}
+{% set ns = namespace(email_label="") %}
 {% for button in hero.buttons or [] %}{% if button.href and button.href.startswith("mailto:") %}{% set ns.email_label = button.label %}{% endif %}{% endfor %}
 {% set email_label = ns.email_label %}
 
