@@ -1,6 +1,6 @@
 // Small, dependency-free enhancements:
 // header + scroll progress, active nav link, mobile menu, live clock, spotlight cards,
-// scroll reveal, count-up stats, email menus, copy email, Selected work rail and screenshot lightbox.
+// scroll reveal, count-up stats, email menus, copy email, About tabs, Selected work rail and screenshot lightbox.
 (function () {
   "use strict";
 
@@ -336,6 +336,68 @@
       event.preventDefault();
       closeEmailMenu(openEmail, true);
     }
+  });
+
+  // ---------- About tabs (Background · Tools I use) ----------
+  // WAI-ARIA tabs: click, ←/→, Home/End. Links to a panel id (e.g. #tools) open that tab first,
+  // so the browser can scroll to it. Without JS both panels simply show one after the other.
+  $$("[data-tabs]").forEach(function (box) {
+    var tabs = $$('[role="tab"]', box);
+    if (!tabs.length) return;
+
+    function panelOf(tab) { return document.getElementById(tab.getAttribute("aria-controls")); }
+
+    function select(tab, focus) {
+      tabs.forEach(function (t) {
+        var on = t === tab;
+        var panel = panelOf(t);
+        t.setAttribute("aria-selected", on ? "true" : "false");
+        t.tabIndex = on ? 0 : -1;
+        if (!panel) return;
+        if (on) {
+          panel.removeAttribute("data-tab-hidden");
+          // cards in a panel that was hidden should not wait for the scroll reveal
+          $$(".reveal", panel).forEach(function (el) { el.classList.add("is-visible"); });
+        } else {
+          panel.setAttribute("data-tab-hidden", "");
+        }
+      });
+      if (focus) tab.focus();
+    }
+
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener("click", function () { select(tab); });
+      tab.addEventListener("keydown", function (event) {
+        var j = null;
+        if (event.key === "ArrowRight") j = (i + 1) % tabs.length;
+        if (event.key === "ArrowLeft") j = (i - 1 + tabs.length) % tabs.length;
+        if (event.key === "Home") j = 0;
+        if (event.key === "End") j = tabs.length - 1;
+        if (j !== null) { event.preventDefault(); select(tabs[j], true); }
+      });
+    });
+
+    function tabFor(id) {
+      return tabs.filter(function (t) { return t.getAttribute("aria-controls") === id; })[0];
+    }
+
+    // In-page links such as the FAQ's "Tools I use" (#tools): open the tab before the browser scrolls.
+    document.addEventListener("click", function (event) {
+      var link = event.target.closest && event.target.closest('a[href^="#"]');
+      var tab = link && tabFor(link.getAttribute("href").slice(1));
+      if (tab) select(tab);
+    });
+
+    // Arriving with #tools in the address (or typing it): open the tab and scroll to it.
+    function fromHash() {
+      var tab = tabFor(window.location.hash.slice(1));
+      if (!tab) return;
+      select(tab);
+      var panel = panelOf(tab);
+      if (panel) panel.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    }
+    window.addEventListener("hashchange", fromHash);
+    fromHash();
   });
 
   // ---------- Selected work rail ----------

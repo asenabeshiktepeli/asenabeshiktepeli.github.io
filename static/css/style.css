@@ -2338,6 +2338,81 @@ html:has(.lightbox[open]) {
   }
 }
 
+/* ---------- About tabs: Background · Tools I use ---------- */
+
+.about-tabs .tab-list {
+  display: flex;
+  gap: 4px;
+  width: fit-content;
+  max-width: 100%;
+  margin-bottom: clamp(28px, 4vw, 44px);
+  padding: 5px;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.tab {
+  flex: none;
+  min-height: 44px;
+  padding: 8px 18px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font: 600 0.9375rem/1 var(--font-sans);
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.tab:hover {
+  color: var(--accent);
+}
+
+.tab[aria-selected="true"] {
+  background: linear-gradient(150deg, var(--accent-bright), var(--navy));
+  color: #fff;
+}
+
+.tab:focus-visible,
+.tab-panel:focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 4px;
+}
+
+.tab-panel:focus-visible {
+  border-radius: var(--radius);
+}
+
+/* With JS: only the chosen panel shows, and its h2 is visually hidden (the tab shows the same words).
+   Without JS (.js missing): both panels show, one after the other, with their h2s. */
+.js .tab-panel[data-tab-hidden] {
+  display: none;
+}
+
+.js .about-tabs .panel-head {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+html:not(.js) .tab-panel + .tab-panel {
+  margin-top: var(--section-space);
+}
+
+@media (max-width: 480px) {
+  .tab {
+    padding: 8px 14px;
+    font-size: 0.875rem;
+  }
+}
+
 /* ---------- Certifications ---------- */
 
 .certs {

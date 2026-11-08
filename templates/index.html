@@ -473,43 +473,89 @@
   </section>
   {% endif %}
 
-  {# ================= Background: about intro + experience ================= #}
+  {# ================= About: Background + Tools as two tabs =================
+     Certifications stays its own, always visible section right after this one.
+     With JS: one panel at a time (ARIA tabs: arrows, Home/End; #tools opens the Tools tab).
+     Without JS: both panels show one after the other. The h2s stay in the HTML. #}
   {% set about_paragraphs = ([about.text] if about.text is string else (about.text or [])) | select | list %}
-  {% if about_paragraphs or experience["items"] %}
+  {% set has_background = about_paragraphs or experience["items"] %}
+  {% set has_tools = tools["items"] %}
+  {% set use_tabs = has_background and has_tools %}
+  {% if has_background or has_tools %}
   {% set sec.n = sec.n + 1 %}
-  <section class="section{% if sec.n is odd %} section-soft{% endif %}" id="about">
+  <section class="section{% if sec.n is odd %} section-soft{% endif %}{% if use_tabs %} about-tabs{% endif %}" id="about"{% if use_tabs %} data-tabs{% endif %}>
     <div class="container">
-      {{ section_head(about.title) }}
-      {% if about_paragraphs %}
-      <div class="background-intro reveal">
-        {% for paragraph in about_paragraphs %}<p>{{ paragraph | no_translate }}</p>{% endfor %}
+      {% if use_tabs %}
+      <div class="tab-list js-only" role="tablist">
+        <button class="tab" type="button" role="tab" id="tab-background" aria-controls="background" aria-selected="true">{{ about.title }}</button>
+        <button class="tab" type="button" role="tab" id="tab-tools" aria-controls="tools" aria-selected="false" tabindex="-1">{{ tools.title }}</button>
       </div>
       {% endif %}
-      {% if experience["items"] %}
-      {# id="experience" keeps old #experience links landing here #}
-      <div class="jobs" id="experience">
-        {% if experience.title %}<p class="sub-label reveal">{{ experience.title }}</p>{% endif %}
-        {% for job in experience["items"] %}
-        <article class="card job reveal">
-          <div class="job-head">
-            <div class="job-meta">
-              <h3 class="job-role">{{ job.role }}</h3>
-              {% if job.company %}<p class="job-company" translate="no">{{ job.company }}</p>{% endif %}
-              <ul class="job-facts">
-                <li class="job-dates">{% if job.dates %}{{ job.dates }}{% else %}{{ job.start }}{% if job.end %} — {{ job.end }}{% endif %}{% endif %}</li>
-                {% if job.location %}<li>{{ job.location | no_translate }}</li>{% endif %}
-              </ul>
-              {% if job.summary %}<p class="job-summary">{{ job.summary }}</p>{% endif %}
+      {% if has_background %}
+      <div class="tab-panel" id="background"{% if use_tabs %} role="tabpanel" aria-labelledby="tab-background" tabindex="0"{% endif %}>
+        {% if about.title %}<div class="section-head panel-head reveal"><h2 class="section-title">{{ about.title }}</h2></div>{% endif %}
+        {% if about_paragraphs %}
+        <div class="background-intro reveal">
+          {% for paragraph in about_paragraphs %}<p>{{ paragraph | no_translate }}</p>{% endfor %}
+        </div>
+        {% endif %}
+        {% if experience["items"] %}
+        {# id="experience" keeps old #experience links landing here #}
+        <div class="jobs" id="experience">
+          {% if experience.title %}<p class="sub-label reveal">{{ experience.title }}</p>{% endif %}
+          {% for job in experience["items"] %}
+          <article class="card job reveal">
+            <div class="job-head">
+              <div class="job-meta">
+                <h3 class="job-role">{{ job.role }}</h3>
+                {% if job.company %}<p class="job-company" translate="no">{{ job.company }}</p>{% endif %}
+                <ul class="job-facts">
+                  <li class="job-dates">{% if job.dates %}{{ job.dates }}{% else %}{{ job.start }}{% if job.end %} — {{ job.end }}{% endif %}{% endif %}</li>
+                  {% if job.location %}<li>{{ job.location | no_translate }}</li>{% endif %}
+                </ul>
+                {% if job.summary %}<p class="job-summary">{{ job.summary }}</p>{% endif %}
+              </div>
             </div>
-          </div>
-          {% set duties = job.duties or job.highlights %}
-          {% if duties %}
-          <ul class="duties">
-            {% for text in duties %}<li>{{ text | no_translate }}</li>{% endfor %}
-          </ul>
+            {% set duties = job.duties or job.highlights %}
+            {% if duties %}
+            <ul class="duties">
+              {% for text in duties %}<li>{{ text | no_translate }}</li>{% endfor %}
+            </ul>
+            {% endif %}
+          </article>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+      {% if has_tools %}
+      <div class="tab-panel" id="tools"{% if use_tabs %} role="tabpanel" aria-labelledby="tab-tools" tabindex="0" data-tab-hidden{% endif %}>
+        {% if tools.title %}<div class="section-head panel-head reveal"><h2 class="section-title">{{ tools.title }}</h2></div>{% endif %}
+        {# Groups come from ui.tool_groups; only names that exist in tools.items are shown,
+           and any tool left out of every group still appears in a final card. #}
+        {% set groups = ui.tool_groups or [] %}
+        {% set grouped = groups | map(attribute="tools") | sum(start=[]) %}
+        {% set rest = tools["items"] | reject("in", grouped) | list %}
+        <div class="tool-groups">
+          {% for group in groups %}
+          {% set listed = (group.tools or []) | select("in", tools["items"]) | list %}
+          {% if listed %}
+          <section class="card tool-group reveal" style="--d: {{ loop.index0 }}" aria-labelledby="tools-{{ loop.index }}">
+            <h3 class="tool-group-title" id="tools-{{ loop.index }}">{{ group.label }}</h3>
+            <ul class="chips">
+              {% for tool in listed %}<li class="chip">{{ tool | no_translate }}</li>{% endfor %}
+            </ul>
+          </section>
           {% endif %}
-        </article>
-        {% endfor %}
+          {% endfor %}
+          {% if rest %}
+          <div class="card tool-group reveal">
+            <ul class="chips">
+              {% for tool in rest %}<li class="chip">{{ tool | no_translate }}</li>{% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+        </div>
       </div>
       {% endif %}
     </div>
@@ -543,41 +589,6 @@
         </li>
         {% endfor %}
       </ul>
-    </div>
-  </section>
-  {% endif %}
-
-  {# ================= Tools ================= #}
-  {% if tools["items"] %}
-  {% set sec.n = sec.n + 1 %}
-  <section class="section{% if sec.n is odd %} section-soft{% endif %}" id="tools">
-    <div class="container">
-      {{ section_head(tools.title) }}
-      {# Groups come from ui.tool_groups; only names that exist in tools.items are shown,
-         and any tool left out of every group still appears in a final card. #}
-      {% set groups = ui.tool_groups or [] %}
-      {% set grouped = groups | map(attribute="tools") | sum(start=[]) %}
-      {% set rest = tools["items"] | reject("in", grouped) | list %}
-      <div class="tool-groups">
-        {% for group in groups %}
-        {% set listed = (group.tools or []) | select("in", tools["items"]) | list %}
-        {% if listed %}
-        <section class="card tool-group reveal" style="--d: {{ loop.index0 }}" aria-labelledby="tools-{{ loop.index }}">
-          <h3 class="tool-group-title" id="tools-{{ loop.index }}">{{ group.label }}</h3>
-          <ul class="chips">
-            {% for tool in listed %}<li class="chip">{{ tool | no_translate }}</li>{% endfor %}
-          </ul>
-        </section>
-        {% endif %}
-        {% endfor %}
-        {% if rest %}
-        <div class="card tool-group reveal">
-          <ul class="chips">
-            {% for tool in rest %}<li class="chip">{{ tool | no_translate }}</li>{% endfor %}
-          </ul>
-        </div>
-        {% endif %}
-      </div>
     </div>
   </section>
   {% endif %}

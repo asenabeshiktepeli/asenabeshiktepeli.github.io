@@ -643,27 +643,58 @@ Python workflow with a human approval step          </h3>
     </div>
   </section>
 
-  <section class="section section-soft" id="about">
+  <section class="section section-soft about-tabs" id="about" data-tabs>
     <div class="container">
-        <div class="section-head reveal">
-    <h2 class="section-title">Background</h2>
-  </div>
-
-      <div class="background-intro reveal">
-<p>I spent nearly 8 years on the customer side of a building materials and interior decoration business in <span translate="no">Kyrenia</span>, Cyprus: answering customers, preparing quotes, tracking orders until delivery and following up on payments. Now I bring that experience to e-commerce businesses remotely, handling customer messages, order follow-ups and clean data, so you can focus on growing your business. I also build small automations with n8n and Python to take repetitive work off your list. I&#39;m open to a full-time remote role, and I also take on two small fixed-price setups for online shops.</p>      </div>
-      <div class="jobs" id="experience">
-<p class="sub-label reveal">Experience</p>        <article class="card job reveal">
-          <div class="job-head">
-            <div class="job-meta">
-              <h3 class="job-role">Sales Consultant</h3>
-<p class="job-company" translate="no">Cagra Co LTD</p>              <ul class="job-facts">
-                <li class="job-dates">Nov 2018 – Aug 2026</li>
-<li><span translate="no">Kyrenia</span>, Cyprus</li>              </ul>
-<p class="job-summary">Building materials and interior decoration supplies.</p>            </div>
-          </div>
-          <ul class="duties">
-<li>Customer communication by email, WhatsApp, phone and face to face</li><li>Quotes and proformas</li><li>Order tracking and shipping coordination</li><li>Complaints and returns</li><li>Invoice and payment follow-up in <span translate="no">Logo Tiger 3</span></li><li>Tables and reports in Excel and Google Sheets</li><li>Entry-level <span translate="no">Logo</span> training for new colleagues</li>          </ul>
-        </article>
+      <div class="tab-list js-only" role="tablist">
+        <button class="tab" type="button" role="tab" id="tab-background" aria-controls="background" aria-selected="true">Background</button>
+        <button class="tab" type="button" role="tab" id="tab-tools" aria-controls="tools" aria-selected="false" tabindex="-1">Tools I use</button>
+      </div>
+      <div class="tab-panel" id="background" role="tabpanel" aria-labelledby="tab-background" tabindex="0">
+<div class="section-head panel-head reveal"><h2 class="section-title">Background</h2></div>        <div class="background-intro reveal">
+<p>I spent nearly 8 years on the customer side of a building materials and interior decoration business in <span translate="no">Kyrenia</span>, Cyprus: answering customers, preparing quotes, tracking orders until delivery and following up on payments. Now I bring that experience to e-commerce businesses remotely, handling customer messages, order follow-ups and clean data, so you can focus on growing your business. I also build small automations with n8n and Python to take repetitive work off your list. I&#39;m open to a full-time remote role, and I also take on two small fixed-price setups for online shops.</p>        </div>
+        <div class="jobs" id="experience">
+<p class="sub-label reveal">Experience</p>          <article class="card job reveal">
+            <div class="job-head">
+              <div class="job-meta">
+                <h3 class="job-role">Sales Consultant</h3>
+<p class="job-company" translate="no">Cagra Co LTD</p>                <ul class="job-facts">
+                  <li class="job-dates">Nov 2018 – Aug 2026</li>
+<li><span translate="no">Kyrenia</span>, Cyprus</li>                </ul>
+<p class="job-summary">Building materials and interior decoration supplies.</p>              </div>
+            </div>
+            <ul class="duties">
+<li>Customer communication by email, WhatsApp, phone and face to face</li><li>Quotes and proformas</li><li>Order tracking and shipping coordination</li><li>Complaints and returns</li><li>Invoice and payment follow-up in <span translate="no">Logo Tiger 3</span></li><li>Tables and reports in Excel and Google Sheets</li><li>Entry-level <span translate="no">Logo</span> training for new colleagues</li>            </ul>
+          </article>
+        </div>
+      </div>
+      <div class="tab-panel" id="tools" role="tabpanel" aria-labelledby="tab-tools" tabindex="0" data-tab-hidden>
+<div class="section-head panel-head reveal"><h2 class="section-title">Tools I use</h2></div>        <div class="tool-groups">
+          <section class="card tool-group reveal" style="--d: 0" aria-labelledby="tools-1">
+            <h3 class="tool-group-title" id="tools-1">Communication</h3>
+            <ul class="chips">
+<li class="chip">Gmail</li><li class="chip">Slack</li><li class="chip">Zoom</li><li class="chip">Google Meet</li>            </ul>
+          </section>
+          <section class="card tool-group reveal" style="--d: 1" aria-labelledby="tools-2">
+            <h3 class="tool-group-title" id="tools-2">Spreadsheets &amp; documents</h3>
+            <ul class="chips">
+<li class="chip">Microsoft Excel</li><li class="chip">Google Sheets</li><li class="chip">Google Docs</li><li class="chip">Google Slides</li><li class="chip">Google Drive</li><li class="chip">Google Calendar</li>            </ul>
+          </section>
+          <section class="card tool-group reveal" style="--d: 2" aria-labelledby="tools-3">
+            <h3 class="tool-group-title" id="tools-3">Business software</h3>
+            <ul class="chips">
+<li class="chip"><span translate="no">Logo Tiger 3</span></li><li class="chip">HubSpot (practice)</li><li class="chip">Jira Service Management (practice)</li>            </ul>
+          </section>
+          <section class="card tool-group reveal" style="--d: 3" aria-labelledby="tools-4">
+            <h3 class="tool-group-title" id="tools-4">Project management</h3>
+            <ul class="chips">
+<li class="chip">Trello</li><li class="chip">Asana</li><li class="chip">Notion</li>            </ul>
+          </section>
+          <section class="card tool-group reveal" style="--d: 4" aria-labelledby="tools-5">
+            <h3 class="tool-group-title" id="tools-5">Automation &amp; data</h3>
+            <ul class="chips">
+<li class="chip">n8n</li><li class="chip">Python</li><li class="chip">VS Code</li><li class="chip">SQLite</li><li class="chip">Git &amp; GitHub</li><li class="chip">Claude &amp; AI assistants</li>            </ul>
+          </section>
+        </div>
       </div>
     </div>
   </section>
@@ -703,43 +734,7 @@ Python workflow with a human approval step          </h3>
     </div>
   </section>
 
-  <section class="section section-soft" id="tools">
-    <div class="container">
-        <div class="section-head reveal">
-    <h2 class="section-title">Tools I use</h2>
-  </div>
-
-      <div class="tool-groups">
-        <section class="card tool-group reveal" style="--d: 0" aria-labelledby="tools-1">
-          <h3 class="tool-group-title" id="tools-1">Communication</h3>
-          <ul class="chips">
-<li class="chip">Gmail</li><li class="chip">Slack</li><li class="chip">Zoom</li><li class="chip">Google Meet</li>          </ul>
-        </section>
-        <section class="card tool-group reveal" style="--d: 1" aria-labelledby="tools-2">
-          <h3 class="tool-group-title" id="tools-2">Spreadsheets &amp; documents</h3>
-          <ul class="chips">
-<li class="chip">Microsoft Excel</li><li class="chip">Google Sheets</li><li class="chip">Google Docs</li><li class="chip">Google Slides</li><li class="chip">Google Drive</li><li class="chip">Google Calendar</li>          </ul>
-        </section>
-        <section class="card tool-group reveal" style="--d: 2" aria-labelledby="tools-3">
-          <h3 class="tool-group-title" id="tools-3">Business software</h3>
-          <ul class="chips">
-<li class="chip"><span translate="no">Logo Tiger 3</span></li><li class="chip">HubSpot (practice)</li><li class="chip">Jira Service Management (practice)</li>          </ul>
-        </section>
-        <section class="card tool-group reveal" style="--d: 3" aria-labelledby="tools-4">
-          <h3 class="tool-group-title" id="tools-4">Project management</h3>
-          <ul class="chips">
-<li class="chip">Trello</li><li class="chip">Asana</li><li class="chip">Notion</li>          </ul>
-        </section>
-        <section class="card tool-group reveal" style="--d: 4" aria-labelledby="tools-5">
-          <h3 class="tool-group-title" id="tools-5">Automation &amp; data</h3>
-          <ul class="chips">
-<li class="chip">n8n</li><li class="chip">Python</li><li class="chip">VS Code</li><li class="chip">SQLite</li><li class="chip">Git &amp; GitHub</li><li class="chip">Claude &amp; AI assistants</li>          </ul>
-        </section>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="faq">
+  <section class="section section-soft" id="faq">
     <div class="container">
         <div class="section-head reveal">
     <h2 class="section-title">FAQ</h2>
