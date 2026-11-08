@@ -390,6 +390,7 @@ ui:
   next_screenshot: "Next screenshot"
   prev_project: "Previous project"
   next_project: "Next project"
+  whats_included: "What's included"  # Services: on phones the list is behind this toggle; empty = always open
   book_call_hero: "Book a 15-min call"
   copy_email: "Copy email address"
   email_copied: "Email address copied"

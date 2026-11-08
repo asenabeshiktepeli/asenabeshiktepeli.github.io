@@ -1,6 +1,6 @@
 // Small, dependency-free enhancements:
 // header + scroll progress, active nav link, mobile menu, live clock, spotlight cards,
-// scroll reveal, count-up stats, email menus, copy email, About tabs, Selected work rail and screenshot lightbox.
+// scroll reveal, count-up stats, email menus, copy email, Services toggles, About tabs, Selected work rail and screenshot lightbox.
 (function () {
   "use strict";
 
@@ -337,6 +337,16 @@
       closeEmailMenu(openEmail, true);
     }
   });
+
+  // ---------- Services: "What's included" closed on phones ----------
+  // The <details> is open in the HTML (so it stays open without JS). Under 640px it starts closed;
+  // on larger screens it is always open (its summary is hidden by CSS).
+  var phoneWidth = window.matchMedia("(max-width: 639px)");
+  function syncIncludes() {
+    $$(".includes-toggle").forEach(function (details) { details.open = !phoneWidth.matches; });
+  }
+  syncIncludes();
+  if (phoneWidth.addEventListener) phoneWidth.addEventListener("change", syncIncludes);
 
   // ---------- About tabs (Background · Tools I use) ----------
   // WAI-ARIA tabs: click, ←/→, Home/End. Links to a panel id (e.g. #tools) open that tab first,

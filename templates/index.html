@@ -206,6 +206,9 @@
           <h3 class="card-title">{{ service.title }}</h3>
           {% if service.text %}<p class="card-text">{{ service.text }}</p>{% endif %}
           {% if service.includes %}
+          {# Phones: the list sits in a closed "What's included" <details> (main.js closes it under 640px).
+             Larger screens: always open, the summary is hidden. Without JS it stays open. #}
+          {% if ui.whats_included %}<details class="includes-toggle" open><summary class="includes-summary">{{ ui.whats_included }}</summary>{% endif %}
           <ul class="includes">
             {% for point in service.includes %}
             <li>
@@ -214,6 +217,7 @@
             </li>
             {% endfor %}
           </ul>
+          {% if ui.whats_included %}</details>{% endif %}
           {% endif %}
           {% if service.sample and ui.see_sample %}
           <a class="service-sample" href="{{ service.sample }}" aria-label="{{ ui.see_sample }}: {{ service.title }}">

@@ -1251,6 +1251,53 @@ html:not(.js) .js-only {
   color: var(--accent);
 }
 
+/* Services: the list sits in a <details>. Larger screens: always open, no summary.
+   Phones (< 640px): a "What's included +" toggle, closed by main.js. */
+.includes-summary {
+  display: none;
+}
+
+@media (max-width: 639px) {
+  .includes-summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    color: var(--accent);
+    font-size: 0.875rem;
+    font-weight: 500;
+    list-style: none;
+    cursor: pointer;
+  }
+
+  .includes-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .includes-summary::after {
+    content: "+";
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border: 1px solid var(--accent-line);
+    border-radius: 50%;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    line-height: 1;
+  }
+
+  .includes-toggle[open] .includes-summary::after {
+    content: "−";
+  }
+
+  .includes-summary:focus-visible {
+    outline: 2px solid var(--accent-bright);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+}
+
 /* Pinned to the bottom so cards in a row line up.
    9. Coloured 2px underline; light teal background on hover. */
 .service-sample {
