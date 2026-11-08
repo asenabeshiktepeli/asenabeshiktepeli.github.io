@@ -30,7 +30,7 @@ hero:
   name: "Asena Beshiktepeli"
   title: "E-commerce Virtual Assistant & Customer Support"
   value_proposition: "I help e-commerce businesses answer customers faster, track orders clearly and keep their data clean."
-  availability: "Available for remote work"
+  availability: "Open to full-time roles · Taking freelance projects"
   local_time:
     label: "Kyrenia, Cyprus · EET (UTC+2)"
     timezone: "Europe/Nicosia"  # IANA time zone for the live clock (EET / UTC+2 in winter)
@@ -51,7 +51,7 @@ hero:
 
 about:
   title: "Background"  # About + Experience in one section (menu label stays "About")
-  text: "I spent nearly 8 years on the customer side of a building materials and interior decoration business in Kyrenia, Cyprus: answering customers, preparing quotes, tracking orders until delivery and following up on payments. Now I bring that experience to e-commerce businesses remotely, handling customer messages, order follow-ups and clean data, so you can focus on growing your business. I also build small automations in Python to take repetitive work off your list."
+  text: "I spent nearly 8 years on the customer side of a building materials and interior decoration business in Kyrenia, Cyprus: answering customers, preparing quotes, tracking orders until delivery and following up on payments. Now I bring that experience to e-commerce businesses remotely, handling customer messages, order follow-ups and clean data, so you can focus on growing your business. I also build small automations with n8n and Python to take repetitive work off your list. I'm open to a full-time remote role, and I also take on two small fixed-price setups for online shops."
 
 services:
   title: "Services"
@@ -316,7 +316,7 @@ contact:
   location: "Kyrenia, Cyprus · EET (UTC+2)"
   work_style:
     - "Fully remote"
-    - "Full-time"
+    - "Full-time role or freelance projects"
     - "Flexible hours, can align with your time zone"
   languages:
     - "Turkish – Native"
@@ -332,8 +332,8 @@ faq:
   items:
     - question: "Which time zone do you work in?"
       answer: "I'm based in Kyrenia, Cyprus (EET, UTC+2). My hours are flexible and I can align with your time zone."
-    - question: "Are you available full-time?"
-      answer: "Yes. I'm looking for full-time, fully remote work."
+    - question: "Are you looking for a job or freelance work?"
+      answer: "Both. I'm open to a full-time remote role, and I also take on two small fixed-price setups for online shops. Every project I accept is finished as agreed."
     - question: "Which tools do you use?"
       answer: "Everything listed under Tools I use above, mainly Google Workspace and Excel. I'm happy to learn the tools your team already uses."
       links:
@@ -342,12 +342,16 @@ faq:
     - question: "Which languages do you speak?"
       answer: "Turkish (native) and English (B2, upper-intermediate)."
     - question: "How do we get started?"
-      answer: "Book a 15-minute intro call or send me an email. We'll talk about your tasks, the tools you use and how you'd like updates."
+      answer: "If you're hiring, email me or download my CV. If you run an online shop, see the fixed-price setups under Services or book a 15-minute call."
       links:
-        - text: "Book a 15-minute intro call"
-          href: "booking"
-        - text: "send me an email"
+        - text: "email me"
           href: "email"
+        - text: "download my CV"
+          href: "static/cv/Asena_Beshiktepeli_CV.pdf"
+        - text: "fixed-price setups"
+          href: "#packages"
+        - text: "book a 15-minute call"
+          href: "booking"
     - question: "Can I see examples of your work?"
       answer: "Yes. The Selected work section has seven sample projects built with fictional data. Four include a link you can open, the HubSpot and Jira help desks are shown with screenshots, and the n8n automation is shown in a short video."
       links:

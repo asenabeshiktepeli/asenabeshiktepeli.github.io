@@ -228,7 +228,7 @@
          buy_url set -> one "Buy on Upwork" button; empty -> email (with subject) + booking link. #}
       {% set pkgs = (packages["items"] or []) | selectattr("title") | list if packages else [] %}
       {% if pkgs %}
-      <div class="packages">
+      <div class="packages" id="packages">
         {% if packages.title %}<p class="sub-label reveal">{{ packages.title }}</p>{% endif %}
         {% if packages.intro %}<p class="section-intro reveal">{{ packages.intro }}</p>{% endif %}
         <div class="services">
