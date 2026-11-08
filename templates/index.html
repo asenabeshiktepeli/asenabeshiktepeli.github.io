@@ -578,32 +578,36 @@
   </section>
   {% endif %}
 
-  {# ================= Contact ================= #}
-  {% set sec.n = sec.n + 1 %}
-  <section class="section contact{% if sec.n is odd %} section-soft{% endif %}" id="contact">
-    <div class="container contact-layout">
-      <div class="contact-intro reveal">
-        {{ section_head(contact.title) }}
-        {% if contact.text %}<p class="statement">{{ contact.text }}</p>{% endif %}
+  {# ================= Closing: Contact + footer slogan in one navy section =================
+     Buttons appear once. id="contact" keeps the menu link and old #contact links working. #}
+  <section class="closing" id="contact"{% if contact.title %} aria-labelledby="contact-title"{% endif %}>
+    <div class="closing-glow" aria-hidden="true"></div>
+    <div class="container closing-layout">
+      <div class="closing-intro reveal">
+        {% if contact.title %}<h2 class="section-title closing-title" id="contact-title">{{ contact.title }}</h2>{% endif %}
+        {% if footer.cta %}<p class="footer-cta closing-slogan">{{ footer.cta }}</p>{% endif %}
+        {% if contact.text %}<p class="closing-note">{{ contact.text }}</p>{% endif %}
         {# Location only; work style and languages are covered by At a glance and the FAQ #}
         {% if contact.location %}
-        <ul class="chips">
+        <ul class="chips closing-meta">
           <li class="chip">{{ contact.location | no_translate }}</li>
         </ul>
         {% endif %}
-        {% if contact.calls %}<p class="contact-note">{{ contact.calls }}</p>{% endif %}
+        {% if contact.calls %}<p class="closing-note">{{ contact.calls }}</p>{% endif %}
       </div>
 
-      <div class="contact-card card reveal">
+      <div class="closing-card reveal">
         {% if contact.email %}
-        <p class="contact-email" translate="no">{{ contact.email }}</p>
-        <div class="contact-actions">
-          {{ m.email_menu(email_label, "email-menu-contact", "btn-primary btn-lg") }}
+        <div class="closing-email">
+          <p class="contact-email" translate="no">{{ contact.email }}</p>
           {% if ui.copy_email %}
-          <button class="btn btn-ghost btn-lg js-only" type="button" data-copy-email>{{ ui.copy_email }}</button>
+          <button class="btn btn-outline-light btn-sm js-only" type="button" data-copy-email>{{ ui.copy_email }}</button>
           {% endif %}
+        </div>
+        <div class="contact-actions">
+          {{ m.email_menu(email_label, "email-menu-contact", "btn-light btn-lg") }}
           {% if contact.booking_url and ui.book_call %}
-          <a class="btn btn-ghost btn-lg" href="{{ contact.booking_url }}" target="_blank" rel="noopener">
+          <a class="btn btn-outline-light btn-lg" href="{{ contact.booking_url }}" target="_blank" rel="noopener">
             {{ ui.book_call }} <span aria-hidden="true">↗</span>
           </a>
           {% endif %}
@@ -622,35 +626,17 @@
   </section>
 </main>
 
-{# ================= Footer CTA ================= #}
+{# ================= Footer: one thin line (links are in the closing card above) ================= #}
 <footer class="site-footer">
-  <div class="footer-glow" aria-hidden="true"></div>
   <div class="container">
-    {% if footer.cta %}
-    <p class="footer-cta reveal">{{ footer.cta }}</p>
-    {% endif %}
-    {% if footer.cta_button %}
-    <div class="footer-action reveal">
-      {% if footer.cta_link and footer.cta_link.startswith("mailto:") or not footer.cta_link %}
-      {{ m.email_menu(footer.cta_button, "email-menu-footer", "btn-light btn-xl") }}
-      {% else %}
-      <a class="btn btn-light btn-xl" href="{{ footer.cta_link }}">{{ footer.cta_button }} <span class="btn-arrow" aria-hidden="true">→</span></a>
-      {% endif %}
-      {% if contact.booking_url and ui.book_call %}
-      <a class="btn btn-outline-light btn-xl" href="{{ contact.booking_url }}" target="_blank" rel="noopener">
-        {{ ui.book_call }} <span aria-hidden="true">↗</span>
-      </a>
-      {% endif %}
-    </div>
-    {% endif %}
     <div class="footer-bottom">
       {% if footer.copyright %}<p>{{ footer.copyright | no_translate }}</p>{% endif %}
       {% if footer.note %}<p>{{ footer.note }}</p>{% endif %}
+      {% if ui.back_to_top %}
       <ul class="footer-links">
-        {% for url, label in [(contact.github, contact.github | display_url), (contact.linkedin, "LinkedIn"), (contact.upwork, contact.upwork | display_url)] if url %}<li><a href="{{ url }}" target="_blank" rel="noopener">{{ label }}</a></li>{% endfor %}
-        {% if ns.cv %}<li><a href="{{ ns.cv }}" download="{{ cv_file }}">{{ ns.cv_label }}</a></li>{% endif %}
-        {% if ui.back_to_top %}<li><a href="#top">{{ ui.back_to_top }} <span aria-hidden="true">↑</span></a></li>{% endif %}
+        <li><a href="#top">{{ ui.back_to_top }} <span aria-hidden="true">↑</span></a></li>
       </ul>
+      {% endif %}
     </div>
   </div>
 </footer>

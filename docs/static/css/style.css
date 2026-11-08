@@ -2482,60 +2482,70 @@ html:has(.lightbox[open]) {
   }
 }
 
-/* ---------- Contact ---------- */
+/* ---------- Closing: Contact + footer slogan in one navy section ---------- */
 
-/* Smaller bottom padding: the compact footer band follows directly */
-.contact {
-  padding-bottom: clamp(48px, 6vw, 80px);
-  background:
-    radial-gradient(60% 80% at 100% 100%, color-mix(in oklab, var(--accent-bright) 8%, transparent), transparent 70%),
-    var(--bg);
+.closing {
+  position: relative;
+  isolation: isolate;
+  padding: clamp(64px, 8vw, 104px) 0 clamp(40px, 5vw, 64px);
+  background: linear-gradient(180deg, var(--navy-2), var(--navy) 70%);
+  color: var(--navy-text);
 }
 
-/* Keep the white/grey rhythm when Contact lands on a soft slot */
-.contact.section-soft {
+/* Two soft lights, kept away from the bottom edge so the footer line joins seamlessly */
+.closing-glow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
   background:
-    radial-gradient(60% 80% at 100% 100%, color-mix(in oklab, var(--accent-bright) 8%, transparent), transparent 70%),
-    var(--bg-soft);
+    radial-gradient(45% 60% at 95% 35%, color-mix(in oklab, var(--accent-bright) 30%, transparent), transparent 70%),
+    radial-gradient(40% 60% at 0% 0%, color-mix(in oklab, var(--teal) 14%, transparent), transparent 70%);
 }
 
-.contact-layout {
+.closing-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(32px, 6vw, 96px);
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: clamp(32px, 6vw, 80px);
   align-items: center;
 }
 
-.contact-intro {
+.closing-title {
+  margin-bottom: 18px;
+  color: #fff;
+}
+
+.closing-note {
+  margin-top: 12px;
+  color: var(--navy-muted);
+}
+
+.closing-meta .chip {
+  border-color: var(--navy-border);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--navy-text);
+}
+
+/* Glass card with the email, the two buttons and the links */
+.closing-card {
   display: grid;
-  gap: 20px;
-  justify-items: start;
+  gap: 22px;
+  padding: clamp(22px, 3.5vw, 36px);
+  border: 1px solid var(--navy-border);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
 }
 
-.contact-intro .section-head {
-  margin-bottom: 4px;
-}
-
-.contact-intro .section-title {
-  font-size: clamp(2.2rem, 5.6vw, 4rem);
-}
-
-.contact-note {
-  color: var(--muted);
-}
-
-.contact-card {
-  display: grid;
-  gap: 24px;
-  padding: clamp(24px, 4vw, 44px);
-  box-shadow: var(--shadow);
-}
-
-.contact-card:hover {
-  transform: none;
+.closing-email {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
 }
 
 .contact-email {
+  color: #fff;
   font-size: clamp(1.25rem, 2.6vw, 1.875rem);
   font-weight: 600;
   letter-spacing: -0.03em;
@@ -2554,96 +2564,37 @@ html:has(.lightbox[open]) {
   flex-wrap: wrap;
   gap: 10px 28px;
   padding-top: 20px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--navy-border);
 }
 
-/* 9. Accent links with a 2px teal underline */
+/* 9. Links with a 2px teal underline; taller tap area (~32px) */
 .contact-links a {
   position: relative;
   z-index: 2;
-  color: var(--accent);
+  display: inline-block;
+  padding: 6px 0;
+  color: var(--navy-text);
   font-weight: 500;
   text-decoration: none;
-  border-bottom: 2px solid color-mix(in oklab, var(--teal-ink) 45%, white);
+  border-bottom: 2px solid rgba(34, 211, 238, 0.45);
   border-radius: 2px;
-  padding-bottom: 2px;
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .contact-links a:hover {
-  background: var(--teal-soft);
-  border-color: var(--teal-ink);
+  background: rgba(34, 211, 238, 0.12);
+  border-color: var(--teal);
 }
 
-.contact-card .email-menu-panel {
+.closing-card .email-menu-panel {
   z-index: 3;
 }
 
-@media (max-width: 860px) {
-  .contact-layout {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 480px) {
-  .contact-actions > *,
-  .contact-actions .btn {
-    width: 100%;
-  }
-}
-
-/* ---------- Footer CTA (dark navy) ---------- */
-
-/* Compact closing band: heading left, buttons right on desktop; stacked on phones.
-   Top is a touch lighter (navy-2) so the step from the light Contact section is softer. */
-.site-footer {
-  position: relative;
-  isolation: isolate;
-  padding: clamp(48px, 6vw, 72px) 0 24px;
-  background: linear-gradient(180deg, var(--navy-2), var(--navy) 70%);
-  color: var(--navy-text);
-}
-
-.site-footer > .container {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 24px 48px;
-}
-
-.site-footer .footer-bottom {
-  grid-column: 1 / -1;
-}
-
-@media (max-width: 860px) {
-  .site-footer > .container {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-
-.footer-glow {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.footer-glow::before {
-  content: "";
-  position: absolute;
-  right: -10%;
-  bottom: -70%;
-  width: min(900px, 120vw);
-  aspect-ratio: 1.6;
-  border-radius: 50%;
-  background: radial-gradient(closest-side, color-mix(in oklab, var(--accent-bright) 45%, transparent), transparent);
-  opacity: 0.5;
-}
-
+/* Slogan (footer.cta): gradient text on navy */
 .footer-cta {
-  max-width: 16em;
-  font-size: clamp(1.75rem, 4.2vw, 3.25rem);
+  max-width: 13em;
+  margin: 0 0 24px;
+  font-size: clamp(1.75rem, 3.6vw, 2.75rem);
   font-weight: 600;
   line-height: 1;
   letter-spacing: -0.055em;
@@ -2654,24 +2605,29 @@ html:has(.lightbox[open]) {
   color: transparent;
 }
 
-.footer-action {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 12px;
+.closing :focus-visible {
+  outline-color: #9db4ff;
 }
 
 @media (max-width: 860px) {
-  .footer-action {
-    justify-content: flex-start;
+  .closing-layout {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
 @media (max-width: 480px) {
-  .footer-action > *,
-  .footer-action .btn {
+  .contact-actions > *,
+  .contact-actions .btn {
     width: 100%;
   }
+}
+
+/* ---------- Footer: one thin line under the closing section ---------- */
+
+.site-footer {
+  padding: 0 0 20px;
+  background: var(--navy);
+  color: var(--navy-text);
 }
 
 .footer-bottom {
@@ -2680,7 +2636,6 @@ html:has(.lightbox[open]) {
   align-items: center;
   justify-content: space-between;
   gap: 8px 32px;
-  margin-top: clamp(16px, 3vw, 32px);
   padding-top: 18px;
   border-top: 1px solid var(--navy-border);
   color: var(--navy-muted);
@@ -2694,6 +2649,8 @@ html:has(.lightbox[open]) {
 }
 
 .footer-links a {
+  display: inline-block;
+  padding: 6px 0;
   color: var(--navy-muted);
   text-decoration: none;
 }
@@ -2760,8 +2717,7 @@ html:has(.lightbox[open]) {
 }
 
 .js .job.reveal.is-visible:hover,
-.js .step.reveal.is-visible:hover,
-.js .contact-card.reveal.is-visible:hover {
+.js .step.reveal.is-visible:hover {
   transform: none;
 }
 
