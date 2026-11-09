@@ -221,6 +221,7 @@ html:not(.js) .js-only {
   align-items: center;
   gap: 10px;
   min-width: 0;
+  max-width: 100%;  /* stays inside its grid column, so the name below can shrink */
   justify-self: start;
   color: var(--text);
   font-weight: 600;
@@ -230,7 +231,8 @@ html:not(.js) .js-only {
   white-space: nowrap;
 }
 
-/* min-width: 0 lets the name shrink (and end in "…") instead of running under the button */
+/* min-width: 0 (with max-width on .brand) lets the name shrink and end in "…"
+   instead of running under the button */
 .brand-name {
   min-width: 0;
   overflow: hidden;
@@ -445,6 +447,12 @@ html:not(.js) .js-only {
 
 /* Small screens: the header button stays, the brand name gives way */
 @media (max-width: 400px) {
+  /* 12px column gap: at 375px the full name then fits its column (with 16px it was half a pixel
+     short and got an "…"); the visible space between name and button stays the same */
+  .bar {
+    gap: 12px;
+  }
+
   .bar-cta {
     padding-inline: 12px;
   }

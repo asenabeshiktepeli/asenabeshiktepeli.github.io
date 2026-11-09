@@ -251,6 +251,10 @@
             {% if pkg.price %}<p class="package-price">{{ pkg.price }}</p>{% endif %}
             {% if pkg.text %}<p class="card-text">{{ pkg.text }}</p>{% endif %}
             {% if pkg.includes %}
+            {# Same as the Services cards: on phones the list sits in a closed "What's included" <details>
+               (main.js closes it under 640px); larger screens keep it open with no summary.
+               "Not included" stays outside, so the scope limit is always visible. #}
+            {% if ui.whats_included %}<details class="includes-toggle" open><summary class="includes-summary">{{ ui.whats_included }}<span class="visually-hidden">: {{ pkg.title }}</span></summary>{% endif %}
             <ul class="includes">
               {% for point in pkg.includes %}
               <li>
@@ -259,6 +263,7 @@
               </li>
               {% endfor %}
             </ul>
+            {% if ui.whats_included %}</details>{% endif %}
             {% endif %}
             {% if pkg.not_included %}<p class="package-note">{{ packages.not_included_label }} {{ pkg.not_included }}</p>{% endif %}
             <div class="package-foot">
