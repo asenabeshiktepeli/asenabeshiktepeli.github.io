@@ -951,18 +951,31 @@ html:not(.js) .js-only {
   background: var(--teal-ink);
 }
 
-/* 3. Stats on a dark navy card (the case study's language) */
+/* 3. Stats on a light card with teal edge, glow and a top strip (like the package cards) */
 .glance-grid {
   position: relative;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   overflow: hidden;
-  border: 1px solid transparent;
+  border: 1px solid color-mix(in oklab, #0891b2 45%, white);
   border-radius: var(--radius);
   background:
-    radial-gradient(80% 120% at 100% 0%, color-mix(in oklab, var(--accent-bright) 45%, transparent), transparent 70%),
-    linear-gradient(160deg, var(--navy-2), var(--navy) 65%);
-  box-shadow: var(--shadow-lg);
+    radial-gradient(70% 120% at 100% 0%, color-mix(in oklab, var(--teal) 16%, transparent), transparent 70%),
+    radial-gradient(60% 100% at 0% 100%, color-mix(in oklab, var(--accent-bright) 8%, transparent), transparent 70%),
+    var(--surface);
+  box-shadow:
+    0 0 0 4px color-mix(in oklab, var(--teal) 10%, transparent),
+    0 18px 50px color-mix(in oklab, #0891b2 22%, transparent),
+    0 0 60px color-mix(in oklab, var(--teal) 16%, transparent);
+}
+
+/* 4px strip on top, same gradient as the package cards */
+.glance-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  background: var(--gradient-2);
 }
 
 .glance-item {
@@ -974,23 +987,24 @@ html:not(.js) .js-only {
 }
 
 .glance-item + .glance-item {
-  border-left: 1px solid var(--navy-border);
+  border-left: 1px solid color-mix(in oklab, #0891b2 22%, white);
 }
 
+/* Navy-to-teal numbers: the light-ground counterpart of the white-to-teal shine */
 .glance-value {
   font-size: clamp(2.5rem, 4.6vw, 3.5rem);
   font-weight: 600;
   line-height: 1;
   letter-spacing: -0.045em;
   font-variant-numeric: tabular-nums;
-  background: linear-gradient(90deg, #ffffff 20%, var(--teal));
+  background: linear-gradient(90deg, var(--accent) 10%, #0891b2 85%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 .glance-label {
-  color: var(--navy-muted);
+  color: var(--muted);
   font-size: 0.875rem;
   line-height: 1.45;
 }
