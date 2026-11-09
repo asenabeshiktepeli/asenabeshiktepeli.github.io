@@ -228,7 +228,9 @@ html:not(.js) .js-only {
   white-space: nowrap;
 }
 
+/* min-width: 0 lets the name shrink (and end in "…") instead of running under the button */
 .brand-name {
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -443,6 +445,20 @@ html:not(.js) .js-only {
 @media (max-width: 400px) {
   .bar-cta {
     padding-inline: 12px;
+  }
+}
+
+/* Below 375px the name no longer fits next to the button: only the "AB" mark shows.
+   The name stays in the link for screen readers (the mark itself is aria-hidden). */
+@media (max-width: 374px) {
+  .brand-name {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
   }
 }
 
@@ -2860,6 +2876,15 @@ html:has(.lightbox[open]) {
 
 .tools-card .chips {
   gap: 6px;
+}
+
+/* One line under the groups (tools.note) */
+.tools-note {
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.9375rem;
+  line-height: 1.5;
 }
 
 /* Tablet: the card is full width, so the groups sit in two columns */

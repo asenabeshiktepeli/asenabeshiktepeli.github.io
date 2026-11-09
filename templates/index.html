@@ -552,6 +552,7 @@
           </div>
           {% endif %}
         </div>
+        {% if tools.note %}<p class="tools-note">{{ tools.note }}</p>{% endif %}
       </section>
       {% endif %}
     </div>
@@ -617,10 +618,12 @@
         {% if contact.title %}<h2 class="section-title closing-title" id="contact-title">{{ contact.title }}</h2>{% endif %}
         {% if footer.cta %}<p class="footer-cta closing-slogan">{{ footer.cta }}</p>{% endif %}
         {% if contact.text %}<p class="closing-note">{{ contact.text }}</p>{% endif %}
-        {# Location only; work style and languages are covered by At a glance and the FAQ #}
-        {% if contact.location %}
+        {# Location and work style (e.g. flexible hours) as chips; languages are covered by the FAQ #}
+        {% set work_style = contact.work_style or [] %}
+        {% if contact.location or work_style %}
         <ul class="chips closing-meta">
-          <li class="chip">{{ contact.location | no_translate }}</li>
+          {% if contact.location %}<li class="chip">{{ contact.location | no_translate }}</li>{% endif %}
+          {% for item in work_style %}<li class="chip">{{ item }}</li>{% endfor %}
         </ul>
         {% endif %}
         {% if contact.calls %}<p class="closing-note">{{ contact.calls }}</p>{% endif %}

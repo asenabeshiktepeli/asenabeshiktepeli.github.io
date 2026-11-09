@@ -40,6 +40,9 @@
       var section = id && document.getElementById(id);
       if (section) byId[id] = link;
     });
+    // The hero has no menu link: when it is back in view (scrolling up, "Back to top"),
+    // no link is marked, so the last section's highlight does not stay on.
+    var hero = $(".hero");
     var sectionObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
@@ -49,6 +52,7 @@
       });
     }, { rootMargin: "-45% 0px -50% 0px" });
     Object.keys(byId).forEach(function (id) { sectionObserver.observe(document.getElementById(id)); });
+    if (hero) sectionObserver.observe(hero);
   }
 
   // ---------- Full-screen mobile menu ----------
