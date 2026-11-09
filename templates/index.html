@@ -639,7 +639,7 @@
         </div>
         {% endif %}
         <ul class="contact-links">
-          {% for url, label in [(contact.github, contact.github | display_url), (contact.linkedin, "LinkedIn"), (contact.upwork, contact.upwork | display_url)] if url %}
+          {% for url, label in [(contact.github, "GitHub"), (contact.linkedin, "LinkedIn"), (contact.upwork, contact.upwork | display_url)] if url %}
           <li><a href="{{ url }}" target="_blank" rel="noopener">{{ label }} <span aria-hidden="true">↗</span></a></li>
           {% endfor %}
           {% if ns.cv %}

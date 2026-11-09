@@ -52,7 +52,10 @@ hero:
 
 about:
   title: "Background"  # About + Experience in one section (menu label stays "About")
-  text: "I spent nearly 8 years on the customer side of a building materials and interior decoration business in Kyrenia, Cyprus: answering customers, preparing quotes, tracking orders until delivery and following up on payments. Now I bring that experience to e-commerce businesses remotely, handling customer messages, order follow-ups and clean data, so you can focus on growing your business. I also build small automations with n8n and Python to take repetitive work off your list. I'm open to a full-time remote role, and I also take on two small fixed-price setups for online shops."
+  text:  # one string per paragraph
+    - "I spent nearly 8 years on the customer side of a building materials and interior decoration business in Kyrenia, Cyprus: answering customers, preparing quotes, tracking orders until delivery and following up on payments."
+    - "Now I bring that experience to e-commerce businesses remotely, handling customer messages, order follow-ups and clean data, so you can focus on growing your business. I also build small automations with n8n and Python to take repetitive work off your list."
+    - "I'm open to a full-time remote role, and I also take on two small fixed-price setups for online shops."
 
 services:
   title: "Services"
@@ -98,7 +101,6 @@ packages:
   not_included_label: "Not included:"
   items:
     - title: "Order Tracking Sheet Setup"
-      badge: "Fixed price"
       price: "$65 · 3–5 business days"
       text: "A Google Sheets order tracker set up for your shop, showing each order's status, shipping date and follow-up notes at a glance."
       includes:
@@ -110,7 +112,6 @@ packages:
       sample: "#work-order-tracking"
       buy_url: ""
     - title: "Spreadsheet Cleanup"
-      badge: "Fixed price"
       price: "From $40 · 3 business days"
       text: "A messy customer or order list cleaned and standardised, with every change logged so you can check it."
       includes:

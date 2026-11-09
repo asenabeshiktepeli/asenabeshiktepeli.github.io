@@ -22,7 +22,7 @@
   --gradient: linear-gradient(135deg, var(--accent-bright) 0%, var(--accent) 45%, #6d8ff0 100%);
 
   /* 0. Second accent: teal (same as the logo). Used sparingly: numbers, step indexes,
-     thin lines, the "Fixed price" badge and link underlines.
+     thin lines, the package cards' top strip and link underlines.
      On dark: #22d3ee (10:1 on navy). On light: #0e7490 (5.4:1 on white). */
   --teal: #22d3ee;
   --teal-ink: #0e7490;
@@ -1439,7 +1439,7 @@ html:not(.js) .js-only {
   gap: 10px;
 }
 
-/* Title with the "Fixed price" badge on the right */
+/* Title with an optional badge (pkg.badge in content.yaml) on the right; none is set now */
 .package-head {
   display: flex;
   align-items: flex-start;
@@ -1922,7 +1922,8 @@ html:not(.js) .js-only {
   flex-basis: 100%;
 }
 
-/* Phones: compact row. A small square preview on the left of the badge and title;
+/* Phones: compact row. A small square preview on the left of the badge and title (now only
+   for a grid card with a video; image previews are hidden, see the end of this block);
    the short text, "Details" and the buttons run full width below. */
 @media (max-width: 639px) {
   .project-tile {
@@ -1971,6 +1972,22 @@ html:not(.js) .js-only {
 
   .project-tile .project-foot {
     padding-top: 0;
+  }
+
+  /* The small screenshot previews are unreadable at this size, so phones hide them and the
+     card runs as one column. "View screenshots" / "View sample" still open them. A grid card
+     with a video keeps it (the featured n8n card is not a grid card and is never affected). */
+  .project-tile:not(:has(video)) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .project-tile:not(:has(video)) .project-media {
+    display: none;
+  }
+
+  .project-tile:not(:has(video)) .badge,
+  .project-tile:not(:has(video)) .card-title {
+    grid-column: 1;
   }
 }
 
@@ -2053,7 +2070,7 @@ html:not(.js) .js-only {
 }
 
 /* Selected work: the "Sample project" label as small, quiet text (no pill); the dot stays.
-   The "Fixed price" badges on the package cards keep the pill. */
+   An optional badge on the package cards (pkg.badge) would keep the pill. */
 .project .badge {
   padding: 0;
   border: 0;
