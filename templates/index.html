@@ -238,13 +238,13 @@
          buy_url set -> one "Buy on Upwork" button; empty -> email (with subject) + booking link. #}
       {% if pkgs %}
       <div class="packages" id="packages">
-        {% if packages.title %}<p class="sub-label reveal">{{ packages.title }}</p>{% endif %}
+        {% if packages.title %}<h3 class="sub-label reveal">{{ packages.title }}</h3>{% endif %}
         {% if packages.intro %}<p class="section-intro reveal">{{ packages.intro }}</p>{% endif %}
         <div class="package-grid">
           {% for pkg in pkgs %}
           <article class="card service package spotlight reveal" style="--d: {{ loop.index0 }}">
             <div class="package-head">
-              <h3 class="card-title">{{ pkg.title }}</h3>
+              <h4 class="card-title">{{ pkg.title }}</h4>
               {% if pkg.badge %}<span class="badge">{{ pkg.badge }}</span>{% endif %}
             </div>
             {% if pkg.price %}<p class="package-price">{{ pkg.price }}</p>{% endif %}
@@ -315,19 +315,23 @@
             {# Optional video instead of an image: plays only when the visitor presses play.
                .video-frame is the compact navy frame around it. #}
             <div class="video-frame">
-              <video class="project-video" src="{{ item.video }}" controls preload="metadata" playsinline{% if item.poster %} poster="{{ item.poster }}"{% endif %}
+              {# poster_fallback (JPEG) is swapped in by main.js only if the WebP poster fails to load #}
+              <video class="project-video" src="{{ item.video }}" controls preload="metadata" playsinline{% if item.poster %} poster="{{ item.poster }}"{% endif %}{% if item.poster_fallback %} data-poster-fallback="{{ item.poster_fallback }}"{% endif %}
                      width="1280" height="720" aria-label="Video: {{ item.title }}{% if item.label %} ({{ item.label | lower }}){% endif %}"></video>
             </div>
             {% elif item.image %}
-            {# <name>-800.webp is made by tools/make_thumbs.py.
-               The image repeats the "View sample" link for mouse users only. #}
+            {# <name>-400.webp and <name>-800.webp are made by tools/make_thumbs.py; srcset lists only
+               the sizes whose files exist. The image repeats the "View sample" link for mouse users only. #}
+            {% set base = item.image[:-5] %}
+            {% set thumbs = [] %}
+            {% for w in [400, 800] %}{% if (base ~ '-' ~ w ~ '.webp') is static_file %}{% set _ = thumbs.append(base ~ '-' ~ w ~ '.webp ' ~ w ~ 'w') %}{% endif %}{% endfor %}
             {% if shots %}
             {# Opens the lightbox gallery below at the first screenshot; without JS the first one opens in a new tab.
                tabindex -1: keyboard users get the "View screenshots" button instead. #}
             <a class="project-media-link project-media-zoom" href="{{ first_shot }}" target="_blank" rel="noopener" tabindex="-1" data-lightbox-open="lightbox-{{ item.id }}" aria-label="{{ ui.view_screenshot or 'View screenshot' }}: {{ item.title }}">
             {% elif item.link %}<a class="project-media-link" href="{{ item.link }}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">{% endif %}
             <img src="{{ item.image }}"{% if item.image.endswith(".webp") %}
-                 srcset="{{ item.image[:-5] }}-800.webp 800w, {{ item.image }} 1600w"
+                 srcset="{% for t in thumbs %}{{ t }}, {% endfor %}{{ item.image }} 1600w"
                  sizes="{{ '(max-width: 860px) calc(100vw - 64px), 520px' if featured else '(max-width: 639px) calc(100vw - 64px), (max-width: 1099px) 45vw, 340px' }}"{% endif %}
                  alt="Screenshot of {{ item.title }}{% if item.label %} ({{ item.label | lower }}){% endif %}" width="1600" height="1000" loading="lazy" decoding="async">
             {% if shots or item.link %}</a>{% endif %}
@@ -498,12 +502,12 @@
         {% endif %}
         {% if experience["items"] %}
         <div class="jobs" id="experience">
-          {% if experience.title %}<p class="sub-label reveal">{{ experience.title }}</p>{% endif %}
+          {% if experience.title %}<h3 class="sub-label reveal">{{ experience.title }}</h3>{% endif %}
           {% for job in experience["items"] %}
           <article class="card job reveal">
             <div class="job-head">
               <div class="job-meta">
-                <h3 class="job-role">{{ job.role }}</h3>
+                <h4 class="job-role">{{ job.role }}</h4>
                 {% if job.company %}<p class="job-company" translate="no">{{ job.company }}</p>{% endif %}
                 <ul class="job-facts">
                   <li class="job-dates">{% if job.dates %}{{ job.dates }}{% else %}{{ job.start }}{% if job.end %} — {{ job.end }}{% endif %}{% endif %}</li>

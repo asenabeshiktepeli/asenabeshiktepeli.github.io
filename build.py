@@ -168,6 +168,8 @@ def main():
     names += [job.get("company") for job in (content.get("experience") or {}).get("items") or []]
     env.filters["no_translate"] = make_no_translate(names + NO_TRANSLATE_TERMS)
     env.filters["link_phrases"] = make_linker(content.get("contact") or {})
+    # {% if path is static_file %}: true when the file exists, e.g. to list only real thumbnail sizes in srcset
+    env.tests["static_file"] = lambda path: bool(path) and (ROOT / path).is_file()
 
     OUT.mkdir(exist_ok=True)
     home = env.get_template("index.html").render(**content, page="home", person_jsonld=person_jsonld(content))

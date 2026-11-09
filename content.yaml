@@ -3,7 +3,7 @@
 
 meta:
   title: "Asena Beshiktepeli – E-commerce Virtual Assistant"
-  description: "I help e-commerce businesses answer customers faster, track orders clearly and keep their data clean."
+  description: "Remote e-commerce virtual assistant: customer support, order and shipping tracking, and clean spreadsheet data. Open to full-time roles and freelance work."
   lang: en
   url: "https://asenabeshiktepeli.github.io"  # no trailing slash; used for canonical, Open Graph, sitemap and robots.txt
   og_image: "static/og/og-image.png"  # link preview image, made by tools/make_og.py
@@ -164,7 +164,8 @@ portfolio:
       # (the link above then becomes a small text link). None at the moment.
       # optional: a video shown instead of an image (click to play, no autoplay)
       video: "static/video/customer-request-automation.mp4"
-      poster: "static/img/portfolio/customer-request-automation-poster.jpg"
+      poster: "static/img/portfolio/customer-request-automation-poster.webp"
+      poster_fallback: "static/img/portfolio/customer-request-automation-poster.jpg"  # used only if the WebP poster cannot load
     - title: "Order Tracking Sheet"
       id: "work-order-tracking"  # anchor target for links such as services "sample"
       short: "A Google Sheets tracker showing each order's status, shipping date and follow-up notes."  # grid cards: one short line; the full text sits under "Details"
@@ -179,7 +180,7 @@ portfolio:
       label: "Sample project"
       text: "How I use AI for first drafts of customer replies, and how I check every draft against store policy before it is sent. Four examples show the AI draft, the reviewed reply and what I changed and why."
       tools: ["Google Docs", "AI assistant"]
-      link: "https://docs.google.com/document/d/1uEHgSsQIdq1cHJ-TXXhwg54oFaYkwxCzJ63wrU6IX64/edit?usp=sharing"
+      link: "https://docs.google.com/document/d/1uEHgSsQIdq1cHJ-TXXhwg54oFaYkwxCzJ63wrU6IX64/preview"
       image: "static/img/portfolio/ai-drafting.webp"
       screenshots:
         - src: "static/img/portfolio/ai-drafting-example-full.webp"
@@ -194,7 +195,7 @@ portfolio:
       label: "Sample project"
       text: "A support playbook for a small online shop: 10 reply templates for order updates, delays, returns and complaints, with response time targets, escalation rules and store policy fields."
       tools: ["Google Docs"]
-      link: "https://docs.google.com/document/d/1xYm1fliueMGKPDli2UzKeNNLda1rVmu8jLQrLuVwvgo/edit?usp=sharing"
+      link: "https://docs.google.com/document/d/1xYm1fliueMGKPDli2UzKeNNLda1rVmu8jLQrLuVwvgo/preview"
       image: "static/img/portfolio/response-library.webp"
     - title: "Data Cleanup Before/After"
       id: "work-data-cleanup"

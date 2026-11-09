@@ -352,6 +352,15 @@
   syncIncludes();
   if (phoneWidth.addEventListener) phoneWidth.addEventListener("change", syncIncludes);
 
+  // ---------- Video poster fallback ----------
+  // <video poster> takes one file only. The poster is WebP; if this browser cannot load it,
+  // switch to the JPEG in data-poster-fallback (supported browsers never download the JPEG).
+  $$("video[data-poster-fallback]").forEach(function (video) {
+    var test = new Image();
+    test.onerror = function () { video.poster = video.getAttribute("data-poster-fallback"); };
+    test.src = video.getAttribute("poster");
+  });
+
   // ---------- Screenshot lightbox (gallery) ----------
   // Links with data-lightbox-open="<dialog id>" open that <dialog> as a modal at its first screenshot.
   // Without JS (or without <dialog> support) they stay normal links to the first full image.

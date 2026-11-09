@@ -89,6 +89,7 @@ body.is-locked {
 h1,
 h2,
 h3,
+h4,
 p,
 dl,
 dd {
@@ -97,7 +98,8 @@ dd {
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
   line-height: 1.08;
   letter-spacing: -0.03em;
   font-weight: 600;
@@ -1139,10 +1141,14 @@ html:not(.js) .js-only {
   text-wrap: pretty;
 }
 
+/* Small mono label; used as an h3 ("Fixed-price setups", "Experience"), so weight and
+   line height are reset to plain text */
 .sub-label {
   color: var(--muted);
   font-family: var(--font-mono);
   font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.6;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
