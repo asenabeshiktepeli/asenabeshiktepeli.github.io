@@ -178,7 +178,8 @@
     {% if stats %}
     <div class="container">
       <div class="glance reveal">
-        {% if ui.at_a_glance %}<p class="glance-title">{{ ui.at_a_glance }}</p>{% endif %}
+        {# Where and when the stats come from (experience.glance_context) follows the small title #}
+        {% if ui.at_a_glance %}<p class="glance-title">{{ ui.at_a_glance }}{% if experience.glance_context %} · <span translate="no">{{ experience.glance_context }}</span>{% endif %}</p>{% endif %}
         <dl class="glance-grid">
           {% for stat in stats %}
           <div class="glance-item">
