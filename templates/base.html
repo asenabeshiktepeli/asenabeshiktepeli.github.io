@@ -36,9 +36,9 @@
   <link rel="apple-touch-icon" href="static/apple-touch-icon.png">
   <meta name="theme-color" content="#ffffff">
   <meta name="color-scheme" content="light">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&display=swap">
+  {# Geist is served from this site (static/fonts, SIL OFL 1.1 – see OFL.txt), not from Google Fonts:
+     no extra connections, and the file is fetched early with the stylesheet #}
+  <link rel="preload" href="static/fonts/geist-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="static/css/style.css">
   {% if page == "home" and person_jsonld %}
   <script type="application/ld+json">{{ person_jsonld }}</script>
