@@ -322,7 +322,7 @@
                .video-frame is the compact navy frame around it. #}
             <div class="video-frame">
               {# poster_fallback (JPEG) is swapped in by main.js only if the WebP poster fails to load #}
-              <video class="project-video" src="{{ item.video }}" controls preload="metadata" playsinline{% if item.poster %} poster="{{ item.poster }}"{% endif %}{% if item.poster_fallback %} data-poster-fallback="{{ item.poster_fallback }}"{% endif %}
+              <video class="project-video" src="{{ item.video }}" controls preload="none" playsinline{% if item.poster %} poster="{{ item.poster }}"{% endif %}{% if item.poster_fallback %} data-poster-fallback="{{ item.poster_fallback }}"{% endif %}
                      width="1280" height="720" aria-label="Video: {{ item.title }}{% if item.label %} ({{ item.label | lower }}){% endif %}"></video>
             </div>
             {% elif item.image %}
