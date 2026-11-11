@@ -212,7 +212,7 @@
           {% if service.includes %}
           {# Phones: the list sits in a closed "What's included" <details> (main.js closes it under 640px).
              Larger screens: always open, the summary is hidden. Without JS it stays open. #}
-          {% if ui.whats_included %}<details class="includes-toggle" open><summary class="includes-summary">{{ ui.whats_included }}</summary>{% endif %}
+          {% if ui.whats_included %}<details class="includes-toggle" open><summary class="includes-summary">{{ ui.whats_included }}<span class="visually-hidden">: {{ service.title }}</span></summary>{% endif %}
           <ul class="includes">
             {% for point in service.includes %}
             <li>
@@ -641,12 +641,15 @@
 
       <div class="closing-card reveal">
         {% if contact.email %}
-        <p class="contact-email" translate="no">{{ contact.email }}</p>
+        {# <wbr> after "@": the only place a long address may wrap (it adds no character when copied) #}
+        {% set email_parts = contact.email.split("@", 1) %}
+        <p class="contact-email" translate="no">{{ email_parts[0] }}{% if email_parts | length > 1 %}@<wbr>{{ email_parts[1] }}{% endif %}</p>
         <div class="contact-actions">
           {{ m.email_menu(email_label, "email-menu-contact", "btn-light btn-lg") }}
-          {% if contact.booking_url and ui.book_call %}
+          {# Same label as the hero and package buttons; only the header keeps the short "Book a call" (space) #}
+          {% if contact.booking_url and ui.book_call_hero %}
           <a class="btn btn-outline-light btn-lg" href="{{ contact.booking_url }}" target="_blank" rel="noopener">
-            {{ ui.book_call }} <span aria-hidden="true">↗</span>
+            {{ ui.book_call_hero }} <span aria-hidden="true">↗</span>
           </a>
           {% endif %}
         </div>

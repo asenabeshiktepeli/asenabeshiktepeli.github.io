@@ -346,7 +346,7 @@ faq:
     - question: "Which languages do you speak?"
       answer: "Turkish (native) and English (B2, upper-intermediate)."
     - question: "How do we get started?"
-      answer: "If you're hiring, email me or download my CV. If you run an online shop, see the fixed-price setups under Services or book a 15-minute call."
+      answer: "If you're hiring, email me or download my CV. If you run an online shop, see the fixed-price setups under Services or book a 15-min call."
       links:
         - text: "email me"
           href: "email"
@@ -354,7 +354,7 @@ faq:
           href: "static/cv/Asena_Beshiktepeli_CV.pdf"
         - text: "fixed-price setups"
           href: "#packages"
-        - text: "book a 15-minute call"
+        - text: "book a 15-min call"
           href: "booking"
     - question: "Can I see examples of your work?"
       answer: "Yes. The Selected work section has seven sample projects built with fictional data. Each one has a link, screenshots or a short video you can open."

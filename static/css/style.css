@@ -3157,7 +3157,9 @@ html:has(.lightbox[open]) {
   font-weight: 600;
   letter-spacing: -0.03em;
   line-height: 1.2;
-  overflow-wrap: anywhere;
+  /* The template puts a <wbr> after "@", so a long address wraps there, never inside a word;
+     break-word is only a last resort if one part alone is wider than the card */
+  overflow-wrap: break-word;
 }
 
 .contact-actions {
@@ -3222,7 +3224,9 @@ html:has(.lightbox[open]) {
   }
 }
 
-@media (max-width: 480px) {
+/* Full-width buttons, one per row: on phones, and on narrow two-column layouts (861–1080px)
+   where "Email me" and "Book a 15-min call" no longer fit side by side */
+@media (max-width: 480px), (min-width: 861px) and (max-width: 1080px) {
   .contact-actions > *,
   .contact-actions .btn {
     width: 100%;
