@@ -90,7 +90,7 @@ services:
 
 # Fixed-price setups, shown under the Services cards. Empty items list hides the block.
 # buy_url empty = "Email me" + "Book a 15-min call" buttons; set it to the Upwork
-# Project Catalog link to show a single "Buy on Upwork ↗" button instead.
+# Project Catalog link to show "Buy on Upwork ↗" (main button) + a plain "Email me" instead.
 packages:
   title: "Fixed-price setups"
   intro: "Two small, fixed-scope jobs for online shops. Each one is based on a sample project you can open on this page."
@@ -99,16 +99,15 @@ packages:
   not_included_label: "Not included:"
   items:
     - title: "Order Tracking Sheet Setup"
-      price: "$65 · 3–5 business days"
-      text: "A Google Sheets order tracker set up for your shop, showing each order's status, shipping date and follow-up notes at a glance."
-      includes:
-        - "Tracker built in Google Sheets and handed over to your account"
-        - "Status, shipping date and follow-up columns matched to how you work"
-        - "Up to 50 existing orders moved in from your store's CSV export or entered by hand"
-        - "One round of changes after delivery"
-      not_included: "Daily order updates or carrier follow-up."
+      price: "From $25 · 2–5 business days"
+      text: "A Google Sheets order tracker set up for your shop, so you can see every order's status at a glance."
+      includes:  # same three tiers as the Upwork Project Catalog listing (Upwork is the source)
+        - "Starter $25: tracker set up for your statuses, colour-coded, with a short how-to guide"
+        - "Standard $50: Starter + up to 150 orders imported and cleaned, plus a live dashboard"
+        - "Advanced $90: Standard + a daily follow-up list with the next action for each order"
+      not_included: "Daily order updates or carrier follow-up (available as ongoing support)."
       sample: "#work-order-tracking"
-      buy_url: ""
+      buy_url: "https://www.upwork.com/services/product/admin-customer-support-a-google-sheets-order-tracker-with-a-live-dashboard-for-your-online-store-2118253006070942660"
     - title: "Spreadsheet Cleanup"
       price: "From $40 · 3 business days"
       text: "A messy customer or order list cleaned and standardised, with every change logged so you can check it."
@@ -121,7 +120,7 @@ packages:
       not_included: "Over 5,000 rows or more than one file (email me for a quote)."
       sample: "#work-data-cleanup"
       buy_url: ""
-  note: "Sample projects use fictional data. Price and scope are confirmed by email before work starts. Files you share are used only for the job and deleted within 30 days after handover."
+  note: "Sample projects use fictional data. Upwork orders are paid securely through Upwork; for anything else, price and scope are confirmed by email before work starts. Files you share are used only for the job and deleted within 30 days after handover."
 
 experience:
   title: "Experience"

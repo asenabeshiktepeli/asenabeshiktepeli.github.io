@@ -236,7 +236,8 @@
       </div>
 
       {# Fixed-price setups: two compact cards (badge next to the title, sample link and buttons in one row).
-         buy_url set -> one "Buy on Upwork" button; empty -> email (with subject) + booking link. #}
+         buy_url set -> "Buy on Upwork" (main) + a plain "Email me" (with subject), no booking link;
+         empty -> email (with subject) + booking link. #}
       {% if pkgs %}
       <div class="packages" id="packages">
         {% if packages.title %}<h3 class="sub-label reveal">{{ packages.title }}</h3>{% endif %}
@@ -277,6 +278,9 @@
               <a class="btn btn-primary btn-sm" href="{{ pkg.buy_url }}" target="_blank" rel="noopener" aria-label="{{ packages.buy_label }}: {{ pkg.title }} (opens in a new tab)">
                 {{ packages.buy_label }} <span aria-hidden="true">↗</span>
               </a>
+              {% if contact.email and packages.email_label %}
+              <a class="btn btn-ghost btn-sm" href="mailto:{{ contact.email }}?subject={{ (pkg.title ~ ' enquiry') | urlencode }}" aria-label="{{ packages.email_label }} about {{ pkg.title }}">{{ packages.email_label }}</a>
+              {% endif %}
               {% else %}
               {% if contact.email and packages.email_label %}
               <a class="btn btn-primary btn-sm" href="mailto:{{ contact.email }}?subject={{ (pkg.title ~ ' enquiry') | urlencode }}" aria-label="{{ packages.email_label }} about {{ pkg.title }}">{{ packages.email_label }}</a>
