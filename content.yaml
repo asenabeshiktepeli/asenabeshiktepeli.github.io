@@ -19,8 +19,6 @@ nav:
       href: "#portfolio"
     - label: "How I work"
       href: "#how-i-work"
-    - label: "Automation"
-      href: "#case-study"
     - label: "About"
       href: "#about"
     - label: "Contact"
@@ -258,16 +256,14 @@ how_i_work:
 case_study:
   title: "Automation case study"
   name: "Python workflow with a human approval step"
-  summary: "A personal system I built with an AI coding assistant to run my own remote job search: it collects listings, scores them, drafts tailored emails and waits for my approval before anything is sent. I can apply the same approach to repetitive business tasks such as order follow-ups or payment reminders. AI does the repetitive part; a person approves every result."
+  summary: "A Python workflow I built with an AI coding assistant for my own job search: it collects new listings, scores them against my criteria, drafts a tailored email for each one and waits for my approval before anything is sent. The same pattern fits repetitive business tasks such as order follow-ups or payment reminders."
   steps:
-    - "Collects job listings from multiple sources"
-    - "Scores and filters them against my criteria"
-    - "Checks ATS compatibility"
-    - "Drafts a tailored cover letter for each listing"
-    - "Tracks every application in a SQLite database"
-    - "Prepares email drafts and waits for my approval before sending"
+    - "Collects new items from several sources"
+    - "Scores and filters them against set rules"
+    - "Drafts a tailored email for each one and logs it in SQLite"
+    - "Waits for my approval before anything is sent"
   highlights:
-    - "500+ automated tests"
+    - "900+ automated tests (pytest)"
     - "Version-controlled with Git"
     - "No email is sent without my approval"
   tech:

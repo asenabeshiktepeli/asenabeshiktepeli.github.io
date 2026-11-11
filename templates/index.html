@@ -434,63 +434,10 @@
   </section>
   {% endif %}
 
-  {# ================= Case study: pipeline ================= #}
-  {% if case_study.name %}
-  {% set sec.n = sec.n + 1 %}
-  <section class="section{% if sec.n is odd %} section-soft{% endif %}" id="case-study">
-    <div class="container">
-      {{ section_head(case_study.title) }}
-      <article class="case spotlight reveal">
-        <div class="case-bg" aria-hidden="true"></div>
-        <div class="case-inner">
-          <h3 class="case-name">
-            {% if case_study.link %}<a class="card-link" href="{{ case_study.link }}" target="_blank" rel="noopener">{{ case_study.name }}</a>{% else %}{{ case_study.name }}{% endif %}
-          </h3>
-          {% if case_study.summary %}<p class="case-summary">{{ case_study.summary }}</p>{% endif %}
-          {% if case_study.steps %}
-          <ol class="pipeline" style="--n: {{ case_study.steps | length }}">
-            {% for text in case_study.steps %}
-            <li class="pipe-step" style="--d: {{ loop.index0 }}">
-              <span class="pipe-index" aria-hidden="true">{{ "%02d" | format(loop.index) }}</span>
-              <span class="pipe-text">{{ text }}</span>
-            </li>
-            {% endfor %}
-          </ol>
-          {% endif %}
-          <div class="case-footer">
-            {% if case_study.highlights %}
-            <div class="case-group">
-              {% if ui.case_highlights %}<p class="case-label">{{ ui.case_highlights }}</p>{% endif %}
-              <ul class="checks">
-                {% for text in case_study.highlights %}
-                <li class="check">
-                  <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M3.5 8.5 6.5 11.5 12.5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  {{ text }}
-                </li>
-                {% endfor %}
-              </ul>
-            </div>
-            {% endif %}
-            {% if case_study.tech %}
-            <div class="case-group">
-              {% if ui.case_tech %}<p class="case-label">{{ ui.case_tech }}</p>{% endif %}
-              <ul class="chips">
-                {% for tech in case_study.tech %}<li class="chip">{{ tech }}</li>{% endfor %}
-              </ul>
-            </div>
-            {% endif %}
-          </div>
-          {% if case_study.note %}<p class="case-note">{{ case_study.note }}</p>{% endif %}
-        </div>
-      </article>
-    </div>
-  </section>
-  {% endif %}
-
   {# ================= About: Background + Experience (left) and Tools I use (right) =================
      Everything is always visible; on phones and tablets the Tools card comes after Experience.
      id="background", id="experience" and id="tools" keep old links (e.g. the FAQ's "Tools I use") working.
-     Certifications stays its own section right after this one. #}
+     The case study and then Certifications follow as their own sections. #}
   {% set about_paragraphs = ([about.text] if about.text is string else (about.text or [])) | select | list %}
   {% set has_background = about_paragraphs or experience["items"] %}
   {% set has_tools = tools["items"] %}
@@ -565,6 +512,60 @@
         {% if tools.note %}<p class="tools-note">{{ tools.note }}</p>{% endif %}
       </section>
       {% endif %}
+    </div>
+  </section>
+  {% endif %}
+
+  {# ================= Case study: pipeline =================
+     After About (Background + Tools) and before Certifications; not in the menu, id="case-study" kept. #}
+  {% if case_study.name %}
+  {% set sec.n = sec.n + 1 %}
+  <section class="section{% if sec.n is odd %} section-soft{% endif %}" id="case-study">
+    <div class="container">
+      {{ section_head(case_study.title) }}
+      <article class="case spotlight reveal">
+        <div class="case-bg" aria-hidden="true"></div>
+        <div class="case-inner">
+          <h3 class="case-name">
+            {% if case_study.link %}<a class="card-link" href="{{ case_study.link }}" target="_blank" rel="noopener">{{ case_study.name }}</a>{% else %}{{ case_study.name }}{% endif %}
+          </h3>
+          {% if case_study.summary %}<p class="case-summary">{{ case_study.summary }}</p>{% endif %}
+          {% if case_study.steps %}
+          <ol class="pipeline" style="--n: {{ case_study.steps | length }}">
+            {% for text in case_study.steps %}
+            <li class="pipe-step" style="--d: {{ loop.index0 }}">
+              <span class="pipe-index" aria-hidden="true">{{ "%02d" | format(loop.index) }}</span>
+              <span class="pipe-text">{{ text }}</span>
+            </li>
+            {% endfor %}
+          </ol>
+          {% endif %}
+          <div class="case-footer">
+            {% if case_study.highlights %}
+            <div class="case-group">
+              {% if ui.case_highlights %}<p class="case-label">{{ ui.case_highlights }}</p>{% endif %}
+              <ul class="checks">
+                {% for text in case_study.highlights %}
+                <li class="check">
+                  <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M3.5 8.5 6.5 11.5 12.5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  {{ text }}
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+            {% endif %}
+            {% if case_study.tech %}
+            <div class="case-group">
+              {% if ui.case_tech %}<p class="case-label">{{ ui.case_tech }}</p>{% endif %}
+              <ul class="chips">
+                {% for tech in case_study.tech %}<li class="chip">{{ tech }}</li>{% endfor %}
+              </ul>
+            </div>
+            {% endif %}
+          </div>
+          {% if case_study.note %}<p class="case-note">{{ case_study.note }}</p>{% endif %}
+        </div>
+      </article>
     </div>
   </section>
   {% endif %}
