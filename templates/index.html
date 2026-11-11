@@ -48,7 +48,7 @@
   <div class="progress" aria-hidden="true"><span data-progress></span></div>
   <nav class="bar container" aria-label="Main">
     <a class="brand" href="#top" translate="no">
-      <span class="brand-mark" aria-hidden="true">{{ (nav.brand or hero.name) | initials }}</span>
+      {{ m.brand_mark() }}
       <span class="brand-name">{{ nav.brand }}</span>
     </a>
     {% if nav["items"] %}

@@ -17,7 +17,7 @@
 <header class="site-header is-scrolled">
   <nav class="bar bar-simple container" aria-label="Main">
     <a class="brand" href="./" translate="no">
-      <span class="brand-mark" aria-hidden="true">{{ (nav.brand or hero.name) | initials }}</span>
+      {{ m.brand_mark() }}
       <span class="brand-name">{{ nav.brand }}</span>
     </a>
   </nav>

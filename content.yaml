@@ -6,7 +6,7 @@ meta:
   description: "Remote e-commerce virtual assistant: customer support, order and shipping tracking, and clean spreadsheet data. Open to full-time roles and freelance work."
   lang: en
   url: "https://asenabeshiktepeli.github.io"  # no trailing slash; used for canonical, Open Graph, sitemap and robots.txt
-  og_image: "static/og/og-image.png"  # link preview image, made by tools/make_og.py
+  og_image: "static/og/og-image-v2.png"  # link preview image (Garamond AB logo); new file name so social sites fetch it fresh
   og_image_alt: "Asena Beshiktepeli – E-commerce Virtual Assistant & Customer Support"  # empty = meta.title
   site_name: "Asena Beshiktepeli"  # og:site_name; empty hides it
 

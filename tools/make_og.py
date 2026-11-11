@@ -1,6 +1,13 @@
-"""Make the link preview image and the PNG icons from content.yaml.
+"""DISABLED: running this script now only prints a note and writes nothing.
 
-Writes static/og/og-image.png (1200x630), static/favicon.png (32x32)
+Why: the site uses the Garamond AB logo (serif "AB" in Cormorant Garamond with a teal rule).
+static/favicon.svg, static/favicon.png, static/apple-touch-icon.png, root/favicon.ico and
+static/og/og-image-v2.png were made from that logo outside this script. This script draws the
+old Segoe UI box monogram, so running it would overwrite the new icons with the old look.
+The code below is kept for reference only.
+
+Old behaviour: made the link preview image and the PNG icons from content.yaml.
+Wrote static/og/og-image.png (1200x630), static/favicon.png (32x32)
 and static/apple-touch-icon.png (180x180). Run before build.py:
 
     .\\.venv\\Scripts\\python.exe tools\\make_og.py
@@ -165,6 +172,12 @@ def icon(name, size, path, rounded=True):
 
 
 def main():
+    # Disabled on purpose (see the note at the top): the icons and the preview image now come
+    # from the Garamond AB logo, and this script would replace them with the old monogram.
+    print("make_og.py is disabled: icons and the preview image come from the Garamond AB logo files.")
+    print("Nothing was written. See the note at the top of tools/make_og.py.")
+    return
+
     content = yaml.safe_load(CONTENT.read_text(encoding="utf-8"))
     meta = content.get("meta") or {}
     hero = content.get("hero") or {}
