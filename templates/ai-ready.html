@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+
+{# /ai-ready/: AI shopping assistant self-check (sample project). Texts: content.yaml "ai_ready".
+   Without JS the questions read as a checklist with a note on how to count the score;
+   static/js/ai-check.js adds the score, the top 3 gaps and the result buttons. Nothing is stored. #}
+{% set ai = ai_ready %}
+{% set questions = ai["questions"] or [] %}
+
+{% block head_end %}
+  <link rel="stylesheet" href="{{ root }}static/css/ai-ready.css">
+{% endblock %}
+
+{% block body %}
+{% if ui.skip_to_content %}<a class="skip-link" href="#check">{{ ui.skip_to_content }}</a>{% endif %}
+<header class="site-header is-scrolled">
+  <nav class="bar bar-simple container" aria-label="Main">
+    <a class="brand" href="{{ root }}" translate="no">
+      {{ m.brand_mark() }}
+      <span class="brand-name">{{ nav.brand }}</span>
+    </a>
+  </nav>
+</header>
+
+<main class="ai-page">
+
+  {# ---------- Intro + source ---------- #}
+  <section class="ai-intro" aria-labelledby="ai-title">
+    <div class="hero-bg" aria-hidden="true"><span class="hero-glow"></span><span class="hero-grid-lines"></span></div>
+    <div class="container ai-intro-inner">
+      {% if ai.label %}<span class="badge">{{ ai.label }}</span>{% endif %}
+      <h1 class="ai-title" id="ai-title">{{ ai.title }}</h1>
+      {% if ai.lead %}<p class="ai-lead">{{ ai.lead }}</p>{% endif %}
+      {% if ai.source and ai.source.quotes %}
+      <figure class="ai-quote">
+        {% for quote in ai.source.quotes %}
+        <blockquote cite="{{ ai.source.url }}"><p>“{{ quote }}”</p></blockquote>
+        {% endfor %}
+        <figcaption>
+          {{ ai.source.author }}, <a href="{{ ai.source.url }}" target="_blank" rel="noopener">“{{ ai.source.title }}”<span class="visually-hidden"> (opens in a new tab)</span></a>, {{ ai.source.publisher }}, {{ ai.source.date }}
+        </figcaption>
+      </figure>
+      {% endif %}
+      {% if ai.questions_basis %}<p class="ai-note">{{ ai.questions_basis }}</p>{% endif %}
+      {% if ai.note %}<p class="ai-note">{{ ai.note }}</p>{% endif %}
+      {% if questions %}
+      <p><a class="btn btn-primary btn-lg" href="#check">{{ ai.check_title }} <span class="btn-arrow" aria-hidden="true">↓</span></a></p>
+      {% endif %}
+    </div>
+  </section>
+
+  {# ---------- Self-check ---------- #}
+  {% if questions %}
+  <section class="ai-section ai-soft" id="check" aria-labelledby="check-title">
+    <div class="container ai-narrow">
+      <h2 class="section-title" id="check-title">{{ ai.check_title }}</h2>
+      {% if ai.check_intro %}<p class="ai-section-intro">{{ ai.check_intro }}</p>{% endif %}
+      {% if ai.nojs_note %}
+      <p class="ai-nojs ai-callout">
+        {{ ai.nojs_note }}
+        {% for band in ai.bands or [] %}<br>{{ band.min }}–{{ band.max }}: {{ band.name }}{% endfor %}
+      </p>
+      {% endif %}
+
+      <form class="ai-form" data-ai-check novalidate autocomplete="off">
+        <ol class="ai-questions">
+          {% for q in questions %}
+          <li>
+            <fieldset class="ai-q" id="q-{{ q.id }}" data-question data-number="{{ loop.index }}"
+                      data-priority="{{ q.priority or 'important' }}" data-topic="{{ q.topic }}" data-fix="fix-{{ q.id }}">
+              <legend><span class="ai-q-num" aria-hidden="true">{{ loop.index }}</span><span><span class="visually-hidden">Question {{ loop.index }}: </span>{{ q.text }}</span></legend>
+              <div class="ai-options">
+                <label class="ai-opt"><input type="radio" name="q-{{ q.id }}" value="yes"><span>{{ ai.yes_label }}</span></label>
+                <label class="ai-opt"><input type="radio" name="q-{{ q.id }}" value="no"><span>{{ ai.no_label }}</span></label>
+              </div>
+              <p class="ai-missing" id="q-{{ q.id }}-missing" data-missing-note hidden>{{ ai.missing_note }}</p>
+            </fieldset>
+          </li>
+          {% endfor %}
+        </ol>
+
+        <div class="ai-foot js-only">
+          <p class="ai-progress" aria-live="polite" data-progress-text data-template="{{ ai.progress }}">
+            {{ ai.progress | replace("{answered}", "0") | replace("{total}", questions | length | string) }}
+          </p>
+          <button class="btn btn-primary btn-lg" type="submit">{{ ai.submit }} <span class="btn-arrow" aria-hidden="true">→</span></button>
+        </div>
+        <p class="ai-error" role="alert" data-error data-template="{{ ai.missing_error }}" hidden></p>
+      </form>
+
+      {# Result: filled in by ai-check.js. Buttons are in the HTML from the start so GoatCounter can bind them. #}
+      {% set r = ai.result %}
+      <div class="ai-result" data-result hidden>
+        <h3 class="ai-result-title" tabindex="-1" data-result-title>
+          {{ r.title }} <span class="ai-score"><span data-score>0</span> {{ r.out_of }} {{ questions | length }}</span>
+        </h3>
+        {% for band in ai.bands or [] %}
+        <div class="ai-band" data-band data-min="{{ band.min }}" data-max="{{ band.max }}" data-name="{{ band.name }}" hidden>
+          <p class="ai-band-name">{{ band.name }}</p>
+          <p>{{ band.text }}</p>
+        </div>
+        {% endfor %}
+        <div class="ai-gaps" data-gaps>
+          <h4 class="ai-gaps-title">{{ r.gaps_title }}</h4>
+          <ol class="ai-gap-list" data-gap-list></ol>
+        </div>
+        <p class="ai-no-gaps" data-no-gaps hidden>{{ r.no_gaps }}</p>
+        <p class="ai-disclaimer">{{ r.disclaimer }}</p>
+        <div class="ai-actions">
+          {% if contact.upwork and r.upwork_label %}
+          <a class="btn btn-primary btn-lg" href="{{ contact.upwork }}" target="_blank" rel="noopener"
+             aria-label="{{ r.upwork_label }} on Upwork (opens in a new tab)"
+             data-goatcounter-click="ai-check-upwork" data-goatcounter-title="Fix this for me – Upwork (result)">
+            {{ r.upwork_label }} <span class="btn-arrow" aria-hidden="true">↗</span>
+          </a>
+          {% endif %}
+          {% if contact.email and r.email_label %}
+          <a class="btn btn-ghost btn-lg" href="mailto:{{ contact.email }}" data-email-link
+             data-email="{{ contact.email }}" data-subject="{{ r.email_subject }}" data-body="{{ r.email_body }}"
+             data-goatcounter-click="email" data-goatcounter-title="Email">{{ r.email_label }}</a>
+          {% endif %}
+          {% if r.restart %}<button class="ai-text-btn" type="button" data-restart>{{ r.restart }}</button>{% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {# ---------- One fix per question (the result's gap links point here) ---------- #}
+  <section class="ai-section" id="fixes" aria-labelledby="fixes-title">
+    <div class="container ai-narrow">
+      <h2 class="section-title" id="fixes-title">{{ ai.fixes_title }}</h2>
+      {% if ai.fixes_intro %}<p class="ai-section-intro">{{ ai.fixes_intro }}</p>{% endif %}
+      <ol class="ai-fixes">
+        {% for q in questions %}
+        <li class="ai-fix" id="fix-{{ q.id }}">
+          <h3 class="ai-fix-title"><span class="ai-q-num" aria-hidden="true">{{ loop.index }}</span>{{ q.topic }}</h3>
+          <p>{{ q.fix }}</p>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+  </section>
+  {% endif %}
+
+  {# ---------- Help + sources ---------- #}
+  <section class="ai-section ai-soft" aria-labelledby="cta-title">
+    <div class="container ai-narrow">
+      <div class="ai-cta card">
+        <h2 class="ai-cta-title" id="cta-title">{{ ai.cta_title }}</h2>
+        {% if ai.cta_text %}<p>{{ ai.cta_text }}</p>{% endif %}
+        <div class="ai-actions">
+          {% if contact.upwork and ai.result.upwork_label %}
+          <a class="btn btn-primary btn-lg" href="{{ contact.upwork }}" target="_blank" rel="noopener"
+             aria-label="{{ ai.result.upwork_label }} on Upwork (opens in a new tab)"
+             data-goatcounter-click="ai-check-upwork" data-goatcounter-title="Fix this for me – Upwork (page end)">
+            {{ ai.result.upwork_label }} <span class="btn-arrow" aria-hidden="true">↗</span>
+          </a>
+          {% endif %}
+          {% if contact.email and ai.result.email_label %}
+          <a class="btn btn-ghost btn-lg" href="mailto:{{ contact.email }}?subject={{ 'AI readiness check' | urlencode }}"
+             data-goatcounter-click="email" data-goatcounter-title="Email">{{ ai.result.email_label }}</a>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="ai-sources">
+        <h2 class="ai-sources-title">{{ ai.sources_title }}</h2>
+        <ul>
+          {% if ai.source and ai.source.url %}
+          <li>{{ ai.source.author }}, <a href="{{ ai.source.url }}" target="_blank" rel="noopener">“{{ ai.source.title }}”<span class="visually-hidden"> (opens in a new tab)</span></a>, {{ ai.source.publisher }}, {{ ai.source.date }}</li>
+          {% endif %}
+          {% for item in ai.further_reading or [] %}
+          <li>Further reading: <a href="{{ item.url }}" target="_blank" rel="noopener">{{ item.text }}<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+          {% endfor %}
+        </ul>
+        {% if ai.disclaimer %}<p>{{ ai.disclaimer }}</p>{% endif %}
+        {% if ai.last_checked %}<p>{{ ai.last_checked }}</p>{% endif %}
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="not-found-footer ai-footer">
+  <div class="container ai-footer-inner">
+    <div>
+      {% if footer.copyright %}<p>{{ footer.copyright | no_translate }}</p>{% endif %}
+      {% if footer.note %}<p>{{ footer.note }}</p>{% endif %}
+    </div>
+    {% if ai.back_home %}<a href="{{ root }}"><span aria-hidden="true">←</span> {{ ai.back_home }}</a>{% endif %}
+  </div>
+</footer>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ root }}static/js/ai-check.js" defer></script>
+{% endblock %}

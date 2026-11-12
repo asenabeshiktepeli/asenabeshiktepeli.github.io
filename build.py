@@ -28,7 +28,9 @@ OUT = ROOT / "docs"
 #   path:     folder with a trailing slash, e.g. "ai-ready/"
 #   content:  content.yaml section with the page's meta_title and meta_description
 # Templates get root ("../") to prefix relative links, and page_path for canonical/og:url.
-PAGES = []
+PAGES = [
+    {"template": "ai-ready.html", "path": "ai-ready/", "content": "ai_ready"},  # AI shopping assistant self-check
+]
 
 # Proper names inside sentences that browser translation should leave alone.
 # The person's name and company names are added from content.yaml.

@@ -1,0 +1,454 @@
+/* AI shopping assistant self-check (/ai-ready/). Loaded only on that page, after style.css,
+   and uses its tokens (colours, radius, spacing). */
+
+.ai-page {
+  padding-top: var(--header-h);
+}
+
+.js .ai-nojs {
+  display: none;
+}
+
+/* ---------- Intro ---------- */
+
+.ai-intro {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(40px, 7vw, 88px) 0 clamp(44px, 6vw, 72px);
+}
+
+.ai-intro-inner {
+  display: grid;
+  justify-items: start;
+  gap: 18px;
+  max-width: calc(48rem + 2 * var(--gutter));
+}
+
+.ai-title {
+  font-size: clamp(2rem, 5.4vw, 3.5rem);
+  letter-spacing: -0.045em;
+  line-height: 1.04;
+}
+
+.ai-lead {
+  max-width: 40em;
+  color: var(--muted);
+  font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
+}
+
+.ai-quote {
+  margin: 6px 0 0;
+  padding: 18px 20px;
+  border-left: 3px solid var(--teal-ink);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: color-mix(in oklab, var(--bg-soft) 85%, white);
+}
+
+.ai-quote blockquote {
+  margin: 0;
+}
+
+.ai-quote blockquote + blockquote {
+  margin-top: 10px;
+}
+
+.ai-quote figcaption {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.ai-note {
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+/* ---------- Sections ---------- */
+
+.ai-section {
+  padding: clamp(52px, 7vw, 96px) 0;
+  border-top: 1px solid var(--border);
+}
+
+.ai-soft {
+  background: var(--bg-soft);
+}
+
+.ai-narrow {
+  max-width: calc(48rem + 2 * var(--gutter));
+}
+
+.ai-section-intro {
+  margin: 14px 0 26px;
+  color: var(--muted);
+}
+
+.ai-callout {
+  margin-bottom: 22px;
+  padding: 14px 18px;
+  border: 1px solid var(--accent-line);
+  border-radius: var(--radius-sm);
+  background: var(--accent-soft);
+}
+
+/* ---------- Questions ---------- */
+
+.ai-questions {
+  display: grid;
+  gap: 14px;
+}
+
+.ai-q {
+  min-width: 0;
+  margin: 0;
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+/* float: the legend sits inside the fieldset's padding like a normal block */
+.ai-q legend {
+  float: left;
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.ai-q-num {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+
+.ai-options {
+  clear: both;
+  display: flex;
+  gap: 10px;
+  padding: 14px 0 0 40px;
+}
+
+.ai-opt {
+  position: relative;
+  flex: 0 1 140px;
+}
+
+/* The real radio covers the pill: native keyboard, screen reader and click behaviour */
+.ai-opt input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.ai-opt span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  font-weight: 500;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+/* Radio circle: empty, then a thick ring when chosen (shape change, not only colour) */
+.ai-opt span::before {
+  content: "";
+  flex: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--faint);
+  border-radius: 50%;
+  background: var(--surface);
+  transition: border-width 0.15s ease, border-color 0.15s ease;
+}
+
+.ai-opt input:hover + span {
+  border-color: var(--accent);
+}
+
+.ai-opt input:checked + span {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+}
+
+.ai-opt input:checked + span::before {
+  border: 6px solid var(--accent);
+}
+
+.ai-opt input:focus-visible + span {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 3px;
+}
+
+.ai-q.is-missing {
+  border-color: #b45309;
+  box-shadow: inset 4px 0 0 #b45309;
+}
+
+.ai-missing {
+  clear: both;
+  margin-top: 10px;
+  padding-left: 40px;
+  color: #9a3412;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.ai-missing::before {
+  content: "! ";
+}
+
+.ai-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
+  margin-top: 24px;
+}
+
+.ai-progress {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.ai-error {
+  margin-top: 16px;
+  padding: 12px 16px;
+  border: 1px solid #f3c58f;
+  border-radius: var(--radius-sm);
+  background: #fff7ed;
+  color: #7c2d12;
+  font-weight: 500;
+}
+
+/* ---------- Result ---------- */
+
+.ai-result {
+  margin-top: 28px;
+  padding: clamp(22px, 4vw, 36px);
+  border: 1px solid var(--accent-line);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, var(--accent-soft), var(--surface) 70%);
+  box-shadow: var(--shadow);
+}
+
+.ai-result-title {
+  font-size: clamp(1.5rem, 3.6vw, 2.25rem);
+  scroll-margin-top: calc(var(--header-h) + 24px);
+}
+
+/* Focus moves here when the result appears; it is not interactive, so no ring */
+.ai-result-title:focus {
+  outline: none;
+}
+
+.ai-score {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.ai-band {
+  margin-top: 12px;
+}
+
+.ai-band-name {
+  font-weight: 600;
+}
+
+.ai-band p + p {
+  color: var(--muted);
+}
+
+.ai-gaps {
+  margin-top: 22px;
+}
+
+.ai-gaps-title {
+  font-size: 1.0625rem;
+  letter-spacing: -0.01em;
+}
+
+.ai-gap-list {
+  display: grid;
+  gap: 4px;
+  margin-top: 8px;
+  padding-left: 1.5em;
+  list-style: decimal;
+}
+
+.ai-gap-list a {
+  display: inline-block;
+  padding: 6px 0;
+  font-weight: 500;
+}
+
+.ai-no-gaps {
+  margin-top: 18px;
+}
+
+.ai-disclaimer {
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.ai-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.ai-text-btn {
+  min-height: 44px;
+  padding: 0 6px;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+/* ---------- Fixes ---------- */
+
+.ai-fixes {
+  display: grid;
+  gap: 12px;
+}
+
+.ai-fix {
+  padding: 16px 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  scroll-margin-top: calc(var(--header-h) + 24px);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Opened from a gap link in the result */
+.ai-fix:target {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-line);
+}
+
+.ai-fix-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.0625rem;
+  letter-spacing: -0.01em;
+}
+
+.ai-fix p {
+  margin-top: 6px;
+  padding-left: 40px;
+  color: var(--muted);
+}
+
+/* ---------- Help + sources ---------- */
+
+.ai-cta {
+  padding: clamp(22px, 4vw, 36px);
+}
+
+.ai-cta-title {
+  font-size: clamp(1.375rem, 3vw, 1.875rem);
+}
+
+.ai-cta > p {
+  margin-top: 10px;
+  color: var(--muted);
+}
+
+.ai-sources {
+  margin-top: clamp(36px, 5vw, 56px);
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.ai-sources-title {
+  margin-bottom: 10px;
+  color: var(--text);
+  font-size: 1.0625rem;
+  letter-spacing: -0.01em;
+}
+
+.ai-sources ul {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 14px;
+  padding-left: 1.2em;
+  list-style: disc;
+}
+
+.ai-sources p + p {
+  margin-top: 8px;
+}
+
+.ai-footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 32px;
+}
+
+.ai-footer-inner a {
+  display: inline-block;
+  padding: 6px 0;
+}
+
+/* ---------- Phones ---------- */
+
+@media (max-width: 560px) {
+  .ai-q {
+    padding: 16px;
+  }
+
+  .ai-options,
+  .ai-missing,
+  .ai-fix p {
+    padding-left: 0;
+  }
+
+  .ai-opt {
+    flex: 1 1 0;
+  }
+
+  .ai-foot .btn,
+  .ai-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .ai-intro-inner > p > .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

@@ -362,6 +362,130 @@ faq:
     - question: "How do you use AI in your work?"
       answer: "I use AI tools for first drafts, summaries and spreadsheet formulas, so routine work gets done faster. I review and edit every reply before it is sent, keep your brand's tone, and never paste customer names, emails or order details into public AI tools. I follow your company's rules on which tools are allowed."
 
+# AI shopping assistant self-check: a separate page at /ai-ready/ (sample project; build.py PAGES).
+# Score = number of Yes answers. The top 3 gaps are the No answers, "critical" before "important",
+# then in question order; each links to its fix ("#fix-<id>") further down the page.
+# Nothing is stored; GoatCounter gets only ai-check-start, ai-check-complete (score band) and ai-check-upwork.
+ai_ready:
+  meta_title: "AI Shopping Assistant Self-Check for Online Shops – Asena Beshiktepeli"
+  meta_description: "A 10-question self-check for small online shops: can AI shopping assistants find clear shipping, returns and product information? Sample project; nothing is saved."
+  label: "Sample project"
+  title: "Is your shop ready for AI shopping assistants?"
+  lead: "AI shopping assistants answer shoppers' questions from what they can read about a store: its policy pages, FAQ and product data. This self-check shows where a small shop's pages may leave gaps."
+  note: "10 yes/no questions · about 2 minutes · Nothing is saved: your answers stay in this browser tab."
+  source:  # quotes checked word for word against the article on 12 Nov 2026
+    quotes:
+      - "Beyond product data, AI agents pull from your FAQs, return policies, shipping information, and pricing data to answer shopper questions."
+      - "Publish your policies and FAQs as dedicated pages with clear headings and plain language."
+    author: "Lauren Scherr"
+    title: "Agentic Commerce: Benefits & How To Get Started in 2026"
+    publisher: "Shopify Blog"
+    date: "25 Sep 2026"
+    url: "https://www.shopify.com/blog/agentic-commerce"
+  questions_basis: "The 10 questions are my own checklist, based on the sources at the end of this page."
+  check_title: "The self-check"
+  check_intro: "Answer each question for your own store. If you're not sure, choose No."
+  nojs_note: "Count your Yes answers to get your score out of 10. Every No has a short fix under “How to fix each point”."
+  yes_label: "Yes"  # not "yes:"/"no:" – YAML reads those keys as true/false
+  no_label: "No"
+  progress: "{answered} of {total} answered"  # {answered} and {total} are filled in by the page
+  submit: "See my result"
+  missing_note: "Not answered yet"
+  missing_error: "Please answer every question. Not answered yet: {list}."  # {list} = question numbers
+  questions:
+    - id: "shipping"
+      topic: "Shipping page"
+      priority: critical
+      text: "Do you have one shipping page that says, in plain sentences, where you ship, what it costs and how long delivery takes?"
+      fix: "Write one shipping page with three facts in plain sentences: where you ship, what it costs and how many business days delivery takes."
+    - id: "returns"
+      topic: "Returns page"
+      priority: critical
+      text: "Does your returns page give the return window in days, who pays for return shipping and how refunds are paid?"
+      fix: "Put three facts near the top of your returns page: the return window in days, who pays for return shipping, and how and when refunds are paid."
+    - id: "late-orders"
+      topic: "Late orders"
+      priority: important
+      text: "Do you explain what happens when an order is late, and when customers should contact you?"
+      fix: "Add a short section on late orders: when an order counts as late, what you do about it and how customers can reach you."
+    - id: "damaged-items"
+      topic: "Damaged items"
+      priority: important
+      text: "Do you explain what to do if an item arrives damaged (photos, time limit, replacement or refund)?"
+      fix: "Explain the steps for a damaged item: how many days customers have to report it, that a photo helps, and whether they get a replacement or a refund."
+    - id: "faq-text"
+      topic: "FAQ as text"
+      priority: critical
+      text: "Is your FAQ written as text on a page, not only in images, PDFs or a chat widget?"
+      fix: "Put your FAQ on a normal page as text, with one question per heading. Images and PDFs can stay as extras, but not as the only place the answers live."
+    - id: "consistency"
+      topic: "Same facts everywhere"
+      priority: critical
+      text: "Do delivery times, return window and prices say the same thing everywhere (product pages, FAQ, policies, marketplace listings)?"
+      fix: "Pick one delivery time, one return window and one price for each item, and use them on every page. An assistant may repeat whichever version it finds."
+    - id: "product-titles"
+      topic: "Clear product titles"
+      priority: critical
+      text: "Do your product titles say what the item is, with key details (e.g. “Linen Cushion Cover, 45 × 45 cm, Sage Green”), rather than only a collection name?"
+      fix: "Start each title with what the item is, then the key details, e.g. “Linen Cushion Cover, 45 × 45 cm, Sage Green” instead of “Nordic Dream”."
+    - id: "product-basics"
+      topic: "Complete product basics"
+      priority: critical
+      text: "Does every product have a price, stock status, at least one photo and a description of two sentences or more?"
+      fix: "Give every product a price, a stock status, at least one photo and a description of two sentences or more. Start with your best sellers."
+    - id: "product-details"
+      topic: "Material, size and care"
+      priority: important
+      text: "Are material, dimensions and care instructions filled in for your products?"
+      fix: "Fill in material, dimensions and care instructions for each product, as separate fields or as clear lines in the description."
+    - id: "variants"
+      topic: "Sizes and colours"
+      priority: important
+      text: "Are sizes and colours set up as options of one product, with the same names everywhere (“Sage Green”, not “sage” or “Green-Sage”)?"
+      fix: "Set sizes and colours up as options of one product, and use one spelling for each value, e.g. “Sage Green” everywhere."
+  bands:  # min/max = number of Yes answers
+    - name: "In good shape"
+      min: 9
+      max: 10
+      text: "Your pages cover the basics an assistant needs. Check them again when your policies or products change."
+    - name: "A few gaps"
+      min: 6
+      max: 8
+      text: "Most of the basics are there. Fixing the points below makes the answers about your store clearer and more consistent."
+    - name: "Start with the basics"
+      min: 0
+      max: 5
+      text: "An assistant may find little clear information about your store. The points below are a good place to start."
+  result:
+    title: "Your score:"  # followed by "7 out of 10"
+    out_of: "out of"
+    gaps_title: "Fix these first"
+    no_gaps: "No gaps found. Check your pages again when your policies or products change."
+    disclaimer: "A quick self-review, not an audit. A full score does not guarantee that any AI assistant will show or recommend your products."
+    upwork_label: "Fix this for me"  # links to contact.upwork
+    email_label: "Email me"
+    email_subject: "AI readiness check – {score}/{total}"
+    email_body: |
+      Hi Asena,
+
+      I took the AI readiness self-check on your site.
+      Score: {score}/{total}
+      Top gaps: {gaps}
+
+      My store:
+    restart: "Start over"
+  fixes_title: "How to fix each point"
+  fixes_intro: "One short fix for each question, in the same order."
+  cta_title: "Want a hand with the gaps?"
+  cta_text: "I can rewrite shipping, returns and FAQ pages in plain language and tidy up product data for small online shops."
+  sources_title: "Sources"
+  further_reading:  # optional; shown under the main source
+    - text: "Yevhen Kurapov, “Agentic commerce for small stores: what's live in 2026”, ChatPal, 13 Oct 2026"
+      url: "https://chatpalbot.com/guides/agentic-commerce-for-small-stores"
+  last_checked: "Sources last checked: 12 Nov 2026"
+  disclaimer: "This is a sample project. The self-check is a quick review, not an audit or legal advice, and a full score does not guarantee that any AI assistant will show or recommend your products."
+  back_home: "Back to homepage"
+
 footer:
   cta: "Your customers, orders and data, in good hands."
   copyright: "© 2026 Asena Beshiktepeli"

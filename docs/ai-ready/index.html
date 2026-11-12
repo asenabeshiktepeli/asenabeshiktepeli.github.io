@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Shopping Assistant Self-Check for Online Shops – Asena Beshiktepeli</title>
+  <script>document.documentElement.classList.add("js");</script>
+  <meta name="description" content="A 10-question self-check for small online shops: can AI shopping assistants find clear shipping, returns and product information? Sample project; nothing is saved.">
+  <link rel="canonical" href="https://asenabeshiktepeli.github.io/ai-ready/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Asena Beshiktepeli">
+  <meta property="og:title" content="AI Shopping Assistant Self-Check for Online Shops – Asena Beshiktepeli">
+  <meta property="og:description" content="A 10-question self-check for small online shops: can AI shopping assistants find clear shipping, returns and product information? Sample project; nothing is saved.">
+  <meta property="og:url" content="https://asenabeshiktepeli.github.io/ai-ready/">
+  <meta property="og:image" content="https://asenabeshiktepeli.github.io/static/og/og-image-v2.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Asena Beshiktepeli – E-commerce Virtual Assistant &amp; Customer Support">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AI Shopping Assistant Self-Check for Online Shops – Asena Beshiktepeli">
+  <meta name="twitter:description" content="A 10-question self-check for small online shops: can AI shopping assistants find clear shipping, returns and product information? Sample project; nothing is saved.">
+  <meta name="twitter:image" content="https://asenabeshiktepeli.github.io/static/og/og-image-v2.png">
+  <link rel="icon" href="../static/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../static/favicon.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="../favicon.ico" sizes="32x32">
+  <link rel="apple-touch-icon" href="../static/apple-touch-icon.png">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="color-scheme" content="light">
+  <link rel="preload" href="../static/fonts/geist-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="../static/css/ai-ready.css">
+</head>
+<body>
+<a class="skip-link" href="#check">Skip to content</a><header class="site-header is-scrolled">
+  <nav class="bar bar-simple container" aria-label="Main">
+    <a class="brand" href="../" translate="no">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 39.8 32" width="39.8" height="32" focusable="false"><g transform="translate(0.76 26) scale(0.03200)"><g fill="#1e3a8a"><path d="M171 -229 186 -257H474L481 -229ZM717 -12Q722 -12 722 -6Q722 0 717 0Q687 0 654.5 -2Q622 -4 592 -4Q558 -4 533 -2Q508 0 477 0Q473 0 473 -6Q473 -12 477 -12Q518 -12 524.5 -28.5Q531 -45 506 -94L303 -495L352 -581L153 -142Q126 -82 152 -47Q178 -12 234 -12Q239 -12 239 -6Q239 0 234 0Q204 0 179 -2Q154 -4 116 -4Q77 -4 53.5 -2Q30 0 -4 0Q-8 0 -8 -6Q-8 -12 -4 -12Q23 -12 42.5 -23.5Q62 -35 81.5 -65.5Q101 -96 126 -152L343 -629Q344 -632 352 -632.5Q360 -633 361 -629L611 -137Q635 -90 652.5 -62.5Q670 -35 685.5 -23.5Q701 -12 717 -12Z"/><path d="M966 -335 977 -353Q1046 -353 1096.5 -331Q1147 -309 1175 -270.5Q1203 -232 1203 -181Q1203 -129 1173 -87Q1143 -45 1090.5 -20.5Q1038 4 972 4Q945 4 903.5 1Q862 -2 828 -2Q792 -2 759.5 -1Q727 0 701 0Q698 0 698 -6Q698 -12 701 -12Q729 -12 744.5 -17Q760 -22 766.5 -37Q773 -52 773 -81V-544Q773 -573 767 -587.5Q761 -602 745.5 -607.5Q730 -613 702 -613Q700 -613 700 -619Q700 -625 702 -625Q728 -625 760 -623.5Q792 -622 828 -622Q857 -622 888 -625Q919 -628 951 -628Q1011 -628 1053.5 -613.5Q1096 -599 1119 -570.5Q1142 -542 1142 -499Q1142 -444 1098 -398.5Q1054 -353 966 -335ZM936 -606Q917 -606 905.5 -600Q894 -594 889.5 -580.5Q885 -567 885 -542V-346L848 -353Q881 -352 902 -351.5Q923 -351 925 -351Q979 -351 1006 -391.5Q1033 -432 1033 -490Q1033 -528 1021.5 -554Q1010 -580 988.5 -593Q967 -606 936 -606ZM955 -21Q1024 -21 1055 -56.5Q1086 -92 1086 -157Q1086 -231 1050.5 -277.5Q1015 -324 937 -324Q927 -324 903 -323.5Q879 -323 852 -318L885 -330V-81Q885 -61 889.5 -47.5Q894 -34 909 -27.5Q924 -21 955 -21Z"/></g></g><rect x="13.7" y="30" width="12.4" height="2" fill="#0e7490"/></svg></span>
+      <span class="brand-name">Asena Beshiktepeli</span>
+    </a>
+  </nav>
+</header>
+
+<main class="ai-page">
+
+  <section class="ai-intro" aria-labelledby="ai-title">
+    <div class="hero-bg" aria-hidden="true"><span class="hero-glow"></span><span class="hero-grid-lines"></span></div>
+    <div class="container ai-intro-inner">
+<span class="badge">Sample project</span>      <h1 class="ai-title" id="ai-title">Is your shop ready for AI shopping assistants?</h1>
+<p class="ai-lead">AI shopping assistants answer shoppers&#39; questions from what they can read about a store: its policy pages, FAQ and product data. This self-check shows where a small shop&#39;s pages may leave gaps.</p>      <figure class="ai-quote">
+        <blockquote cite="https://www.shopify.com/blog/agentic-commerce"><p>“Beyond product data, AI agents pull from your FAQs, return policies, shipping information, and pricing data to answer shopper questions.”</p></blockquote>
+        <blockquote cite="https://www.shopify.com/blog/agentic-commerce"><p>“Publish your policies and FAQs as dedicated pages with clear headings and plain language.”</p></blockquote>
+        <figcaption>
+          Lauren Scherr, <a href="https://www.shopify.com/blog/agentic-commerce" target="_blank" rel="noopener">“Agentic Commerce: Benefits &amp; How To Get Started in 2026”<span class="visually-hidden"> (opens in a new tab)</span></a>, Shopify Blog, 25 Sep 2026
+        </figcaption>
+      </figure>
+<p class="ai-note">The 10 questions are my own checklist, based on the sources at the end of this page.</p><p class="ai-note">10 yes/no questions · about 2 minutes · Nothing is saved: your answers stay in this browser tab.</p>      <p><a class="btn btn-primary btn-lg" href="#check">The self-check <span class="btn-arrow" aria-hidden="true">↓</span></a></p>
+    </div>
+  </section>
+
+  <section class="ai-section ai-soft" id="check" aria-labelledby="check-title">
+    <div class="container ai-narrow">
+      <h2 class="section-title" id="check-title">The self-check</h2>
+<p class="ai-section-intro">Answer each question for your own store. If you&#39;re not sure, choose No.</p>      <p class="ai-nojs ai-callout">
+        Count your Yes answers to get your score out of 10. Every No has a short fix under “How to fix each point”.
+<br>9–10: In good shape<br>6–8: A few gaps<br>0–5: Start with the basics      </p>
+
+      <form class="ai-form" data-ai-check novalidate autocomplete="off">
+        <ol class="ai-questions">
+          <li>
+            <fieldset class="ai-q" id="q-shipping" data-question data-number="1"
+                      data-priority="critical" data-topic="Shipping page" data-fix="fix-shipping">
+              <legend><span class="ai-q-num" aria-hidden="true">1</span><span><span class="visually-hidden">Question 1: </span>Do you have one shipping page that says, in plain sentences, where you ship, what it costs and how long delivery takes?</span></legend>
+              <div class="ai-options">
+                <label class="ai-opt"><input type="radio" name="q-shipping" value="yes"><span>Yes</span></label>
+                <label class="ai-opt"><input type="radio" name="q-shipping" value="no"><span>No</span></label>
+              </div>
+              <p class="ai-missing" id="q-shipping-missing" data-missing-note hidden>Not answered yet</p>
+            </fieldset>
+          </li>
+          <li>
+            <fieldset class="ai-q" id="q-returns" data-question data-number="2"
+                      data-priority="critical" data-topic="Returns page" data-fix="fix-returns">
+              <legend><span class="ai-q-num" aria-hidden="true">2</span><span><span class="visually-hidden">Question 2: </span>Does your returns page give the return window in days, who pays for return shipping and how refunds are paid?</span></legend>
+              <div class="ai-options">
+                <label class="ai-opt"><input type="radio" name="q-returns" value="yes"><span>Yes</span></label>
+                <label class="ai-opt"><input type="radio" name="q-returns" value="no"><span>No</span></label>
+              </div>
+              <p class="ai-missing" id="q-returns-missing" data-missing-note hidden>Not answered yet</p>
+            </fieldset>
+          </li>
+          <li>
+            <fieldset class="ai-q" id="q-late-orders" data-question data-number="3"
+                      data-priority="important" data-topic="Late orders" data-fix="fix-late-orders">
+              <legend><span class="ai-q-num" aria-hidden="true">3</span><span><span class="visually-hidden">Question 3: </span>Do you explain what happens when an order is late, and when customers should contact you?</span></legend>
+              <div class="ai-options">
+                <label class="ai-opt"><input type="radio" name="q-late-orders" value="yes"><span>Yes</span></label>
+                <label class="ai-opt"><input type="radio" name="q-late-orders" value="no"><span>No</span></label>
+              </div>
+              <p class="ai-missing" id="q-late-orders-missing" data-missing-note hidden>Not answered yet</p>
+            </fieldset>
+          </li>
+          <li>
+            <fieldset class="ai-q" id="q-damaged-items" data-question data-number="4"
+                      data-priority="important" data-topic="Damaged items" data-fix="fix-damaged-items">
+              <legend><span class="ai-q-num" aria-hidden="true">4</span><span><span class="visually-hidden">Question 4: </span>Do you explain what to do if an item arrives damaged (photos, time limit, replacement or refund)?</span></legend>
+              <div class="ai-options">
+                <label class="ai-opt"><input type="radio" name="q-damaged-items" value="yes"><span>Yes</span></label>
+                <label class="ai-opt"><input type="radio" name="q-damaged-items" value="no"><span>No</span></label>
+              </div>
+              <p class="ai-missing" id="q-damaged-items-missing" data-missing-note hidden>Not answered yet</p>
+            </fieldset>
+          </li>
+          <li>
+            <fieldset class="ai-q" id="q-faq-text" data-question data-number="5"
+                      data-priority="critical" data-topic="FAQ as text" data-fix="fix-faq-text">
+              <legend><span class="ai-q-num" aria-hidden="true">5</span><span><span class="visually-hidden">Question 5: </span>Is your FAQ written as text on a page, not only in images, PDFs or a chat widget?</span></legend>
+              <div class="ai-options">
+                <label class="ai-opt"><input type="radio" name="q-faq-text" value="yes"><span>Yes</span></label>
+                <label class="ai-opt"><input type="radio" name="q-faq-text" value="no"><span>No</span></label>
+              </div>
+              <p class="ai-missing" id="q-faq-text-missing" data-missing-note hidden>Not answered yet</p>
+            </fieldset>
+          </li>
+          <li>
+            <fieldset class="ai-q" id="q-consistency" data-question data-number="6"
+                      data-priority="critical" data-topic="Same facts everywhere" data-fix="fix-consistency">
+              <legend><span class="ai-q-num" aria-hidden="true">6</span><span><span class="visually-hidden">Question 6: </span>Do delivery times, return window and prices say the same thing everywhere (product pages, FAQ, policies, marketplace listings)?</span></legend>
+              <div class="ai-options">
+                <label class="ai-opt"><input type="radio" name="q-consistency" value="yes"><span>Yes</span></label>
+                <label class="ai-opt"><input type="radio" name="q-consistency" value="no"><span>No</span></label>
+              </div>
+              <p class="ai-missing" id="q-consistency-missing" data-missing-note hidden>Not answered yet</p>
+            </fieldset>
+          </li>
+          <li>
+            <fieldset class="ai-q" id="q-product-titles" data-question data-number="7"
+                      data-priority="critical" data-topic="Clear product titles" data-fix="fix-product-titles">
+              <legend><span class="ai-q-num" aria-hidden="true">7</span><span><span class="visually-hidden">Question 7: </span>Do your product titles say what the item is, with key details (e.g. “Linen Cushion Cover, 45 × 45 cm, Sage Green”), rather than only a collection name?</span></legend>
+              <div class="ai-options">
+                <label class="ai-opt"><input type="radio" name="q-product-titles" value="yes"><span>Yes</span></label>
+                <label class="ai-opt"><input type="radio" name="q-product-titles" value="no"><span>No</span></label>
+              </div>
+              <p class="ai-missing" id="q-product-titles-missing" data-missing-note hidden>Not answered yet</p>
+            </fieldset>
+          </li>
+          <li>
+            <fieldset class="ai-q" id="q-product-basics" data-question data-number="8"
+                      data-priority="critical" data-topic="Complete product basics" data-fix="fix-product-basics">
+              <legend><span class="ai-q-num" aria-hidden="true">8</span><span><span class="visually-hidden">Question 8: </span>Does every product have a price, stock status, at least one photo and a description of two sentences or more?</span></legend>
+              <div class="ai-options">
+                <label class="ai-opt"><input type="radio" name="q-product-basics" value="yes"><span>Yes</span></label>
+                <label class="ai-opt"><input type="radio" name="q-product-basics" value="no"><span>No</span></label>
+              </div>
+              <p class="ai-missing" id="q-product-basics-missing" data-missing-note hidden>Not answered yet</p>
+            </fieldset>
+          </li>
+          <li>
+            <fieldset class="ai-q" id="q-product-details" data-question data-number="9"
+                      data-priority="important" data-topic="Material, size and care" data-fix="fix-product-details">
+              <legend><span class="ai-q-num" aria-hidden="true">9</span><span><span class="visually-hidden">Question 9: </span>Are material, dimensions and care instructions filled in for your products?</span></legend>
+              <div class="ai-options">
+                <label class="ai-opt"><input type="radio" name="q-product-details" value="yes"><span>Yes</span></label>
+                <label class="ai-opt"><input type="radio" name="q-product-details" value="no"><span>No</span></label>
+              </div>
+              <p class="ai-missing" id="q-product-details-missing" data-missing-note hidden>Not answered yet</p>
+            </fieldset>
+          </li>
+          <li>
+            <fieldset class="ai-q" id="q-variants" data-question data-number="10"
+                      data-priority="important" data-topic="Sizes and colours" data-fix="fix-variants">
+              <legend><span class="ai-q-num" aria-hidden="true">10</span><span><span class="visually-hidden">Question 10: </span>Are sizes and colours set up as options of one product, with the same names everywhere (“Sage Green”, not “sage” or “Green-Sage”)?</span></legend>
+              <div class="ai-options">
+                <label class="ai-opt"><input type="radio" name="q-variants" value="yes"><span>Yes</span></label>
+                <label class="ai-opt"><input type="radio" name="q-variants" value="no"><span>No</span></label>
+              </div>
+              <p class="ai-missing" id="q-variants-missing" data-missing-note hidden>Not answered yet</p>
+            </fieldset>
+          </li>
+        </ol>
+
+        <div class="ai-foot js-only">
+          <p class="ai-progress" aria-live="polite" data-progress-text data-template="{answered} of {total} answered">
+            0 of 10 answered
+          </p>
+          <button class="btn btn-primary btn-lg" type="submit">See my result <span class="btn-arrow" aria-hidden="true">→</span></button>
+        </div>
+        <p class="ai-error" role="alert" data-error data-template="Please answer every question. Not answered yet: {list}." hidden></p>
+      </form>
+
+      <div class="ai-result" data-result hidden>
+        <h3 class="ai-result-title" tabindex="-1" data-result-title>
+          Your score: <span class="ai-score"><span data-score>0</span> out of 10</span>
+        </h3>
+        <div class="ai-band" data-band data-min="9" data-max="10" data-name="In good shape" hidden>
+          <p class="ai-band-name">In good shape</p>
+          <p>Your pages cover the basics an assistant needs. Check them again when your policies or products change.</p>
+        </div>
+        <div class="ai-band" data-band data-min="6" data-max="8" data-name="A few gaps" hidden>
+          <p class="ai-band-name">A few gaps</p>
+          <p>Most of the basics are there. Fixing the points below makes the answers about your store clearer and more consistent.</p>
+        </div>
+        <div class="ai-band" data-band data-min="0" data-max="5" data-name="Start with the basics" hidden>
+          <p class="ai-band-name">Start with the basics</p>
+          <p>An assistant may find little clear information about your store. The points below are a good place to start.</p>
+        </div>
+        <div class="ai-gaps" data-gaps>
+          <h4 class="ai-gaps-title">Fix these first</h4>
+          <ol class="ai-gap-list" data-gap-list></ol>
+        </div>
+        <p class="ai-no-gaps" data-no-gaps hidden>No gaps found. Check your pages again when your policies or products change.</p>
+        <p class="ai-disclaimer">A quick self-review, not an audit. A full score does not guarantee that any AI assistant will show or recommend your products.</p>
+        <div class="ai-actions">
+          <a class="btn btn-primary btn-lg" href="https://www.upwork.com/freelancers/~0117c47ba95ca02fa2" target="_blank" rel="noopener"
+             aria-label="Fix this for me on Upwork (opens in a new tab)"
+             data-goatcounter-click="ai-check-upwork" data-goatcounter-title="Fix this for me – Upwork (result)">
+            Fix this for me <span class="btn-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="btn btn-ghost btn-lg" href="mailto:asenabeshiktepeli@gmail.com" data-email-link
+             data-email="asenabeshiktepeli@gmail.com" data-subject="AI readiness check – {score}/{total}" data-body="Hi Asena,
+
+I took the AI readiness self-check on your site.
+Score: {score}/{total}
+Top gaps: {gaps}
+
+My store:
+"
+             data-goatcounter-click="email" data-goatcounter-title="Email">Email me</a>
+<button class="ai-text-btn" type="button" data-restart>Start over</button>        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ai-section" id="fixes" aria-labelledby="fixes-title">
+    <div class="container ai-narrow">
+      <h2 class="section-title" id="fixes-title">How to fix each point</h2>
+<p class="ai-section-intro">One short fix for each question, in the same order.</p>      <ol class="ai-fixes">
+        <li class="ai-fix" id="fix-shipping">
+          <h3 class="ai-fix-title"><span class="ai-q-num" aria-hidden="true">1</span>Shipping page</h3>
+          <p>Write one shipping page with three facts in plain sentences: where you ship, what it costs and how many business days delivery takes.</p>
+        </li>
+        <li class="ai-fix" id="fix-returns">
+          <h3 class="ai-fix-title"><span class="ai-q-num" aria-hidden="true">2</span>Returns page</h3>
+          <p>Put three facts near the top of your returns page: the return window in days, who pays for return shipping, and how and when refunds are paid.</p>
+        </li>
+        <li class="ai-fix" id="fix-late-orders">
+          <h3 class="ai-fix-title"><span class="ai-q-num" aria-hidden="true">3</span>Late orders</h3>
+          <p>Add a short section on late orders: when an order counts as late, what you do about it and how customers can reach you.</p>
+        </li>
+        <li class="ai-fix" id="fix-damaged-items">
+          <h3 class="ai-fix-title"><span class="ai-q-num" aria-hidden="true">4</span>Damaged items</h3>
+          <p>Explain the steps for a damaged item: how many days customers have to report it, that a photo helps, and whether they get a replacement or a refund.</p>
+        </li>
+        <li class="ai-fix" id="fix-faq-text">
+          <h3 class="ai-fix-title"><span class="ai-q-num" aria-hidden="true">5</span>FAQ as text</h3>
+          <p>Put your FAQ on a normal page as text, with one question per heading. Images and PDFs can stay as extras, but not as the only place the answers live.</p>
+        </li>
+        <li class="ai-fix" id="fix-consistency">
+          <h3 class="ai-fix-title"><span class="ai-q-num" aria-hidden="true">6</span>Same facts everywhere</h3>
+          <p>Pick one delivery time, one return window and one price for each item, and use them on every page. An assistant may repeat whichever version it finds.</p>
+        </li>
+        <li class="ai-fix" id="fix-product-titles">
+          <h3 class="ai-fix-title"><span class="ai-q-num" aria-hidden="true">7</span>Clear product titles</h3>
+          <p>Start each title with what the item is, then the key details, e.g. “Linen Cushion Cover, 45 × 45 cm, Sage Green” instead of “Nordic Dream”.</p>
+        </li>
+        <li class="ai-fix" id="fix-product-basics">
+          <h3 class="ai-fix-title"><span class="ai-q-num" aria-hidden="true">8</span>Complete product basics</h3>
+          <p>Give every product a price, a stock status, at least one photo and a description of two sentences or more. Start with your best sellers.</p>
+        </li>
+        <li class="ai-fix" id="fix-product-details">
+          <h3 class="ai-fix-title"><span class="ai-q-num" aria-hidden="true">9</span>Material, size and care</h3>
+          <p>Fill in material, dimensions and care instructions for each product, as separate fields or as clear lines in the description.</p>
+        </li>
+        <li class="ai-fix" id="fix-variants">
+          <h3 class="ai-fix-title"><span class="ai-q-num" aria-hidden="true">10</span>Sizes and colours</h3>
+          <p>Set sizes and colours up as options of one product, and use one spelling for each value, e.g. “Sage Green” everywhere.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="ai-section ai-soft" aria-labelledby="cta-title">
+    <div class="container ai-narrow">
+      <div class="ai-cta card">
+        <h2 class="ai-cta-title" id="cta-title">Want a hand with the gaps?</h2>
+<p>I can rewrite shipping, returns and FAQ pages in plain language and tidy up product data for small online shops.</p>        <div class="ai-actions">
+          <a class="btn btn-primary btn-lg" href="https://www.upwork.com/freelancers/~0117c47ba95ca02fa2" target="_blank" rel="noopener"
+             aria-label="Fix this for me on Upwork (opens in a new tab)"
+             data-goatcounter-click="ai-check-upwork" data-goatcounter-title="Fix this for me – Upwork (page end)">
+            Fix this for me <span class="btn-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="btn btn-ghost btn-lg" href="mailto:asenabeshiktepeli@gmail.com?subject=AI%20readiness%20check"
+             data-goatcounter-click="email" data-goatcounter-title="Email">Email me</a>
+        </div>
+      </div>
+
+      <div class="ai-sources">
+        <h2 class="ai-sources-title">Sources</h2>
+        <ul>
+          <li>Lauren Scherr, <a href="https://www.shopify.com/blog/agentic-commerce" target="_blank" rel="noopener">“Agentic Commerce: Benefits &amp; How To Get Started in 2026”<span class="visually-hidden"> (opens in a new tab)</span></a>, Shopify Blog, 25 Sep 2026</li>
+          <li>Further reading: <a href="https://chatpalbot.com/guides/agentic-commerce-for-small-stores" target="_blank" rel="noopener">Yevhen Kurapov, “Agentic commerce for small stores: what&#39;s live in 2026”, ChatPal, 13 Oct 2026<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+        </ul>
+<p>This is a sample project. The self-check is a quick review, not an audit or legal advice, and a full score does not guarantee that any AI assistant will show or recommend your products.</p><p>Sources last checked: 12 Nov 2026</p>      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="not-found-footer ai-footer">
+  <div class="container ai-footer-inner">
+    <div>
+<p>© 2026 <span translate="no">Asena Beshiktepeli</span></p><p>This site counts visits with GoatCounter, without cookies or personal data.</p>    </div>
+<a href="../"><span aria-hidden="true">←</span> Back to homepage</a>  </div>
+</footer>
+  <script src="../static/js/main.js" defer></script>
+  <script src="../static/js/ai-check.js" defer></script>
+  <script data-goatcounter="https://asenabeshiktepeli.goatcounter.com/count"
+          async src="//gc.zgo.at/count.v4.js"
+          crossorigin="anonymous"
+          integrity="sha384-nRw6qfbWyJha9LhsOtSb2YJDyZdKvvCFh0fJYlkquSFjUxp9FVNugbfy8q1jdxI+"></script>
+</body>
+</html>
