@@ -1,5 +1,6 @@
-"""Build the site: content.yaml + templates/ -> docs/index.html and docs/404.html,
-static/ -> docs/static/, plus docs/robots.txt and docs/sitemap.xml.
+"""Build the site: content.yaml + templates/ -> docs/index.html, docs/404.html and the
+pages in PAGES (docs/<path>index.html), static/ -> docs/static/, plus docs/robots.txt
+and docs/sitemap.xml.
 
 Run: .\\.venv\\Scripts\\python.exe build.py
 """
@@ -21,6 +22,13 @@ STATIC = ROOT / "static"
 ROOT_FILES = ROOT / "root"  # copied as-is to the top of docs/ (e.g. search console verification)
 N8N_FILES = ROOT / "automation" / "n8n"  # sample workflows, published to docs/static/n8n/ (source stays here)
 OUT = ROOT / "docs"
+
+# Extra pages, each in its own folder so the URL has no ".html" (docs/<path>index.html).
+#   template: file in templates/ (extends base.html)
+#   path:     folder with a trailing slash, e.g. "ai-ready/"
+#   content:  content.yaml section with the page's meta_title and meta_description
+# Templates get root ("../") to prefix relative links, and page_path for canonical/og:url.
+PAGES = []
 
 # Proper names inside sentences that browser translation should leave alone.
 # The person's name and company names are added from content.yaml.
@@ -140,19 +148,24 @@ def last_content_change():
     return date.fromtimestamp(newest).isoformat()
 
 
-def write_seo_files(meta):
-    """robots.txt (allow all) and a one-page sitemap.xml dated by the last content change."""
+def write_seo_files(meta, paths=("",)):
+    """robots.txt (allow all) and sitemap.xml (home + extra pages) dated by the last content change."""
     url = (meta.get("url") or "").rstrip("/")
     robots = "User-agent: *\nAllow: /\n"
     if url:
         robots += f"\nSitemap: {url}/sitemap.xml\n"
+        lastmod = last_content_change()
+        entries = "".join(
+            "  <url>\n"
+            f"    <loc>{escape(url)}/{escape(path)}</loc>\n"
+            f"    <lastmod>{lastmod}</lastmod>\n"
+            "  </url>\n"
+            for path in paths
+        )
         sitemap = (
             '<?xml version="1.0" encoding="UTF-8"?>\n'
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-            "  <url>\n"
-            f"    <loc>{escape(url)}/</loc>\n"
-            f"    <lastmod>{last_content_change()}</lastmod>\n"
-            "  </url>\n"
+            f"{entries}"
             "</urlset>\n"
         )
         (OUT / "sitemap.xml").write_text(sitemap, encoding="utf-8")
@@ -192,7 +205,22 @@ def main():
     (OUT / "index.html").write_text(home, encoding="utf-8")
     not_found = env.get_template("404.html").render(**content, page="404")
     (OUT / "404.html").write_text(not_found, encoding="utf-8")
-    write_seo_files(content.get("meta") or {})
+
+    for spec in PAGES:
+        path = spec["path"]
+        section = content.get(spec["content"]) or {}
+        html = env.get_template(spec["template"]).render(
+            **content,
+            page=spec["content"],
+            page_path=path,
+            root="../" * path.count("/"),
+            page_title=section.get("meta_title") or "",
+            page_description=section.get("meta_description") or "",
+        )
+        (OUT / path).mkdir(parents=True, exist_ok=True)
+        (OUT / path / "index.html").write_text(html, encoding="utf-8")
+
+    write_seo_files(content.get("meta") or {}, ["", *(spec["path"] for spec in PAGES)])
 
     out_static = OUT / "static"
     if out_static.exists():
