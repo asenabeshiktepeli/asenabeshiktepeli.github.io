@@ -116,6 +116,20 @@ def person_jsonld(content):
     return Markup(data.replace("</", "<\\/"))
 
 
+def website_jsonld(content):
+    """schema.org WebSite (site name for search results), built only from content.yaml.
+
+    Empty when meta.url or a name (meta.site_name, else hero.name) is missing.
+    """
+    meta = content.get("meta") or {}
+    name = meta.get("site_name") or (content.get("hero") or {}).get("name")
+    if not meta.get("url") or not name:
+        return ""
+    site = {"@context": "https://schema.org", "@type": "WebSite", "name": name, "url": meta["url"].rstrip("/") + "/"}
+    data = json.dumps(site, ensure_ascii=False, indent=2)
+    return Markup(data.replace("</", "<\\/"))
+
+
 def last_content_change():
     """Newest modification date of content.yaml, templates/ and static/.
 
@@ -172,7 +186,9 @@ def main():
     env.tests["static_file"] = lambda path: bool(path) and (ROOT / path).is_file()
 
     OUT.mkdir(exist_ok=True)
-    home = env.get_template("index.html").render(**content, page="home", person_jsonld=person_jsonld(content))
+    home = env.get_template("index.html").render(
+        **content, page="home", person_jsonld=person_jsonld(content), website_jsonld=website_jsonld(content)
+    )
     (OUT / "index.html").write_text(home, encoding="utf-8")
     not_found = env.get_template("404.html").render(**content, page="404")
     (OUT / "404.html").write_text(not_found, encoding="utf-8")

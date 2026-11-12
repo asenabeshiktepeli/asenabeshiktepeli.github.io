@@ -44,6 +44,9 @@
   {% if page == "home" and person_jsonld %}
   <script type="application/ld+json">{{ person_jsonld }}</script>
   {% endif %}
+  {% if page == "home" and website_jsonld %}
+  <script type="application/ld+json">{{ website_jsonld }}</script>
+  {% endif %}
 </head>
 <body>
   {% block body %}{% endblock %}
