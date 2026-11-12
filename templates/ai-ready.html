@@ -6,6 +6,10 @@
    static/js/ai-check.js adds the score, the top 3 gaps and the result buttons. Nothing is stored. #}
 {% set ai = ai_ready %}
 {% set questions = ai["questions"] or [] %}
+{# Template id -> title, so questions can link to "#template-<id>" only when that template exists #}
+{% set template_titles = {} %}
+{% for t in ai.templates or [] %}{% if t.id %}{% set _ = template_titles.update({t.id: t.title}) %}{% endif %}{% endfor %}
+{% set template_ids = template_titles.keys() | list %}
 
 {% block head_end %}
   <link rel="stylesheet" href="{{ root }}static/css/ai-ready.css">
@@ -43,6 +47,14 @@
       {% endif %}
       {% if ai.questions_basis %}<p class="ai-note">{{ ai.questions_basis }}</p>{% endif %}
       {% if ai.note %}<p class="ai-note">{{ ai.note }}</p>{% endif %}
+      {% if ai.also_label and (ai.example or ai.templates) %}
+      <p class="ai-note">
+        {{ ai.also_label }}
+        {% if ai.example %}<a href="#example">{{ ai.example.title }}</a>{% endif %}
+        {% if ai.example and ai.templates %}·{% endif %}
+        {% if ai.templates %}<a href="#templates">{{ ai.templates_title }}</a>{% endif %}
+      </p>
+      {% endif %}
       {% if questions %}
       <p><a class="btn btn-primary btn-lg" href="#check">{{ ai.check_title }} <span class="btn-arrow" aria-hidden="true">↓</span></a></p>
       {% endif %}
@@ -67,7 +79,8 @@
           {% for q in questions %}
           <li>
             <fieldset class="ai-q" id="q-{{ q.id }}" data-question data-number="{{ loop.index }}"
-                      data-priority="{{ q.priority or 'important' }}" data-topic="{{ q.topic }}" data-fix="fix-{{ q.id }}">
+                      data-priority="{{ q.priority or 'important' }}" data-topic="{{ q.topic }}" data-fix="fix-{{ q.id }}"
+                      {%- if q.template and q.template in template_ids %} data-template="template-{{ q.template }}"{% endif %}>
               <legend><span class="ai-q-num" aria-hidden="true">{{ loop.index }}</span><span><span class="visually-hidden">Question {{ loop.index }}: </span>{{ q.text }}</span></legend>
               <div class="ai-options">
                 <label class="ai-opt"><input type="radio" name="q-{{ q.id }}" value="yes"><span>{{ ai.yes_label }}</span></label>
@@ -102,7 +115,7 @@
         {% endfor %}
         <div class="ai-gaps" data-gaps>
           <h4 class="ai-gaps-title">{{ r.gaps_title }}</h4>
-          <ol class="ai-gap-list" data-gap-list></ol>
+          <ol class="ai-gap-list" data-gap-list data-template-label="{{ r.template_label }}"></ol>
         </div>
         <p class="ai-no-gaps" data-no-gaps hidden>{{ r.no_gaps }}</p>
         <p class="ai-disclaimer">{{ r.disclaimer }}</p>
@@ -135,9 +148,71 @@
         <li class="ai-fix" id="fix-{{ q.id }}">
           <h3 class="ai-fix-title"><span class="ai-q-num" aria-hidden="true">{{ loop.index }}</span>{{ q.topic }}</h3>
           <p>{{ q.fix }}</p>
+          {% if q.template and q.template in template_ids %}
+          <p class="ai-fix-link">{{ ai.fix_template_label }} <a href="#template-{{ q.template }}">{{ template_titles[q.template] }} <span aria-hidden="true">↓</span></a></p>
+          {% endif %}
         </li>
         {% endfor %}
       </ol>
+    </div>
+  </section>
+  {% endif %}
+
+  {# ---------- Before/after on a fictional store ---------- #}
+  {% set ex = ai.example %}
+  {% if ex and ex.before and ex.after %}
+  <section class="ai-section ai-soft" id="example" aria-labelledby="example-title">
+    <div class="container ai-wide">
+      <h2 class="section-title" id="example-title">{{ ex.title }}</h2>
+      {% if ex.intro %}<p class="ai-section-intro">{{ ex.intro }}{% if ex.store_note %}<br><span class="ai-store-note">{{ ex.store_note }}</span>{% endif %}</p>{% endif %}
+      <div class="ai-compare">
+        <article class="ai-page-sample ai-before" aria-labelledby="before-label">
+          <p class="ai-sample-label" id="before-label"><span class="ai-sample-mark" aria-hidden="true">✕</span>{{ ex.before_label }}</p>
+          <div class="ai-md">{{ ex.before | mini_markdown }}</div>
+        </article>
+        <article class="ai-page-sample ai-after" aria-labelledby="after-label">
+          <p class="ai-sample-label" id="after-label"><span class="ai-sample-mark" aria-hidden="true">✓</span>{{ ex.after_label }}</p>
+          <div class="ai-md">{{ ex.after | mini_markdown }}</div>
+        </article>
+      </div>
+      {% if ex.changes %}
+      <div class="ai-changes">
+        <h3 class="ai-changes-title">{{ ex.changes_title }}</h3>
+        <ul>
+          {% for change in ex.changes %}<li>{{ change }}</li>{% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+  {% endif %}
+
+  {# ---------- Policy and FAQ templates (closed <details>; links to #template-<id> open them) ---------- #}
+  {% if ai.templates %}
+  <section class="ai-section" id="templates" aria-labelledby="templates-title">
+    <div class="container ai-narrow">
+      <h2 class="section-title" id="templates-title">{{ ai.templates_title }}</h2>
+      {% if ai.templates_intro %}<div class="ai-section-intro">{{ ai.templates_intro | mini_markdown }}</div>{% endif %}
+      {% if ai.legal_note %}
+      <p class="ai-callout ai-legal"><strong>{{ ai.legal_note_title }}</strong> {{ ai.legal_note }}</p>
+      {% endif %}
+      <div class="ai-templates">
+        {% for t in ai.templates %}
+        <details class="ai-tpl" id="template-{{ t.id }}">
+          <summary class="ai-tpl-summary">
+            <span class="ai-tpl-head">
+              <span class="ai-tpl-title">{{ t.title }}</span>
+              {% if t.summary %}<span class="ai-tpl-desc">{{ t.summary }}</span>{% endif %}
+            </span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="ai-tpl-body ai-md">
+            {{ t.text | mini_markdown }}
+            {% if t.check %}<p class="ai-tpl-check"><strong>{{ ai.check_label }}</strong> {{ t.check }}</p>{% endif %}
+          </div>
+        </details>
+        {% endfor %}
+      </div>
     </div>
   </section>
   {% endif %}

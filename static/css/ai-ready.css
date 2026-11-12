@@ -424,6 +424,242 @@
   padding: 6px 0;
 }
 
+.ai-fix .ai-fix-link {
+  margin-top: 8px;
+  color: var(--text);
+  font-size: 0.9375rem;
+}
+
+.ai-fix-link a {
+  display: inline-block;
+  padding: 4px 0;
+  font-weight: 500;
+}
+
+.ai-gap-template {
+  font-weight: 400;
+}
+
+/* ---------- Shared: text rendered from content.yaml (mini_markdown) ---------- */
+
+.ai-md h3 {
+  margin: 18px 0 6px;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.ai-md h3:first-child {
+  margin-top: 0;
+}
+
+.ai-md p + p {
+  margin-top: 6px;
+}
+
+.ai-md ul,
+.ai-md ol {
+  display: grid;
+  gap: 4px;
+  margin: 6px 0 0;
+  padding-left: 1.3em;
+}
+
+.ai-md ul {
+  list-style: disc;
+}
+
+.ai-md ol {
+  list-style: decimal;
+}
+
+/* [Placeholder]: dashed underline + tint, so it reads as "fill this in" without relying on colour */
+.ai-ph {
+  padding: 0 3px;
+  border-bottom: 1px dashed var(--teal-ink);
+  border-radius: 3px;
+  background: var(--teal-soft);
+  color: var(--teal-ink);
+  font-weight: 500;
+}
+
+/* ---------- Before / after ---------- */
+
+.ai-wide {
+  max-width: calc(66rem + 2 * var(--gutter));
+}
+
+.ai-store-note {
+  font-size: 0.875rem;
+  font-style: italic;
+}
+
+.ai-compare {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.ai-page-sample {
+  padding: 20px 22px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  font-size: 0.9688rem;
+}
+
+.ai-before {
+  border-style: dashed;
+  border-color: var(--border-strong);
+  color: var(--muted);
+}
+
+.ai-after {
+  border-color: var(--accent-line);
+  box-shadow: inset 0 3px 0 var(--accent), var(--shadow-sm);
+}
+
+.ai-sample-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ai-sample-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--bg-soft);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+}
+
+.ai-after .ai-sample-mark {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.ai-changes {
+  margin-top: 22px;
+  padding: 18px 22px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.ai-changes-title {
+  margin-bottom: 8px;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.ai-changes ul {
+  display: grid;
+  gap: 6px;
+  padding-left: 1.3em;
+  list-style: disc;
+  color: var(--muted);
+}
+
+/* ---------- Templates ---------- */
+
+.ai-legal {
+  margin-bottom: 22px;
+}
+
+.ai-templates {
+  display: grid;
+  gap: 12px;
+}
+
+.ai-tpl {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  scroll-margin-top: calc(var(--header-h) + 24px);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ai-tpl:target {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-line);
+}
+
+.ai-tpl-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 44px;
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  list-style: none;
+  cursor: pointer;
+}
+
+.ai-tpl-summary::-webkit-details-marker {
+  display: none;
+}
+
+.ai-tpl-summary:hover .ai-tpl-title {
+  color: var(--accent);
+}
+
+.ai-tpl-head {
+  display: grid;
+  gap: 2px;
+}
+
+.ai-tpl-title {
+  font-weight: 600;
+}
+
+.ai-tpl-desc {
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.ai-tpl[open] .faq-icon {
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+}
+
+.ai-tpl[open] .faq-icon::after {
+  transform: rotate(0deg);
+}
+
+.ai-tpl-body {
+  margin: 0 20px;
+  padding: 16px 0 20px;
+  border-top: 1px solid var(--border);
+}
+
+.ai-md .ai-tpl-check {
+  margin-top: 16px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-soft);
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+@media (max-width: 760px) {
+  .ai-compare {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 /* ---------- Phones ---------- */
 
 @media (max-width: 560px) {

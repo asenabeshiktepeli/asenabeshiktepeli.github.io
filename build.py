@@ -62,6 +62,41 @@ def make_no_translate(terms):
     return no_translate
 
 
+def mini_markdown(text):
+    """Filter: a small Markdown subset for templates written in content.yaml.
+
+    "## Heading" -> <h3>, "- item" -> <ul>, "1. item" -> <ol>, any other line -> <p>.
+    [Placeholders in brackets] are wrapped in <span class="ai-ph"> so they stand out.
+    The same text can later be published as .md files unchanged.
+    """
+    def inline(line):
+        escaped = str(escape(line))
+        return re.sub(r"\[([^\]]+)\]", r'<span class="ai-ph">[\1]</span>', escaped)
+
+    html, open_list = [], None
+    for raw in (text or "").strip().splitlines():
+        line = raw.strip()
+        bullet = re.match(r"(- |\d+\. )(.*)", line)
+        list_tag = ("ul" if bullet.group(1) == "- " else "ol") if bullet else None
+        if open_list and list_tag != open_list:
+            html.append(f"</{open_list}>")
+            open_list = None
+        if not line:
+            continue
+        if line.startswith("## "):
+            html.append(f"<h3>{inline(line[3:])}</h3>")
+        elif bullet and list_tag:
+            if not open_list:
+                html.append(f"<{list_tag}>")
+                open_list = list_tag
+            html.append(f"<li>{inline(bullet.group(2))}</li>")
+        else:
+            html.append(f"<p>{inline(line)}</p>")
+    if open_list:
+        html.append(f"</{open_list}>")
+    return Markup("\n".join(html))
+
+
 def make_linker(contact):
     """Filter: turn phrases in already-escaped text into links (used by FAQ answers).
 
@@ -197,6 +232,7 @@ def main():
     names += [job.get("company") for job in (content.get("experience") or {}).get("items") or []]
     env.filters["no_translate"] = make_no_translate(names + NO_TRANSLATE_TERMS)
     env.filters["link_phrases"] = make_linker(content.get("contact") or {})
+    env.filters["mini_markdown"] = mini_markdown
     # {% if path is static_file %}: true when the file exists, e.g. to list only real thumbnail sizes in srcset
     env.tests["static_file"] = lambda path: bool(path) and (ROOT / path).is_file()
 

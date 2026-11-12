@@ -4,6 +4,20 @@
 (function () {
   "use strict";
 
+  // Links to a closed <details> (the policy templates) open it, also when the page loads with
+  // that #hash. Without JS the link still scrolls to the template's summary.
+  function openDetails(hash) {
+    var target = hash && hash.length > 1 ? document.getElementById(decodeURIComponent(hash.slice(1))) : null;
+    var details = target && target.closest("details");
+    if (details) details.open = true;
+  }
+  document.addEventListener("click", function (event) {
+    var link = event.target.closest && event.target.closest('a[href^="#"]');
+    if (link) openDetails(link.getAttribute("href"));
+  });
+  window.addEventListener("hashchange", function () { openDetails(location.hash); });
+  openDetails(location.hash);
+
   var form = document.querySelector("[data-ai-check]");
   var result = document.querySelector("[data-result]");
   if (!form || !result) return;
@@ -98,6 +112,21 @@
       link.href = "#" + gap.question.dataset.fix;
       link.textContent = gap.question.dataset.topic;
       item.appendChild(link);
+      // Second link to the matching policy template, e.g. "Returns page · template"
+      var templateId = gap.question.dataset.template;
+      var templateLabel = gapList.dataset.templateLabel;
+      if (templateId && templateLabel) {
+        var templateLink = document.createElement("a");
+        var hidden = document.createElement("span");
+        templateLink.href = "#" + templateId;
+        templateLink.className = "ai-gap-template";
+        templateLink.textContent = templateLabel;
+        hidden.className = "visually-hidden";
+        hidden.textContent = " for " + gap.question.dataset.topic;
+        templateLink.appendChild(hidden);
+        item.appendChild(document.createTextNode(" · "));
+        item.appendChild(templateLink);
+      }
       gapList.appendChild(item);
     });
     gapsBlock.hidden = top.length === 0;

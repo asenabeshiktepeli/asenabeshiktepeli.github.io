@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AI Shopping Assistant Self-Check for Online Shops – Asena Beshiktepeli</title>
   <script>document.documentElement.classList.add("js");</script>
-  <meta name="description" content="A 10-question self-check for small online shops: can AI shopping assistants find clear shipping, returns and product information? Sample project; nothing is saved.">
+  <meta name="description" content="A 10-question self-check for small online shops: can AI shopping assistants find clear shipping, returns and product information? With plain-language policy and FAQ templates. Sample project; nothing is saved.">
   <link rel="canonical" href="https://asenabeshiktepeli.github.io/ai-ready/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Asena Beshiktepeli">
   <meta property="og:title" content="AI Shopping Assistant Self-Check for Online Shops – Asena Beshiktepeli">
-  <meta property="og:description" content="A 10-question self-check for small online shops: can AI shopping assistants find clear shipping, returns and product information? Sample project; nothing is saved.">
+  <meta property="og:description" content="A 10-question self-check for small online shops: can AI shopping assistants find clear shipping, returns and product information? With plain-language policy and FAQ templates. Sample project; nothing is saved.">
   <meta property="og:url" content="https://asenabeshiktepeli.github.io/ai-ready/">
   <meta property="og:image" content="https://asenabeshiktepeli.github.io/static/og/og-image-v2.png">
   <meta property="og:image:width" content="1200">
@@ -18,7 +18,7 @@
   <meta property="og:image:alt" content="Asena Beshiktepeli – E-commerce Virtual Assistant &amp; Customer Support">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="AI Shopping Assistant Self-Check for Online Shops – Asena Beshiktepeli">
-  <meta name="twitter:description" content="A 10-question self-check for small online shops: can AI shopping assistants find clear shipping, returns and product information? Sample project; nothing is saved.">
+  <meta name="twitter:description" content="A 10-question self-check for small online shops: can AI shopping assistants find clear shipping, returns and product information? With plain-language policy and FAQ templates. Sample project; nothing is saved.">
   <meta name="twitter:image" content="https://asenabeshiktepeli.github.io/static/og/og-image-v2.png">
   <link rel="icon" href="../static/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="../static/favicon.png" type="image/png" sizes="32x32">
@@ -53,7 +53,10 @@
           Lauren Scherr, <a href="https://www.shopify.com/blog/agentic-commerce" target="_blank" rel="noopener">“Agentic Commerce: Benefits &amp; How To Get Started in 2026”<span class="visually-hidden"> (opens in a new tab)</span></a>, Shopify Blog, 25 Sep 2026
         </figcaption>
       </figure>
-<p class="ai-note">The 10 questions are my own checklist, based on the sources at the end of this page.</p><p class="ai-note">10 yes/no questions · about 2 minutes · Nothing is saved: your answers stay in this browser tab.</p>      <p><a class="btn btn-primary btn-lg" href="#check">The self-check <span class="btn-arrow" aria-hidden="true">↓</span></a></p>
+<p class="ai-note">The 10 questions are my own checklist, based on the sources at the end of this page.</p><p class="ai-note">10 yes/no questions · about 2 minutes · Nothing is saved: your answers stay in this browser tab.</p>      <p class="ai-note">
+        Also on this page:
+<a href="#example">Example: Sample Home &amp; Decor Store</a>·<a href="#templates">Policy and FAQ templates</a>      </p>
+      <p><a class="btn btn-primary btn-lg" href="#check">The self-check <span class="btn-arrow" aria-hidden="true">↓</span></a></p>
     </div>
   </section>
 
@@ -68,7 +71,7 @@
         <ol class="ai-questions">
           <li>
             <fieldset class="ai-q" id="q-shipping" data-question data-number="1"
-                      data-priority="critical" data-topic="Shipping page" data-fix="fix-shipping">
+                      data-priority="critical" data-topic="Shipping page" data-fix="fix-shipping" data-template="template-shipping">
               <legend><span class="ai-q-num" aria-hidden="true">1</span><span><span class="visually-hidden">Question 1: </span>Do you have one shipping page that says, in plain sentences, where you ship, what it costs and how long delivery takes?</span></legend>
               <div class="ai-options">
                 <label class="ai-opt"><input type="radio" name="q-shipping" value="yes"><span>Yes</span></label>
@@ -79,7 +82,7 @@
           </li>
           <li>
             <fieldset class="ai-q" id="q-returns" data-question data-number="2"
-                      data-priority="critical" data-topic="Returns page" data-fix="fix-returns">
+                      data-priority="critical" data-topic="Returns page" data-fix="fix-returns" data-template="template-returns">
               <legend><span class="ai-q-num" aria-hidden="true">2</span><span><span class="visually-hidden">Question 2: </span>Does your returns page give the return window in days, who pays for return shipping and how refunds are paid?</span></legend>
               <div class="ai-options">
                 <label class="ai-opt"><input type="radio" name="q-returns" value="yes"><span>Yes</span></label>
@@ -90,7 +93,7 @@
           </li>
           <li>
             <fieldset class="ai-q" id="q-late-orders" data-question data-number="3"
-                      data-priority="important" data-topic="Late orders" data-fix="fix-late-orders">
+                      data-priority="important" data-topic="Late orders" data-fix="fix-late-orders" data-template="template-late-orders">
               <legend><span class="ai-q-num" aria-hidden="true">3</span><span><span class="visually-hidden">Question 3: </span>Do you explain what happens when an order is late, and when customers should contact you?</span></legend>
               <div class="ai-options">
                 <label class="ai-opt"><input type="radio" name="q-late-orders" value="yes"><span>Yes</span></label>
@@ -101,7 +104,7 @@
           </li>
           <li>
             <fieldset class="ai-q" id="q-damaged-items" data-question data-number="4"
-                      data-priority="important" data-topic="Damaged items" data-fix="fix-damaged-items">
+                      data-priority="important" data-topic="Damaged items" data-fix="fix-damaged-items" data-template="template-damaged-items">
               <legend><span class="ai-q-num" aria-hidden="true">4</span><span><span class="visually-hidden">Question 4: </span>Do you explain what to do if an item arrives damaged (photos, time limit, replacement or refund)?</span></legend>
               <div class="ai-options">
                 <label class="ai-opt"><input type="radio" name="q-damaged-items" value="yes"><span>Yes</span></label>
@@ -112,7 +115,7 @@
           </li>
           <li>
             <fieldset class="ai-q" id="q-faq-text" data-question data-number="5"
-                      data-priority="critical" data-topic="FAQ as text" data-fix="fix-faq-text">
+                      data-priority="critical" data-topic="FAQ as text" data-fix="fix-faq-text" data-template="template-faq">
               <legend><span class="ai-q-num" aria-hidden="true">5</span><span><span class="visually-hidden">Question 5: </span>Is your FAQ written as text on a page, not only in images, PDFs or a chat widget?</span></legend>
               <div class="ai-options">
                 <label class="ai-opt"><input type="radio" name="q-faq-text" value="yes"><span>Yes</span></label>
@@ -205,7 +208,7 @@
         </div>
         <div class="ai-gaps" data-gaps>
           <h4 class="ai-gaps-title">Fix these first</h4>
-          <ol class="ai-gap-list" data-gap-list></ol>
+          <ol class="ai-gap-list" data-gap-list data-template-label="template"></ol>
         </div>
         <p class="ai-no-gaps" data-no-gaps hidden>No gaps found. Check your pages again when your policies or products change.</p>
         <p class="ai-disclaimer">A quick self-review, not an audit. A full score does not guarantee that any AI assistant will show or recommend your products.</p>
@@ -237,22 +240,27 @@ My store:
         <li class="ai-fix" id="fix-shipping">
           <h3 class="ai-fix-title"><span class="ai-q-num" aria-hidden="true">1</span>Shipping page</h3>
           <p>Write one shipping page with three facts in plain sentences: where you ship, what it costs and how many business days delivery takes.</p>
+          <p class="ai-fix-link">Template: <a href="#template-shipping">Shipping page <span aria-hidden="true">↓</span></a></p>
         </li>
         <li class="ai-fix" id="fix-returns">
           <h3 class="ai-fix-title"><span class="ai-q-num" aria-hidden="true">2</span>Returns page</h3>
           <p>Put three facts near the top of your returns page: the return window in days, who pays for return shipping, and how and when refunds are paid.</p>
+          <p class="ai-fix-link">Template: <a href="#template-returns">Returns page <span aria-hidden="true">↓</span></a></p>
         </li>
         <li class="ai-fix" id="fix-late-orders">
           <h3 class="ai-fix-title"><span class="ai-q-num" aria-hidden="true">3</span>Late orders</h3>
           <p>Add a short section on late orders: when an order counts as late, what you do about it and how customers can reach you.</p>
+          <p class="ai-fix-link">Template: <a href="#template-late-orders">Late orders <span aria-hidden="true">↓</span></a></p>
         </li>
         <li class="ai-fix" id="fix-damaged-items">
           <h3 class="ai-fix-title"><span class="ai-q-num" aria-hidden="true">4</span>Damaged items</h3>
           <p>Explain the steps for a damaged item: how many days customers have to report it, that a photo helps, and whether they get a replacement or a refund.</p>
+          <p class="ai-fix-link">Template: <a href="#template-damaged-items">Damaged items <span aria-hidden="true">↓</span></a></p>
         </li>
         <li class="ai-fix" id="fix-faq-text">
           <h3 class="ai-fix-title"><span class="ai-q-num" aria-hidden="true">5</span>FAQ as text</h3>
           <p>Put your FAQ on a normal page as text, with one question per heading. Images and PDFs can stay as extras, but not as the only place the answers live.</p>
+          <p class="ai-fix-link">Template: <a href="#template-faq">Short FAQ <span aria-hidden="true">↓</span></a></p>
         </li>
         <li class="ai-fix" id="fix-consistency">
           <h3 class="ai-fix-title"><span class="ai-q-num" aria-hidden="true">6</span>Same facts everywhere</h3>
@@ -275,6 +283,170 @@ My store:
           <p>Set sizes and colours up as options of one product, and use one spelling for each value, e.g. “Sage Green” everywhere.</p>
         </li>
       </ol>
+    </div>
+  </section>
+
+  <section class="ai-section ai-soft" id="example" aria-labelledby="example-title">
+    <div class="container ai-wide">
+      <h2 class="section-title" id="example-title">Example: Sample Home &amp; Decor Store</h2>
+<p class="ai-section-intro">A fictional store&#39;s shipping and returns text, before and after a plain-language rewrite.<br><span class="ai-store-note">Fictional store and policies, written for this sample project.</span></p>      <div class="ai-compare">
+        <article class="ai-page-sample ai-before" aria-labelledby="before-label">
+          <p class="ai-sample-label" id="before-label"><span class="ai-sample-mark" aria-hidden="true">✕</span>Before</p>
+          <div class="ai-md"><h3>Shipping &amp; Returns</h3>
+<p>We ship worldwide!* Orders usually go out quickly and most customers receive them within about a week. Shipping is calculated at checkout.</p>
+<p>Returns are accepted on eligible items in accordance with our Terms &amp; Conditions. Items must be unused and in their original packaging. Refunds are processed in due course.</p>
+<p>*Some exceptions may apply.</p>
+<h3>Elsewhere on the same store</h3>
+<ul>
+<li>Product pages: “Delivered in 3–5 days”</li>
+<li>FAQ, as an image: “Delivery 5–7 working days”</li>
+<li>Footer: “Free shipping over €50” (checkout uses €60)</li>
+</ul></div>
+        </article>
+        <article class="ai-page-sample ai-after" aria-labelledby="after-label">
+          <p class="ai-sample-label" id="after-label"><span class="ai-sample-mark" aria-hidden="true">✓</span>After</p>
+          <div class="ai-md"><h3>Shipping</h3>
+<ul>
+<li>We ship to the EU, the UK and Switzerland.</li>
+<li>We dispatch orders within 1 business day.</li>
+<li>Delivery takes 3–5 business days in the EU and 5–7 business days to the UK and Switzerland.</li>
+<li>Shipping costs €4.90 in the EU and €9.90 to the UK and Switzerland. Orders over €60 ship free in the EU.</li>
+<li>Import taxes or customs fees for UK and Swiss orders are paid by the customer on delivery.</li>
+</ul>
+<h3>Returns</h3>
+<ul>
+<li>You can return any item within 30 days of delivery.</li>
+<li>Return shipping is free in the EU. UK and Swiss customers pay for return shipping.</li>
+<li>We refund to your original payment method, including the original shipping cost, within 5 business days of receiving the item.</li>
+<li>You can unpack an item to check it. If it has been used beyond that, we may reduce the refund.</li>
+</ul></div>
+        </article>
+      </div>
+      <div class="ai-changes">
+        <h3 class="ai-changes-title">What changed</h3>
+        <ul>
+<li>One delivery time per region, the same on every page (before: “3–5 days”, “5–7 working days” and “about a week”).</li><li>Countries named instead of “worldwide*”.</li><li>Shipping costs and the free-shipping threshold as numbers, €60 everywhere.</li><li>Return window, who pays for return shipping and refund timing, each in one sentence.</li><li>The FAQ moved from an image to text (see the FAQ template below).</li>        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="ai-section" id="templates" aria-labelledby="templates-title">
+    <div class="container ai-narrow">
+      <h2 class="section-title" id="templates-title">Policy and FAQ templates</h2>
+<div class="ai-section-intro"><p>Replace everything in <span class="ai-ph">[brackets]</span> with your own facts, delete lines that don&#39;t apply, and use the same numbers on every page.</p></div>      <p class="ai-callout ai-legal"><strong>Not legal advice.</strong> Consumer rules differ by country, so check them for every country you sell to. For example, customers in the EU and the UK can generally cancel an online order within 14 days after delivery (with exceptions such as made-to-order items), so keep your return window at 14 days or more for them.</p>
+      <div class="ai-templates">
+        <details class="ai-tpl" id="template-shipping">
+          <summary class="ai-tpl-summary">
+            <span class="ai-tpl-head">
+              <span class="ai-tpl-title">Shipping page</span>
+<span class="ai-tpl-desc">Where you ship, delivery times, costs, tracking and customs.</span>            </span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="ai-tpl-body ai-md">
+            <h3>Where we ship</h3>
+<p>We ship to <span class="ai-ph">[countries or regions]</span>.</p>
+<h3>Delivery times</h3>
+<ul>
+<li>We dispatch orders within <span class="ai-ph">[1]</span> business day.</li>
+<li><span class="ai-ph">[Region 1]</span>: <span class="ai-ph">[3–5]</span> business days after dispatch.</li>
+<li><span class="ai-ph">[Region 2]</span>: <span class="ai-ph">[5–7]</span> business days after dispatch.</li>
+</ul>
+<h3>Shipping costs</h3>
+<ul>
+<li><span class="ai-ph">[Region 1]</span>: <span class="ai-ph">[€4.90]</span>. Orders over <span class="ai-ph">[€60]</span> ship free.</li>
+<li><span class="ai-ph">[Region 2]</span>: <span class="ai-ph">[€9.90]</span>.</li>
+</ul>
+<h3>Tracking</h3>
+<p>We email you a tracking link when your order is dispatched.</p>
+<h3>Customs and import taxes</h3>
+<p>For orders to <span class="ai-ph">[countries outside your customs area]</span>, <span class="ai-ph">[the customer / we]</span> pay import taxes and customs fees.</p>
+<p class="ai-tpl-check"><strong>Check:</strong> If you ship outside your own customs area, say who pays import taxes and customs fees.</p>          </div>
+        </details>
+        <details class="ai-tpl" id="template-returns">
+          <summary class="ai-tpl-summary">
+            <span class="ai-tpl-head">
+              <span class="ai-tpl-title">Returns page</span>
+<span class="ai-tpl-desc">Return window, how to return, who pays and when refunds are paid.</span>            </span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="ai-tpl-body ai-md">
+            <h3>Return window</h3>
+<p>You can return any item within <span class="ai-ph">[30 – at least 14 in the EU and UK]</span> days of delivery.</p>
+<h3>How to return an item</h3>
+<ol>
+<li>Email <span class="ai-ph">[your address]</span> with your order number.</li>
+<li>We reply within <span class="ai-ph">[1 business day]</span> with the return address <span class="ai-ph">[and a prepaid label]</span>.</li>
+<li>Send the item back within <span class="ai-ph">[14 – not fewer in the EU and UK]</span> days of your email.</li>
+</ol>
+<h3>Return shipping</h3>
+<p><span class="ai-ph">[We pay / You pay]</span> for return shipping. If an item is faulty or we sent the wrong item, we always pay.</p>
+<h3>Refunds</h3>
+<p>We refund to your original payment method, including the original shipping cost, within <span class="ai-ph">[5]</span> business days of receiving the item.</p>
+<h3>Used items</h3>
+<p>You can unpack an item to check it. If it has been used beyond that, we may reduce the refund.</p>
+<h3>Items we can&#39;t take back</h3>
+<p><span class="ai-ph">[Personalised or made-to-order items]</span>, <span class="ai-ph">[other exceptions]</span>.</p>
+<p class="ai-tpl-check"><strong>Check:</strong> In the EU and the UK, the return window can&#39;t be shorter than 14 days after delivery, and the standard delivery charge must be refunded when an order is cancelled within that time.</p>          </div>
+        </details>
+        <details class="ai-tpl" id="template-late-orders">
+          <summary class="ai-tpl-summary">
+            <span class="ai-tpl-head">
+              <span class="ai-tpl-title">Late orders</span>
+<span class="ai-tpl-desc">When an order counts as late and what customers should do.</span>            </span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="ai-tpl-body ai-md">
+            <h3>If your order is late</h3>
+<ul>
+<li>An order is late if it hasn&#39;t arrived <span class="ai-ph">[2]</span> business days after the delivery estimate in your confirmation email.</li>
+<li>Check your tracking link first.</li>
+<li>If the tracking hasn&#39;t changed for <span class="ai-ph">[3]</span> business days, email <span class="ai-ph">[your address]</span> with your order number.</li>
+<li>We contact the carrier and reply within <span class="ai-ph">[1 business day]</span>.</li>
+<li>If the parcel is lost, we send a replacement or refund you in full, whichever you prefer.</li>
+</ul>
+<p class="ai-tpl-check"><strong>Check:</strong> Use the same delivery estimate as on your shipping page.</p>          </div>
+        </details>
+        <details class="ai-tpl" id="template-damaged-items">
+          <summary class="ai-tpl-summary">
+            <span class="ai-tpl-head">
+              <span class="ai-tpl-title">Damaged items</span>
+<span class="ai-tpl-desc">What to do if an item arrives damaged.</span>            </span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="ai-tpl-body ai-md">
+            <h3>If your item arrives damaged</h3>
+<ol>
+<li>Take a photo of the item and the packaging.</li>
+<li>Email <span class="ai-ph">[your address]</span> with your order number and the photo within <span class="ai-ph">[7]</span> days of delivery.</li>
+<li>We reply within <span class="ai-ph">[1 business day]</span> and send a replacement or refund you in full, whichever you prefer.</li>
+</ol>
+<p>You don&#39;t need to send the item back <span class="ai-ph">[unless we ask you to]</span>.</p>
+<p>This doesn&#39;t affect your legal rights for faulty items.</p>
+<p class="ai-tpl-check"><strong>Check:</strong> A reporting deadline is a request. It doesn&#39;t shorten customers&#39; legal rights for faulty goods (in the EU, at least 2 years).</p>          </div>
+        </details>
+        <details class="ai-tpl" id="template-faq">
+          <summary class="ai-tpl-summary">
+            <span class="ai-tpl-head">
+              <span class="ai-tpl-title">Short FAQ</span>
+<span class="ai-tpl-desc">Six common questions, answered in one or two sentences each.</span>            </span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="ai-tpl-body ai-md">
+            <h3>Where do you ship?</h3>
+<p>We ship to <span class="ai-ph">[countries or regions]</span>. Our shipping page has the details.</p>
+<h3>How long does delivery take?</h3>
+<p><span class="ai-ph">[3–5]</span> business days to <span class="ai-ph">[region 1]</span> and <span class="ai-ph">[5–7]</span> business days to <span class="ai-ph">[region 2]</span>, after we dispatch your order.</p>
+<h3>How much is shipping?</h3>
+<p><span class="ai-ph">[€4.90]</span> to <span class="ai-ph">[region 1]</span>. Orders over <span class="ai-ph">[€60]</span> ship free to <span class="ai-ph">[region 1]</span>.</p>
+<h3>Can I return an item?</h3>
+<p>Yes, within <span class="ai-ph">[30 – at least 14 in the EU and UK]</span> days of delivery. <span class="ai-ph">[We pay / You pay]</span> for return shipping. Our returns page explains how.</p>
+<h3>My order is late. What should I do?</h3>
+<p>Check your tracking link first. If it hasn&#39;t changed for <span class="ai-ph">[3]</span> business days, email <span class="ai-ph">[your address]</span> with your order number.</p>
+<h3>My item arrived damaged. What should I do?</h3>
+<p>Email <span class="ai-ph">[your address]</span> a photo of the item and the packaging within <span class="ai-ph">[7]</span> days of delivery. We&#39;ll send a replacement or a full refund, whichever you prefer.</p>
+<p class="ai-tpl-check"><strong>Check:</strong> Publish it as text on a normal page, and use exactly the same numbers as on your shipping and returns pages.</p>          </div>
+        </details>
+      </div>
     </div>
   </section>
 

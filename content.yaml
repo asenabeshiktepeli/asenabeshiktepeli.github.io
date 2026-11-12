@@ -368,11 +368,12 @@ faq:
 # Nothing is stored; GoatCounter gets only ai-check-start, ai-check-complete (score band) and ai-check-upwork.
 ai_ready:
   meta_title: "AI Shopping Assistant Self-Check for Online Shops – Asena Beshiktepeli"
-  meta_description: "A 10-question self-check for small online shops: can AI shopping assistants find clear shipping, returns and product information? Sample project; nothing is saved."
+  meta_description: "A 10-question self-check for small online shops: can AI shopping assistants find clear shipping, returns and product information? With plain-language policy and FAQ templates. Sample project; nothing is saved."
   label: "Sample project"
   title: "Is your shop ready for AI shopping assistants?"
   lead: "AI shopping assistants answer shoppers' questions from what they can read about a store: its policy pages, FAQ and product data. This self-check shows where a small shop's pages may leave gaps."
   note: "10 yes/no questions · about 2 minutes · Nothing is saved: your answers stay in this browser tab."
+  also_label: "Also on this page:"  # followed by links to the example and the templates
   source:  # quotes checked word for word against the article on 12 Nov 2026
     quotes:
       - "Beyond product data, AI agents pull from your FAQs, return policies, shipping information, and pricing data to answer shopper questions."
@@ -394,26 +395,31 @@ ai_ready:
   missing_error: "Please answer every question. Not answered yet: {list}."  # {list} = question numbers
   questions:
     - id: "shipping"
+      template: "shipping"  # links to #template-shipping
       topic: "Shipping page"
       priority: critical
       text: "Do you have one shipping page that says, in plain sentences, where you ship, what it costs and how long delivery takes?"
       fix: "Write one shipping page with three facts in plain sentences: where you ship, what it costs and how many business days delivery takes."
     - id: "returns"
+      template: "returns"  # links to #template-returns
       topic: "Returns page"
       priority: critical
       text: "Does your returns page give the return window in days, who pays for return shipping and how refunds are paid?"
       fix: "Put three facts near the top of your returns page: the return window in days, who pays for return shipping, and how and when refunds are paid."
     - id: "late-orders"
+      template: "late-orders"  # links to #template-late-orders
       topic: "Late orders"
       priority: important
       text: "Do you explain what happens when an order is late, and when customers should contact you?"
       fix: "Add a short section on late orders: when an order counts as late, what you do about it and how customers can reach you."
     - id: "damaged-items"
+      template: "damaged-items"  # links to #template-damaged-items
       topic: "Damaged items"
       priority: important
       text: "Do you explain what to do if an item arrives damaged (photos, time limit, replacement or refund)?"
       fix: "Explain the steps for a damaged item: how many days customers have to report it, that a photo helps, and whether they get a replacement or a refund."
     - id: "faq-text"
+      template: "faq"  # links to #template-faq
       topic: "FAQ as text"
       priority: critical
       text: "Is your FAQ written as text on a page, not only in images, PDFs or a chat widget?"
@@ -474,8 +480,131 @@ ai_ready:
 
       My store:
     restart: "Start over"
+    template_label: "template"  # second link next to a gap that has a template ("for <topic>" is added for screen readers)
   fixes_title: "How to fix each point"
   fixes_intro: "One short fix for each question, in the same order."
+  fix_template_label: "Template:"  # under a fix: "Template: Shipping page ↓"
+
+  # Before/after on a fictional store. Text uses the same small Markdown as the templates below.
+  example:
+    title: "Example: Sample Home & Decor Store"
+    intro: "A fictional store's shipping and returns text, before and after a plain-language rewrite."
+    store_note: "Fictional store and policies, written for this sample project."
+    before_label: "Before"
+    before: |
+      ## Shipping & Returns
+      We ship worldwide!* Orders usually go out quickly and most customers receive them within about a week. Shipping is calculated at checkout.
+      Returns are accepted on eligible items in accordance with our Terms & Conditions. Items must be unused and in their original packaging. Refunds are processed in due course.
+      *Some exceptions may apply.
+      ## Elsewhere on the same store
+      - Product pages: “Delivered in 3–5 days”
+      - FAQ, as an image: “Delivery 5–7 working days”
+      - Footer: “Free shipping over €50” (checkout uses €60)
+    after_label: "After"
+    after: |
+      ## Shipping
+      - We ship to the EU, the UK and Switzerland.
+      - We dispatch orders within 1 business day.
+      - Delivery takes 3–5 business days in the EU and 5–7 business days to the UK and Switzerland.
+      - Shipping costs €4.90 in the EU and €9.90 to the UK and Switzerland. Orders over €60 ship free in the EU.
+      - Import taxes or customs fees for UK and Swiss orders are paid by the customer on delivery.
+      ## Returns
+      - You can return any item within 30 days of delivery.
+      - Return shipping is free in the EU. UK and Swiss customers pay for return shipping.
+      - We refund to your original payment method, including the original shipping cost, within 5 business days of receiving the item.
+      - You can unpack an item to check it. If it has been used beyond that, we may reduce the refund.
+    changes_title: "What changed"
+    changes:
+      - "One delivery time per region, the same on every page (before: “3–5 days”, “5–7 working days” and “about a week”)."
+      - "Countries named instead of “worldwide*”."
+      - "Shipping costs and the free-shipping threshold as numbers, €60 everywhere."
+      - "Return window, who pays for return shipping and refund timing, each in one sentence."
+      - "The FAQ moved from an image to text (see the FAQ template below)."
+
+  # Policy and FAQ templates. "id" gives the anchor #template-<id>; questions link here with "template:".
+  # Text: "## Heading", "- item", "1. step", plain lines; [brackets] = replace with your own facts.
+  templates_title: "Policy and FAQ templates"
+  templates_intro: "Replace everything in [brackets] with your own facts, delete lines that don't apply, and use the same numbers on every page."
+  legal_note_title: "Not legal advice."
+  legal_note: "Consumer rules differ by country, so check them for every country you sell to. For example, customers in the EU and the UK can generally cancel an online order within 14 days after delivery (with exceptions such as made-to-order items), so keep your return window at 14 days or more for them."
+  check_label: "Check:"
+  templates:
+    - id: "shipping"
+      title: "Shipping page"
+      summary: "Where you ship, delivery times, costs, tracking and customs."
+      text: |
+        ## Where we ship
+        We ship to [countries or regions].
+        ## Delivery times
+        - We dispatch orders within [1] business day.
+        - [Region 1]: [3–5] business days after dispatch.
+        - [Region 2]: [5–7] business days after dispatch.
+        ## Shipping costs
+        - [Region 1]: [€4.90]. Orders over [€60] ship free.
+        - [Region 2]: [€9.90].
+        ## Tracking
+        We email you a tracking link when your order is dispatched.
+        ## Customs and import taxes
+        For orders to [countries outside your customs area], [the customer / we] pay import taxes and customs fees.
+      check: "If you ship outside your own customs area, say who pays import taxes and customs fees."
+    - id: "returns"
+      title: "Returns page"
+      summary: "Return window, how to return, who pays and when refunds are paid."
+      text: |
+        ## Return window
+        You can return any item within [30 – at least 14 in the EU and UK] days of delivery.
+        ## How to return an item
+        1. Email [your address] with your order number.
+        2. We reply within [1 business day] with the return address [and a prepaid label].
+        3. Send the item back within [14 – not fewer in the EU and UK] days of your email.
+        ## Return shipping
+        [We pay / You pay] for return shipping. If an item is faulty or we sent the wrong item, we always pay.
+        ## Refunds
+        We refund to your original payment method, including the original shipping cost, within [5] business days of receiving the item.
+        ## Used items
+        You can unpack an item to check it. If it has been used beyond that, we may reduce the refund.
+        ## Items we can't take back
+        [Personalised or made-to-order items], [other exceptions].
+      check: "In the EU and the UK, the return window can't be shorter than 14 days after delivery, and the standard delivery charge must be refunded when an order is cancelled within that time."
+    - id: "late-orders"
+      title: "Late orders"
+      summary: "When an order counts as late and what customers should do."
+      text: |
+        ## If your order is late
+        - An order is late if it hasn't arrived [2] business days after the delivery estimate in your confirmation email.
+        - Check your tracking link first.
+        - If the tracking hasn't changed for [3] business days, email [your address] with your order number.
+        - We contact the carrier and reply within [1 business day].
+        - If the parcel is lost, we send a replacement or refund you in full, whichever you prefer.
+      check: "Use the same delivery estimate as on your shipping page."
+    - id: "damaged-items"
+      title: "Damaged items"
+      summary: "What to do if an item arrives damaged."
+      text: |
+        ## If your item arrives damaged
+        1. Take a photo of the item and the packaging.
+        2. Email [your address] with your order number and the photo within [7] days of delivery.
+        3. We reply within [1 business day] and send a replacement or refund you in full, whichever you prefer.
+        You don't need to send the item back [unless we ask you to].
+        This doesn't affect your legal rights for faulty items.
+      check: "A reporting deadline is a request. It doesn't shorten customers' legal rights for faulty goods (in the EU, at least 2 years)."
+    - id: "faq"
+      title: "Short FAQ"
+      summary: "Six common questions, answered in one or two sentences each."
+      text: |
+        ## Where do you ship?
+        We ship to [countries or regions]. Our shipping page has the details.
+        ## How long does delivery take?
+        [3–5] business days to [region 1] and [5–7] business days to [region 2], after we dispatch your order.
+        ## How much is shipping?
+        [€4.90] to [region 1]. Orders over [€60] ship free to [region 1].
+        ## Can I return an item?
+        Yes, within [30 – at least 14 in the EU and UK] days of delivery. [We pay / You pay] for return shipping. Our returns page explains how.
+        ## My order is late. What should I do?
+        Check your tracking link first. If it hasn't changed for [3] business days, email [your address] with your order number.
+        ## My item arrived damaged. What should I do?
+        Email [your address] a photo of the item and the packaging within [7] days of delivery. We'll send a replacement or a full refund, whichever you prefer.
+      check: "Publish it as text on a normal page, and use exactly the same numbers as on your shipping and returns pages."
   cta_title: "Want a hand with the gaps?"
   cta_text: "I can rewrite shipping, returns and FAQ pages in plain language and tidy up product data for small online shops."
   sources_title: "Sources"
