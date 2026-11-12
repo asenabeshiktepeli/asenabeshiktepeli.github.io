@@ -11,7 +11,7 @@
 {% macro email_menu(label, id, btn_class="btn-primary", arrow=true, align="start") %}
   {% if contact.email %}
   <div class="email-menu" data-email-menu data-align="{{ align }}">
-    <a class="btn {{ btn_class }}" href="mailto:{{ contact.email }}" data-email-trigger
+    <a class="btn {{ btn_class }}" href="mailto:{{ contact.email }}" data-email-trigger data-goatcounter-click="email" data-goatcounter-title="Email"
        aria-expanded="false" aria-controls="{{ id }}">
       {{ label }}
       {% if arrow %}<span class="btn-arrow" aria-hidden="true">→</span>{% endif %}

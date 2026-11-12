@@ -38,6 +38,7 @@
 <footer class="not-found-footer">
   <div class="container">
     {% if footer.copyright %}<p>{{ footer.copyright | no_translate }}</p>{% endif %}
+    {% if footer.note %}<p>{{ footer.note }}</p>{% endif %}
   </div>
 </footer>
 

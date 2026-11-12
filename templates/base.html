@@ -48,5 +48,14 @@
 <body>
   {% block body %}{% endblock %}
   <script src="static/js/main.js" defer></script>
+  {# GoatCounter: cookie-free visit counter (~3.3 KB gzipped, async). It skips localhost and file://.
+     Pinned to count.v4.js with SRI; hash from goatcounter.com/help/countjs-versions.
+     Click events: any element with data-goatcounter-click="name" (+ data-goatcounter-title). #}
+  {% if meta.goatcounter %}
+  <script data-goatcounter="{{ meta.goatcounter.rstrip('/') }}/count"
+          async src="//gc.zgo.at/count.v4.js"
+          crossorigin="anonymous"
+          integrity="sha384-nRw6qfbWyJha9LhsOtSb2YJDyZdKvvCFh0fJYlkquSFjUxp9FVNugbfy8q1jdxI+"></script>
+  {% endif %}
 </body>
 </html>

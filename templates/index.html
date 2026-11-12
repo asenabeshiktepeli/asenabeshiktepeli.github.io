@@ -60,7 +60,7 @@
     {% endif %}
     <div class="bar-actions">
       {% if contact.booking_url and ui.book_call %}
-      <a class="btn btn-primary btn-sm bar-cta" href="{{ contact.booking_url }}" target="_blank" rel="noopener">{{ ui.book_call }}</a>
+      <a class="btn btn-primary btn-sm bar-cta" href="{{ contact.booking_url }}" target="_blank" rel="noopener" data-goatcounter-click="book-call" data-goatcounter-title="Book a call">{{ ui.book_call }}</a>
       {% else %}
       <div class="bar-email">{{ m.email_menu(email_label, "email-menu-header", "btn-primary btn-sm", false, "end") }}</div>
       {% endif %}
@@ -82,10 +82,10 @@
   </ul>
   <div class="mobile-menu-foot">
     {% if contact.email %}
-    <a class="mobile-menu-email" href="mailto:{{ contact.email }}" translate="no">{{ contact.email }}</a>
+    <a class="mobile-menu-email" href="mailto:{{ contact.email }}" translate="no" data-goatcounter-click="email" data-goatcounter-title="Email">{{ contact.email }}</a>
     {% endif %}
     {% if ns.cv %}
-    <a class="btn btn-ghost btn-sm" href="{{ ns.cv }}" download="{{ cv_file }}">{{ ns.cv_label }} <span aria-hidden="true">↓</span></a>
+    <a class="btn btn-ghost btn-sm" href="{{ ns.cv }}" download="{{ cv_file }}" data-goatcounter-click="cv-download" data-goatcounter-title="Download CV">{{ ns.cv_label }} <span aria-hidden="true">↓</span></a>
     {% endif %}
   </div>
 </div>
@@ -128,7 +128,7 @@
         {% if buttons or booking %}
         <div class="hero-actions">
           {% if booking %}
-          <a class="btn btn-primary btn-lg" href="{{ contact.booking_url }}" target="_blank" rel="noopener">
+          <a class="btn btn-primary btn-lg" href="{{ contact.booking_url }}" target="_blank" rel="noopener" data-goatcounter-click="book-call" data-goatcounter-title="Book a call">
             {{ ui.book_call_hero }}
             <span class="btn-arrow" aria-hidden="true">↗</span>
           </a>
@@ -137,7 +137,7 @@
           {% if button.href.startswith("mailto:") %}
           {{ m.email_menu(button.label, "email-menu-hero", "btn-ghost btn-lg" if booking else "btn-primary btn-lg", not booking) }}
           {% elif button.href.endswith(".pdf") %}
-          <a class="hero-text-link" href="{{ button.href }}" download="{{ button.href.split('/')[-1] }}">
+          <a class="hero-text-link" href="{{ button.href }}" download="{{ button.href.split('/')[-1] }}" data-goatcounter-click="cv-download" data-goatcounter-title="Download CV">
             {{ button.label }} <span aria-hidden="true">↓</span>
           </a>
           {% else %}
@@ -275,18 +275,18 @@
             {% endif %}
             <div class="package-actions">
               {% if pkg.buy_url %}
-              <a class="btn btn-primary btn-sm" href="{{ pkg.buy_url }}" target="_blank" rel="noopener" aria-label="{{ packages.buy_label }}: {{ pkg.title }} (opens in a new tab)">
+              <a class="btn btn-primary btn-sm" href="{{ pkg.buy_url }}" target="_blank" rel="noopener" aria-label="{{ packages.buy_label }}: {{ pkg.title }} (opens in a new tab)"{% if pkg.buy_event %} data-goatcounter-click="{{ pkg.buy_event }}"{% if pkg.buy_event_title %} data-goatcounter-title="{{ pkg.buy_event_title }}"{% endif %}{% endif %}>
                 {{ packages.buy_label }} <span aria-hidden="true">↗</span>
               </a>
               {% if contact.email and packages.email_label %}
-              <a class="btn btn-ghost btn-sm" href="mailto:{{ contact.email }}?subject={{ (pkg.title ~ ' enquiry') | urlencode }}" aria-label="{{ packages.email_label }} about {{ pkg.title }}">{{ packages.email_label }}</a>
+              <a class="btn btn-ghost btn-sm" href="mailto:{{ contact.email }}?subject={{ (pkg.title ~ ' enquiry') | urlencode }}" aria-label="{{ packages.email_label }} about {{ pkg.title }}" data-goatcounter-click="email" data-goatcounter-title="Email">{{ packages.email_label }}</a>
               {% endif %}
               {% else %}
               {% if contact.email and packages.email_label %}
-              <a class="btn btn-primary btn-sm" href="mailto:{{ contact.email }}?subject={{ (pkg.title ~ ' enquiry') | urlencode }}" aria-label="{{ packages.email_label }} about {{ pkg.title }}">{{ packages.email_label }}</a>
+              <a class="btn btn-primary btn-sm" href="mailto:{{ contact.email }}?subject={{ (pkg.title ~ ' enquiry') | urlencode }}" aria-label="{{ packages.email_label }} about {{ pkg.title }}" data-goatcounter-click="email" data-goatcounter-title="Email">{{ packages.email_label }}</a>
               {% endif %}
               {% if contact.booking_url and ui.book_call_hero %}
-              <a class="btn btn-ghost btn-sm" href="{{ contact.booking_url }}" target="_blank" rel="noopener">
+              <a class="btn btn-ghost btn-sm" href="{{ contact.booking_url }}" target="_blank" rel="noopener" data-goatcounter-click="book-call" data-goatcounter-title="Book a call">
                 {{ ui.book_call_hero }} <span aria-hidden="true">↗</span>
               </a>
               {% endif %}
@@ -428,7 +428,7 @@
       </ol>
       {% if how_i_work.cta and contact.booking_url %}
       <div class="steps-cta reveal">
-        <a class="btn btn-primary btn-lg" href="{{ contact.booking_url }}" target="_blank" rel="noopener">
+        <a class="btn btn-primary btn-lg" href="{{ contact.booking_url }}" target="_blank" rel="noopener" data-goatcounter-click="book-call" data-goatcounter-title="Book a call">
           {{ how_i_work.cta }}
           <span class="btn-arrow" aria-hidden="true">↗</span>
         </a>
@@ -653,18 +653,18 @@
           {{ m.email_menu(email_label, "email-menu-contact", "btn-light btn-lg") }}
           {# Same label as the hero and package buttons; only the header keeps the short "Book a call" (space) #}
           {% if contact.booking_url and ui.book_call_hero %}
-          <a class="btn btn-outline-light btn-lg" href="{{ contact.booking_url }}" target="_blank" rel="noopener">
+          <a class="btn btn-outline-light btn-lg" href="{{ contact.booking_url }}" target="_blank" rel="noopener" data-goatcounter-click="book-call" data-goatcounter-title="Book a call">
             {{ ui.book_call_hero }} <span aria-hidden="true">↗</span>
           </a>
           {% endif %}
         </div>
         {% endif %}
         <ul class="contact-links">
-          {% for url, label in [(contact.github, "GitHub"), (contact.linkedin, "LinkedIn"), (contact.upwork, contact.upwork | display_url)] if url %}
+          {% for url, label in [(contact.github, "GitHub"), (contact.linkedin, "LinkedIn"), (contact.upwork, "Upwork")] if url %}
           <li><a href="{{ url }}" target="_blank" rel="noopener">{{ label }} <span aria-hidden="true">↗</span></a></li>
           {% endfor %}
           {% if ns.cv %}
-          <li><a href="{{ ns.cv }}" download="{{ cv_file }}">{{ ns.cv_label }} <span aria-hidden="true">↓</span></a></li>
+          <li><a href="{{ ns.cv }}" download="{{ cv_file }}" data-goatcounter-click="cv-download" data-goatcounter-title="Download CV">{{ ns.cv_label }} <span aria-hidden="true">↓</span></a></li>
           {% endif %}
         </ul>
       </div>
