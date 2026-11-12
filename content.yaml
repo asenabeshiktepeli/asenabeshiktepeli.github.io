@@ -167,6 +167,16 @@ portfolio:
       video: "static/video/customer-request-automation.mp4"
       poster: "static/img/portfolio/customer-request-automation-poster.webp"
       poster_fallback: "static/img/portfolio/customer-request-automation-poster.jpg"  # used only if the WebP poster cannot load
+    - title: "AI shopping assistant readiness check"
+      id: "work-ai-ready"
+      short: "A 10-question self-check for small online shops, with a score, the top 3 gaps and plain-language policy templates."
+      label: "Sample project"
+      text: "A 10-question self-check for small online shops: can AI shopping assistants find clear shipping, returns, FAQ and product information? It gives a score and the top 3 gaps, with plain-language policy and FAQ templates and a before/after example on a fictional store. It runs in the browser and saves nothing."
+      tools: ["HTML", "CSS", "JavaScript", "Python"]
+      link: "ai-ready/"  # a page on this site: opens in the same tab (links starting with http open in a new tab)
+      link_label: "Try the self-check"
+      image: "static/img/portfolio/ai-ready.webp"  # screenshot of the page's own result box (no third-party logos)
+      track: "card-ai-ready"  # optional: GoatCounter click event for the card's link and image
     - title: "Order Tracking Sheet"
       id: "work-order-tracking"  # anchor target for links such as services "sample"
       short: "A Google Sheets tracker showing each order's status, shipping date and follow-up notes."  # grid cards: one short line; the full text sits under "Details"
@@ -355,7 +365,7 @@ faq:
         - text: "book a 15-min call"
           href: "booking"
     - question: "Can I see examples of your work?"
-      answer: "Yes. The Selected work section has seven sample projects built with fictional data. Each one has a link, screenshots or a short video you can open."
+      answer: "Yes. The Selected work section has eight sample projects built with fictional data. Each one has a link, screenshots or a short video you can open."
       links:
         - text: "Selected work"
           href: "#portfolio"
