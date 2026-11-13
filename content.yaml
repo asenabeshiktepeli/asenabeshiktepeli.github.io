@@ -47,6 +47,7 @@ hero:
     - "Nearly 8 years in customer-facing sales and support"
     - "ALX Virtual Assistant certified"
     - "Google Advanced Data Analytics certified"
+    - "HubSpot Service Hub certified"
     - "Turkish & English"
 
 about:
@@ -291,22 +292,26 @@ certifications:
   title: "Certifications"
   verify_label: "Verify"  # link text; only shows when an item has a link
   items:
+    - name: "HubSpot Service Hub Software Certified"
+      issuer: "HubSpot Academy"
+      date: "Nov 2026 · valid until Dec 2027"
+      note: "Help desk, ticket pipelines, routing, SLAs and service reporting in HubSpot."
+    - name: "Google Advanced Data Analytics Certificate"
+      issuer: "Google (Coursera)"
+      date: "May 2026"
+      link: "https://www.coursera.org/account/accomplishments/professional-cert/YAONZADEFSOP"
     - name: "ALX Virtual Assistant Programme – Certificate of Achievement"
       issuer: "ALX"
       date: "Nov 2025"
       note: "10-week programme in Virtual Assistance Skills in the Digital Age"
       link: "https://savanna.alxafrica.com/certificates/zfN6epE3J2"
-    - name: "Google Advanced Data Analytics Certificate"
-      issuer: "Google (Coursera)"
-      date: "May 2026"
-      link: "https://www.coursera.org/account/accomplishments/professional-cert/YAONZADEFSOP"
 
 tools:
   title: "Tools I use"
   note: "I'm happy to learn the tools your team already uses."  # one line under the tool groups; empty hides it
   items:
     - "Logo Tiger 3"
-    - "HubSpot (practice)"
+    - "HubSpot Service Hub (certified)"
     - "Jira Service Management (practice)"
     - "Microsoft Excel"
     - "Google Sheets"
@@ -662,7 +667,7 @@ ui:
     - label: "Spreadsheets & documents"
       tools: ["Microsoft Excel", "Google Sheets", "Google Docs", "Google Slides", "Google Drive", "Google Calendar"]
     - label: "Business software"
-      tools: ["Logo Tiger 3", "HubSpot (practice)", "Jira Service Management (practice)"]
+      tools: ["Logo Tiger 3", "HubSpot Service Hub (certified)", "Jira Service Management (practice)"]
     - label: "Project management"
       tools: ["Trello", "Asana", "Notion"]
     - label: "Automation & data"
