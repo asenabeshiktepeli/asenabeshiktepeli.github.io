@@ -130,7 +130,7 @@ experience:
   title: "Experience"
   glance_context: "Cagra Co LTD, 2018–2026"  # shown after "At a glance" above the stats card; empty hides it
   items:
-    - role: "Sales Consultant"
+    - role: "Sales & After-Sales Support Consultant"
       company: "Cagra Co LTD"
       dates: "Nov 2018 – Aug 2026"
       location: "Kyrenia, Cyprus"
@@ -142,10 +142,10 @@ experience:
         - value: "120%"
           label: "Of internal sales targets reached, in multiple years"
       duties:
-        - "Customer communication by email, WhatsApp, phone and face to face"
-        - "Quotes and proformas"
-        - "Order tracking and shipping coordination"
+        - "Customer questions by email, WhatsApp, phone and face to face, from local and international clients"
+        - "Order tracking and shipping coordination until delivery"
         - "Complaints and returns"
+        - "Quotes and proformas"
         - "Invoice and payment follow-up in Logo Tiger 3"
         - "Tables and reports in Excel and Google Sheets"
         - "Entry-level Logo training for new colleagues"
