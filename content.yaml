@@ -264,7 +264,7 @@ portfolio:
           alt: "Screenshot of a resolved Jira request with the resolution SLA met (sample project, fictional data)"
           caption: "Resolved within SLA"
   feedback:  # one-line text link under the cards (services-extra style), opens url in a new tab; empty text hides it
-    text: "Seen the samples? Tell me what would make this site better (2 minutes)"
+    text: "Seen the samples? Tell me what would make this site better (3 minutes)"
     url: "https://docs.google.com/forms/d/e/1FAIpQLSdacdB8X1TM5an62U-kB64D28lrl4B0Tm4R6rquM5yPhlEAVQ/viewform?usp=header"
 
 how_i_work:
