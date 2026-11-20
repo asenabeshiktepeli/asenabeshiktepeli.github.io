@@ -60,7 +60,7 @@ about:
 # Short promo video between the hero and Services (click to play: no autoplay, nothing loads before that).
 # Empty video hides the block; empty title shows no heading. text is the caption under the video.
 intro_video:
-  title: ""
+  title: "Meet Asena in 40 seconds"
   text: "A 40-second tour of this site: who I am, what I do and how to start small."
   video: "static/media/asena-promo-site.mp4"  # 1080 × 1080, 40 s
   poster: "static/media/poster.jpg"
