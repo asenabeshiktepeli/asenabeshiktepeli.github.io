@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+
+{# /black-friday-support/: peak-season support checklist. Texts: content.yaml "black_friday_support".
+   Same layout and stylesheet as /ai-ready/; no page script. Not linked from the homepage or menu. #}
+{% set bf = black_friday_support %}
+
+{% block head_end %}
+  <link rel="stylesheet" href="{{ root }}static/css/ai-ready.css">
+{% endblock %}
+
+{% block body %}
+{% if ui.skip_to_content %}<a class="skip-link" href="#checklist">{{ ui.skip_to_content }}</a>{% endif %}
+<header class="site-header is-scrolled">
+  <nav class="bar bar-simple container" aria-label="Main">
+    <a class="brand" href="{{ root }}" translate="no">
+      {{ m.brand_mark() }}
+      <span class="brand-name">{{ nav.brand }}</span>
+    </a>
+  </nav>
+</header>
+
+<main class="ai-page bf-page">
+
+  {# ---------- Intro ---------- #}
+  <section class="ai-intro" aria-labelledby="bf-title">
+    <div class="hero-bg" aria-hidden="true"><span class="hero-glow"></span><span class="hero-grid-lines"></span></div>
+    <div class="container ai-intro-inner">
+      <h1 class="ai-title" id="bf-title">{{ bf.title }}</h1>
+      {% if bf.lead %}<p class="ai-lead">{{ bf.lead }}</p>{% endif %}
+    </div>
+  </section>
+
+  {# ---------- Checklist ---------- #}
+  {% if bf.checklist %}
+  <section class="ai-section ai-soft" id="checklist" aria-labelledby="checklist-title">
+    <div class="container ai-narrow">
+      <h2 class="section-title" id="checklist-title">{{ bf.checklist_title }}</h2>
+      <ol class="ai-fixes">
+        {% for item in bf.checklist %}
+        <li class="ai-fix">
+          <div class="ai-fix-title"><span class="ai-q-num" aria-hidden="true">{{ loop.index }}</span><span>{{ item }}</span></div>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+  </section>
+  {% endif %}
+
+  {# ---------- Sample reply templates ([placeholders] highlighted by mini_markdown) ---------- #}
+  {% if bf.templates %}
+  <section class="ai-section" id="templates" aria-labelledby="templates-title">
+    <div class="container ai-narrow">
+      <h2 class="section-title" id="templates-title">{{ bf.templates_title }}</h2>
+      <div class="ai-templates">
+        {% for t in bf.templates %}
+        <article class="ai-page-sample ai-md">
+          <h3>{{ t.title }}</h3>
+          {{ t.text | mini_markdown }}
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  {# ---------- Help ---------- #}
+  {% if bf.cta_text %}
+  <section class="ai-section ai-soft">
+    <div class="container ai-narrow">
+      <div class="ai-cta card">
+        {# cta_link_text -> contact.booking_url (same filter as the FAQ links; plain text when empty) #}
+        <p>{{ bf.cta_text | e | link_phrases([{"text": bf.cta_link_text, "href": "booking"}]) }}</p>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+</main>
+
+<footer class="not-found-footer ai-footer">
+  <div class="container ai-footer-inner">
+    <div>
+      {% if footer.copyright %}<p>{{ footer.copyright | no_translate }}</p>{% endif %}
+      {% if footer.note %}<p>{{ footer.note }}</p>{% endif %}
+    </div>
+  </div>
+</footer>
+{% endblock %}

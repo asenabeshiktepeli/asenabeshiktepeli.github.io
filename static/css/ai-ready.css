@@ -84,6 +84,11 @@
   color: var(--muted);
 }
 
+/* /black-friday-support/ reuses this file; it has no intro text under its section titles */
+.bf-page .section-title {
+  margin-bottom: 26px;
+}
+
 .ai-callout {
   margin-bottom: 22px;
   padding: 14px 18px;

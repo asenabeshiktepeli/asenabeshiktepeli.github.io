@@ -30,6 +30,7 @@ OUT = ROOT / "docs"
 # Templates get root ("../") to prefix relative links, and page_path for canonical/og:url.
 PAGES = [
     {"template": "ai-ready.html", "path": "ai-ready/", "content": "ai_ready"},  # AI shopping assistant self-check
+    {"template": "black-friday-support.html", "path": "black-friday-support/", "content": "black_friday_support"},  # peak-season support checklist (not linked from the site)
 ]
 
 # Proper names inside sentences that browser translation should leave alone.
