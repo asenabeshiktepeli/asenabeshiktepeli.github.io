@@ -419,6 +419,11 @@
         </article>
         {% endfor %}
       </div>
+
+      {# One-line text link under the cards (same style as the services link) #}
+      {% if portfolio.feedback and portfolio.feedback.text and portfolio.feedback.url %}
+      <p class="services-extra reveal"><a href="{{ portfolio.feedback.url }}" target="_blank" rel="noopener">{{ portfolio.feedback.text }} <span aria-hidden="true">→</span></a></p>
+      {% endif %}
     </div>
   </section>
   {% endif %}
