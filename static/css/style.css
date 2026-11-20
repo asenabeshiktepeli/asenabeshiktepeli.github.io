@@ -1454,6 +1454,26 @@ html:not(.js) .js-only {
   transform: translateX(3px);
 }
 
+/* One-line text link under the service cards (same colours as "See sample") */
+.services-extra {
+  margin-top: clamp(24px, 3vw, 32px);
+  font-size: 0.9375rem;
+}
+
+.services-extra a {
+  color: var(--accent);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--teal-ink) 55%, white);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  transition: text-decoration-color 0.2s ease;
+}
+
+.services-extra a:hover {
+  text-decoration-color: var(--teal-ink);
+}
+
 /* Fixed-price setups under the services */
 /* 5. Light tinted panel; cards with a thin coloured strip on top */
 .packages {

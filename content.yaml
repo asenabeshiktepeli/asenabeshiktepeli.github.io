@@ -89,6 +89,9 @@ services:
         - "Duplicates and inconsistent formats cleaned up"
         - "Simple reports in Excel or Google Sheets"
       sample: "#work-data-cleanup"
+  extra_link:  # optional one-line text link under the cards (before Fixed-price setups); empty text hides it
+    text: "Busy season coming up? See the Black Friday & Christmas support checklist (sample project)"
+    url: "black-friday-support/"
 
 # Fixed-price setups, shown under the Services cards. Empty items list hides the block.
 # buy_url empty = "Email me" + "Book a 15-min call" buttons; set it to the Upwork

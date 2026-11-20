@@ -235,6 +235,11 @@
         {% endfor %}
       </div>
 
+      {# One-line text link under the cards (e.g. to a sample page) #}
+      {% if services.extra_link and services.extra_link.text and services.extra_link.url %}
+      <p class="services-extra reveal"><a href="{{ services.extra_link.url }}">{{ services.extra_link.text }} <span aria-hidden="true">→</span></a></p>
+      {% endif %}
+
       {# Fixed-price setups: two compact cards (badge next to the title, sample link and buttons in one row).
          buy_url set -> "Buy on Upwork" (main) + a plain "Email me" (with subject), no booking link;
          empty -> email (with subject) + booking link. #}
