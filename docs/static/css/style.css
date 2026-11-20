@@ -3305,6 +3305,17 @@ html:has(.lightbox[open]) {
   color: #fff;
 }
 
+/* Link inside a footer line (feedback form): same colour as the line, underlined */
+.footer-bottom p a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.footer-bottom p a:hover {
+  color: #fff;
+}
+
 .site-footer :focus-visible {
   outline-color: #9db4ff;
 }

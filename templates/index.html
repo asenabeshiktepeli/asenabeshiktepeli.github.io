@@ -692,6 +692,7 @@
   <div class="container">
     <div class="footer-bottom">
       {% if footer.copyright %}<p>{{ footer.copyright | no_translate }}</p>{% endif %}
+      {% if footer.feedback and footer.feedback.text %}<p>{{ footer.feedback.text | e | link_phrases([{"text": footer.feedback.link_text, "href": footer.feedback.url}]) }}</p>{% endif %}
       {% if footer.note %}<p>{{ footer.note }}</p>{% endif %}
       {% if ui.back_to_top %}
       <ul class="footer-links">

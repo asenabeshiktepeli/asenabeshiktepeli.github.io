@@ -665,6 +665,10 @@ black_friday_support:
 footer:
   cta: "Your customers, orders and data, in good hands."
   copyright: "© 2026 Asena Beshiktepeli"
+  feedback:  # homepage footer, above the note; link_text inside text opens url in a new tab; empty text hides it
+    text: "Was this site helpful? Share quick feedback"
+    link_text: "Share quick feedback"
+    url: "https://docs.google.com/forms/d/e/1FAIpQLSdacdB8X1TM5an62U-kB64D28lrl4B0Tm4R6rquM5yPhlEAVQ/viewform?usp=header"
   note: "This site counts visits with GoatCounter, without cookies or personal data."  # empty hides it
 
 # Interface labels only (buttons, menus, small headings) – no information claims.
