@@ -193,6 +193,23 @@
     {% endif %}
   </section>
 
+  {# ================= Intro video (between hero and Services) =================
+     Not a numbered section, so the soft/plain backgrounds of the sections below stay the same.
+     preload="none": nothing is downloaded until the visitor presses play. #}
+  {% if intro_video and intro_video.video %}
+  <div class="intro-video">
+    <div class="container">
+      <figure class="intro-video-inner reveal">
+        {% if intro_video.title %}<h2 class="intro-video-title">{{ intro_video.title }}</h2>{% endif %}
+        <video controls preload="none" playsinline{% if intro_video.poster %} poster="{{ intro_video.poster }}"{% endif %} width="1080" height="1080">
+          <source src="{{ intro_video.video }}" type="video/mp4">
+        </video>
+        {% if intro_video.text %}<figcaption>{{ intro_video.text }}</figcaption>{% endif %}
+      </figure>
+    </div>
+  </div>
+  {% endif %}
+
   {# ================= Services ================= #}
   {% if services["items"] %}
   {% set sec.n = sec.n + 1 %}

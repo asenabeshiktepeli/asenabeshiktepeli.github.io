@@ -57,6 +57,14 @@ about:
     - "Now I bring that experience to e-commerce businesses remotely, handling customer messages, order follow-ups and clean data, so you can focus on growing your business. I also build small automations with n8n and Python to take repetitive work off your list."
     - "I'm open to a full-time remote role, and I also take on two small fixed-price setups for online shops."
 
+# Short promo video between the hero and Services (click to play: no autoplay, nothing loads before that).
+# Empty video hides the block; empty title shows no heading. text is the caption under the video.
+intro_video:
+  title: ""
+  text: "A 40-second tour of this site: who I am, what I do and how to start small."
+  video: "static/media/asena-promo-site.mp4"  # 1080 × 1080, 40 s
+  poster: "static/media/poster.jpg"
+
 services:
   title: "Services"
   items:

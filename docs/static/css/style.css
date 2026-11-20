@@ -1454,6 +1454,38 @@ html:not(.js) .js-only {
   transform: translateX(3px);
 }
 
+/* Intro video between the hero and Services: centred, at most 520px wide; full container width on phones */
+.intro-video {
+  padding: clamp(32px, 5vw, 56px) 0;
+}
+
+.intro-video-inner {
+  max-width: 520px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.intro-video-title {
+  margin-bottom: 14px;
+  font-size: clamp(1.25rem, 2.4vw, 1.5rem);
+}
+
+.intro-video video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-lg);
+  background: #0b1530;
+  box-shadow: var(--shadow);
+}
+
+.intro-video figcaption {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
 /* One-line text link under the service cards (same colours as "See sample") */
 .services-extra {
   margin-top: clamp(24px, 3vw, 32px);
