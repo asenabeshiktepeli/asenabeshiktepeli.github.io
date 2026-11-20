@@ -69,8 +69,8 @@
   <section class="ai-section ai-soft">
     <div class="container ai-narrow">
       <div class="ai-cta card">
-        {# cta_link_text -> contact.booking_url (same filter as the FAQ links; plain text when empty) #}
-        <p>{{ bf.cta_text | e | link_phrases([{"text": bf.cta_link_text, "href": "booking"}]) }}</p>
+        {# cta_link_text -> mailto:contact.email (same filter as the FAQ links; plain text when empty) #}
+        <p>{{ bf.cta_text | e | link_phrases([{"text": bf.cta_link_text, "href": "email"}]) }}</p>
       </div>
     </div>
   </section>

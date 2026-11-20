@@ -633,7 +633,7 @@ ai_ready:
 
 # Black Friday & Christmas support checklist: a separate page at /black-friday-support/ (build.py PAGES).
 # Not linked from the homepage or menu. Texts are used as given; [placeholders] are highlighted on the page.
-# cta_link_text is linked to contact.booking_url (plain text when that is empty).
+# cta_link_text is linked to mailto:contact.email (plain text when that is empty).
 black_friday_support:
   meta_title: "Black Friday & Christmas support checklist for small online shops"
   meta_description: "The busy weeks bring the same messages again and again: where is my order, why is delivery late, how do I return this. A little preparation now saves hours later."
@@ -657,8 +657,8 @@ black_friday_support:
       text: "\"Hi [name], we wanted to let you know that your order [order number] is running a little late because of high demand. The new estimate is [date]. We are sorry for the wait and will update you if anything changes.\""
     - title: "Return request:"
       text: "\"Hi [name], we are sorry the item was not right. To start a return, please [step]. Once we receive it, we will [refund or exchange] within [time].\""
-  cta_text: "Need an extra pair of hands in the busy weeks? Book a call or send me a message, and we can start with a small trial task."
-  cta_link_text: "Book a call"
+  cta_text: "Need an extra pair of hands in the busy weeks? Send me a message, and we can start with a small trial task."
+  cta_link_text: "Send me a message"
 
 footer:
   cta: "Your customers, orders and data, in good hands."
