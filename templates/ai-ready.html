@@ -123,14 +123,14 @@
           {% if contact.upwork and r.upwork_label %}
           <a class="btn btn-primary btn-lg" href="{{ contact.upwork }}" target="_blank" rel="noopener"
              aria-label="{{ r.upwork_label }} on Upwork (opens in a new tab)"
-             data-goatcounter-click="ai-check-upwork" data-goatcounter-title="Fix this for me – Upwork (result)">
+             data-goatcounter-click="ai-check-upwork-result" data-goatcounter-title="Fix this for me – Upwork (result)">
             {{ r.upwork_label }} <span class="btn-arrow" aria-hidden="true">↗</span>
           </a>
           {% endif %}
           {% if contact.email and r.email_label %}
           <a class="btn btn-ghost btn-lg" href="mailto:{{ contact.email }}" data-email-link
              data-email="{{ contact.email }}" data-subject="{{ r.email_subject }}" data-body="{{ r.email_body }}"
-             data-goatcounter-click="email" data-goatcounter-title="Email">{{ r.email_label }}</a>
+             data-goatcounter-click="email-ai-ready-result" data-goatcounter-title="Email (AI-ready result)">{{ r.email_label }}</a>
           {% endif %}
           {% if r.restart %}<button class="ai-text-btn" type="button" data-restart>{{ r.restart }}</button>{% endif %}
         </div>
@@ -227,13 +227,13 @@
           {% if contact.upwork and ai.result.upwork_label %}
           <a class="btn btn-primary btn-lg" href="{{ contact.upwork }}" target="_blank" rel="noopener"
              aria-label="{{ ai.result.upwork_label }} on Upwork (opens in a new tab)"
-             data-goatcounter-click="ai-check-upwork" data-goatcounter-title="Fix this for me – Upwork (page end)">
+             data-goatcounter-click="ai-check-upwork-page-end" data-goatcounter-title="Fix this for me – Upwork (page end)">
             {{ ai.result.upwork_label }} <span class="btn-arrow" aria-hidden="true">↗</span>
           </a>
           {% endif %}
           {% if contact.email and ai.result.email_label %}
           <a class="btn btn-ghost btn-lg" href="mailto:{{ contact.email }}?subject={{ 'AI readiness check' | urlencode }}"
-             data-goatcounter-click="email" data-goatcounter-title="Email">{{ ai.result.email_label }}</a>
+             data-goatcounter-click="email-ai-ready-page-end" data-goatcounter-title="Email (AI-ready page end)">{{ ai.result.email_label }}</a>
           {% endif %}
         </div>
       </div>
