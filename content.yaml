@@ -173,6 +173,8 @@ portfolio:
       tools: ["n8n", "Asana", "Google Calendar", "Google Sheets"]
       link: "https://github.com/asenabeshiktepeli/asenabeshiktepeli.github.io/tree/main/automation/n8n"
       link_label: "View on GitHub"  # optional: button text for this card instead of view_label
+      track: "sample-n8n-github"  # optional: GoatCounter click event for the card's link
+      track_title: "View n8n workflow on GitHub"  # with track_title, a linked card image gets "<track>-image"
       # optional "downloads:" list of {label, href}: files on this site shown as download buttons
       # (the link above then becomes a small text link). None at the moment.
       # optional: a video shown instead of an image (click to play, no autoplay)
@@ -197,6 +199,8 @@ portfolio:
       tools: ["Google Sheets"]
       link: "https://docs.google.com/spreadsheets/d/1qmdii_crHkBCz38AoZM4wB0z7KvREubd9FTeGDE5Ieg/preview"
       image: "static/img/portfolio/order-tracking.webp"
+      track: "sample-order-tracking"
+      track_title: "View sample (Order Tracking Sheet)"
     - title: "AI-Assisted Reply Drafting"
       id: "work-ai-drafting"
       short: "How I use AI for first drafts of customer replies and check each one against store policy before it is sent."
@@ -205,6 +209,8 @@ portfolio:
       tools: ["Google Docs", "AI assistant"]
       link: "https://docs.google.com/document/d/1uEHgSsQIdq1cHJ-TXXhwg54oFaYkwxCzJ63wrU6IX64/preview"
       image: "static/img/portfolio/ai-drafting.webp"
+      track: "sample-ai-drafting"
+      track_title: "View sample (AI-Assisted Reply Drafting)"
       screenshots:
         - src: "static/img/portfolio/ai-drafting-example-full.webp"
           alt: "AI first draft and reviewed reply for a damaged item (sample project)"
@@ -220,6 +226,8 @@ portfolio:
       tools: ["Google Docs"]
       link: "https://docs.google.com/document/d/1xYm1fliueMGKPDli2UzKeNNLda1rVmu8jLQrLuVwvgo/preview"
       image: "static/img/portfolio/response-library.webp"
+      track: "sample-response-library"
+      track_title: "View sample (Customer Support Response Library)"
     - title: "Data Cleanup Before/After"
       id: "work-data-cleanup"
       short: "A messy customer export cleaned with reusable formulas, with every change logged and checked."
@@ -228,6 +236,8 @@ portfolio:
       tools: ["Google Sheets"]
       link: "https://docs.google.com/spreadsheets/d/15lbhsX5VS6nrGrRYlrYHuI1Cgy2hru-fDLFgh4He9sY/preview"
       image: "static/img/portfolio/data-cleanup.webp"
+      track: "sample-data-cleanup"
+      track_title: "View sample (Data Cleanup Before/After)"
     - title: "HubSpot Support Workflow"
       id: "work-hubspot-support"
       short: "A practice HubSpot help desk for a fictional online shop: 8 tickets moved through a pipeline and tracked on a dashboard."
@@ -360,6 +370,16 @@ contact:
   github: "https://github.com/asenabeshiktepeli"
   linkedin: "https://www.linkedin.com/in/asena-beshiktepeli"  # empty – stays hidden
   upwork: "https://www.upwork.com/freelancers/~0117c47ba95ca02fa2"  # shown as "Upwork ↗" next to GitHub and LinkedIn
+  profile_tracks:  # optional: GoatCounter click events for the GitHub / LinkedIn / Upwork links in Contact
+    github:
+      track: "profile-github"
+      track_title: "Profile link (GitHub)"
+    linkedin:
+      track: "profile-linkedin"
+      track_title: "Profile link (LinkedIn)"
+    upwork:
+      track: "profile-upwork"
+      track_title: "Profile link (Upwork)"
   location: "Kyrenia, Cyprus · EET (UTC+2)"
   work_style:  # shown as chips next to the location in Contact
     - "Flexible hours, can align with your time zone"
