@@ -7,11 +7,12 @@
 {%- endmacro %}
 
 {# Email button + small menu (Gmail / Outlook / default app / copy).
-   Without JS, or on touch devices, the button is a plain mailto: link. #}
-{% macro email_menu(label, id, btn_class="btn-primary", arrow=true, align="start") %}
+   Without JS, or on touch devices, the button is a plain mailto: link.
+   track / track_title: GoatCounter click event for the button (one name per position, e.g. "email-hero"). #}
+{% macro email_menu(label, id, btn_class="btn-primary", arrow=true, align="start", track="email", track_title="Email") %}
   {% if contact.email %}
   <div class="email-menu" data-email-menu data-align="{{ align }}">
-    <a class="btn {{ btn_class }}" href="mailto:{{ contact.email }}" data-email-trigger data-goatcounter-click="email" data-goatcounter-title="Email"
+    <a class="btn {{ btn_class }}" href="mailto:{{ contact.email }}" data-email-trigger data-goatcounter-click="{{ track }}" data-goatcounter-title="{{ track_title }}"
        aria-expanded="false" aria-controls="{{ id }}">
       {{ label }}
       {% if arrow %}<span class="btn-arrow" aria-hidden="true">→</span>{% endif %}
