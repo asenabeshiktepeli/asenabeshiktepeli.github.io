@@ -311,15 +311,21 @@ certifications:
       date: "Nov 2026 · valid until Dec 2027"
       note: "Help desk, ticket pipelines, routing, SLAs and service reporting in HubSpot."
       link: "https://app-eu1.hubspot.com/academy/achievements/4k0rxg0r/en/1/asena-beshiktepeli/service-hub-software-certified"
+      track: "cert-verify-hubspot-service-hub"  # optional: GoatCounter click event for the Verify link
+      track_title: "Verify certificate (HubSpot Service Hub)"
     - name: "Google Advanced Data Analytics Certificate"
       issuer: "Google (Coursera)"
       date: "May 2026"
       link: "https://www.coursera.org/account/accomplishments/professional-cert/YAONZADEFSOP"
+      track: "cert-verify-google-advanced-data-analytics"
+      track_title: "Verify certificate (Google Advanced Data Analytics)"
     - name: "ALX Virtual Assistant Programme – Certificate of Achievement"
       issuer: "ALX"
       date: "Nov 2025"
       note: "10-week programme in Virtual Assistance Skills in the Digital Age"
       link: "https://savanna.alxafrica.com/certificates/zfN6epE3J2"
+      track: "cert-verify-alx-virtual-assistant"
+      track_title: "Verify certificate (ALX Virtual Assistant)"
 
 tools:
   title: "Tools I use"

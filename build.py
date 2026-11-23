@@ -103,6 +103,7 @@ def make_linker(contact):
 
     href "booking" -> contact.booking_url, "email" -> mailto:contact.email,
     "#id" -> same page, https://... -> new tab. Links without a target stay plain text.
+    Optional "track" / "track_title": GoatCounter click event (data-goatcounter-click / -title).
     """
     special = {
         "booking": contact.get("booking_url") or "",
@@ -117,7 +118,12 @@ def make_linker(contact):
             if not text or not href or text not in html:
                 continue
             new_tab = ' target="_blank" rel="noopener"' if href.startswith("http") else ""
-            anchor = f'<a href="{escape(href)}"{new_tab}>{text}</a>'
+            track = ""
+            if link.get("track"):
+                track = f' data-goatcounter-click="{escape(link["track"])}"'
+                if link.get("track_title"):
+                    track += f' data-goatcounter-title="{escape(link["track_title"])}"'
+            anchor = f'<a href="{escape(href)}"{new_tab}{track}>{text}</a>'
             html = Markup(str(html).replace(text, anchor, 1))
         return html
 

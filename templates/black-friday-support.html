@@ -70,7 +70,7 @@
     <div class="container ai-narrow">
       <div class="ai-cta card">
         {# {email} -> contact.email, shown as text and linked as mailto (same filter as the FAQ links) #}
-        <p>{{ bf.cta_text | replace("{email}", contact.email or "") | e | link_phrases([{"text": contact.email, "href": "email"}]) }}</p>
+        <p>{{ bf.cta_text | replace("{email}", contact.email or "") | e | link_phrases([{"text": contact.email, "href": "email", "track": "black-friday-email", "track_title": "Email (Black Friday page)"}]) }}</p>
       </div>
     </div>
   </section>

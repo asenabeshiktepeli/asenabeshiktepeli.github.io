@@ -441,7 +441,7 @@
 
       {# One-line text link under the cards (same style as the services link) #}
       {% if portfolio.feedback and portfolio.feedback.text and portfolio.feedback.url %}
-      <p class="services-extra reveal"><a href="{{ portfolio.feedback.url }}" target="_blank" rel="noopener">{{ portfolio.feedback.text }} <span aria-hidden="true">→</span></a></p>
+      <p class="services-extra reveal"><a href="{{ portfolio.feedback.url }}" target="_blank" rel="noopener" data-goatcounter-click="feedback-form-selected-work" data-goatcounter-title="Feedback form (selected work)">{{ portfolio.feedback.text }} <span aria-hidden="true">→</span></a></p>
       {% endif %}
     </div>
   </section>
@@ -632,7 +632,7 @@
               {% if cert.date %}<span class="cert-date">{{ cert.date }}</span>{% endif %}
             </div>
             {% if cert.link and certifications.verify_label %}
-            <a class="cert-verify" href="{{ cert.link }}" target="_blank" rel="noopener" aria-label="{{ certifications.verify_label }}: {{ cert.name }} (opens in a new tab)">
+            <a class="cert-verify" href="{{ cert.link }}" target="_blank" rel="noopener" aria-label="{{ certifications.verify_label }}: {{ cert.name }} (opens in a new tab)"{% if cert.track %} data-goatcounter-click="{{ cert.track }}"{% if cert.track_title %} data-goatcounter-title="{{ cert.track_title }}"{% endif %}{% endif %}>
               {{ certifications.verify_label }} <span aria-hidden="true">↗</span>
             </a>
             {% endif %}
@@ -716,7 +716,7 @@
   <div class="container">
     <div class="footer-bottom">
       {% if footer.copyright %}<p>{{ footer.copyright | no_translate }}</p>{% endif %}
-      {% if footer.feedback and footer.feedback.text %}<p>{{ footer.feedback.text | e | link_phrases([{"text": footer.feedback.link_text, "href": footer.feedback.url}]) }}</p>{% endif %}
+      {% if footer.feedback and footer.feedback.text %}<p>{{ footer.feedback.text | e | link_phrases([{"text": footer.feedback.link_text, "href": footer.feedback.url, "track": "feedback-form-footer", "track_title": "Feedback form (footer)"}]) }}</p>{% endif %}
       {% if footer.note %}<p>{{ footer.note }}</p>{% endif %}
       {% if ui.back_to_top %}
       <ul class="footer-links">
