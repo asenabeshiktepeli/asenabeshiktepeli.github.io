@@ -131,37 +131,29 @@ def make_linker(contact):
 
 
 def person_jsonld(content):
-    """schema.org Person for search engines, built only from content.yaml."""
+    """schema.org Person for search engines (homepage only), built only from content.yaml.
+
+    Deliberately minimal: name, jobTitle and description exactly as shown in the hero, the site URL
+    and the public profile links from Contact (without ?query or #fragment). No email, address,
+    languages, images, employers or certificates.
+    """
     meta = content.get("meta") or {}
     hero = content.get("hero") or {}
     contact = content.get("contact") or {}
-    certifications = (content.get("certifications") or {}).get("items") or []
 
     person = {"@context": "https://schema.org", "@type": "Person", "name": hero.get("name")}
     if hero.get("title"):
         person["jobTitle"] = hero["title"]
+    if hero.get("value_proposition"):
+        person["description"] = hero["value_proposition"]
     if meta.get("url"):
         person["url"] = meta["url"].rstrip("/") + "/"
-    if contact.get("email"):
-        person["email"] = "mailto:" + contact["email"]
 
-    # "Kyrenia, Cyprus · EET (UTC+2)" -> locality "Kyrenia", country "Cyprus"
-    place = [part.strip() for part in (contact.get("location") or "").split("·")[0].split(",")]
-    if len(place) >= 2 and all(place):
-        person["address"] = {"@type": "PostalAddress", "addressLocality": place[0], "addressCountry": place[-1]}
-
-    same_as = [url for url in (contact.get("github"), contact.get("linkedin"), contact.get("upwork")) if url]
+    # "https://…/profile?ref=x#top" -> "https://…/profile"
+    same_as = [re.split(r"[?#]", url, maxsplit=1)[0]
+               for url in (contact.get("github"), contact.get("linkedin"), contact.get("upwork")) if url]
     if same_as:
         person["sameAs"] = same_as
-
-    schools = [c["issuer"] for c in certifications if c.get("issuer") and "degree" in (c.get("name") or "").lower()]
-    if schools:
-        person["alumniOf"] = [{"@type": "CollegeOrUniversity", "name": name} for name in schools]
-
-    # "Turkish – Native" -> "Turkish"
-    languages = [re.split(r"\s[–-]\s", lang)[0].strip() for lang in contact.get("languages") or []]
-    if languages:
-        person["knowsLanguage"] = languages
 
     data = json.dumps(person, ensure_ascii=False, indent=2)
     # "</" inside a <script> block would end it early
