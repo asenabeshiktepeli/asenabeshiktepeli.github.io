@@ -3474,6 +3474,62 @@ html:has(.lightbox[open]) {
   }
 }
 
+/* ---------- Aurora + grain background ----------
+   Two fixed layers behind all content (z-index -1, no pointer events): three soft, low-saturation
+   radial blobs (violet, mint, peach) that drift slowly with transform only, and a fine SVG grain.
+   They show through the plain white areas; opaque sections and cards keep their own backgrounds. */
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+}
+
+body::before {
+  inset: -20vmax;
+  background:
+    radial-gradient(38vmax 30vmax at 22% 28%, rgba(185, 167, 232, 0.2), transparent 70%),
+    radial-gradient(34vmax 28vmax at 78% 36%, rgba(159, 220, 196, 0.18), transparent 70%),
+    radial-gradient(36vmax 30vmax at 52% 78%, rgba(243, 195, 166, 0.18), transparent 70%);
+  animation: aurora-drift 18s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+body::after {
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  opacity: 0.05;
+}
+
+@keyframes aurora-drift {
+  from { transform: translate3d(-3%, -2%, 0) rotate(0deg); }
+  to   { transform: translate3d(3%, 2%, 0) rotate(6deg); }
+}
+
+@media (max-width: 599px) {
+  body::before {
+    background:
+      radial-gradient(28vmax 22vmax at 20% 22%, rgba(185, 167, 232, 0.18), transparent 70%),
+      radial-gradient(24vmax 20vmax at 82% 40%, rgba(159, 220, 196, 0.16), transparent 70%),
+      radial-gradient(26vmax 22vmax at 50% 80%, rgba(243, 195, 166, 0.16), transparent 70%);
+  }
+
+  body::after {
+    opacity: 0.03;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    animation: none;
+    transform: none;
+    will-change: auto;
+  }
+}
+
 /* ---------- Reduced motion: everything still, everything visible ---------- */
 
 @media (prefers-reduced-motion: reduce) {
