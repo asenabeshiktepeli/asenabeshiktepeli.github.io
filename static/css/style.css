@@ -3475,55 +3475,96 @@ html:has(.lightbox[open]) {
 }
 
 /* ---------- Aurora + grain background ----------
-   Two fixed layers behind all content (z-index -1, no pointer events): three soft, low-saturation
-   radial blobs (violet, mint, peach) that drift slowly with transform only, and a fine SVG grain.
-   They show through the plain white areas; opaque sections and cards keep their own backgrounds. */
+   Three layers behind all content, none of them clickable:
+   - body::before: strong aurora at the top of the page only (absolute, so it stays behind the hero and
+     scrolls away): violet behind/around the photo, mint on the right edge, peach in the bottom-left
+     corner, kept away from the hero text.
+   - body::after: a faint fixed aurora for the rest of the page (seen through .section-soft).
+   - html::before: a fine SVG grain on top of both.
+   Motion is transform only and slow; it stops with prefers-reduced-motion. */
 
+html::before,
 body::before,
 body::after {
   content: "";
-  position: fixed;
-  z-index: -1;
+  z-index: -2;
   pointer-events: none;
 }
 
 body::before {
-  inset: -20vmax;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1100px;
   background:
-    radial-gradient(38vmax 30vmax at 22% 28%, rgba(185, 167, 232, 0.2), transparent 70%),
-    radial-gradient(34vmax 28vmax at 78% 36%, rgba(159, 220, 196, 0.18), transparent 70%),
-    radial-gradient(36vmax 30vmax at 52% 78%, rgba(243, 195, 166, 0.18), transparent 70%);
-  animation: aurora-drift 18s ease-in-out infinite alternate;
+    radial-gradient(330px 330px at calc(100% - 210px) 250px, rgba(150, 118, 232, 0.55), transparent),
+    radial-gradient(290px 300px at calc(100% + 30px) 600px, rgba(84, 206, 160, 0.5), transparent),
+    radial-gradient(340px 320px at -30px 860px, rgba(247, 160, 112, 0.55), transparent);
+  animation: aurora-sway 16s ease-in-out infinite alternate;
   will-change: transform;
 }
 
 body::after {
+  position: fixed;
   inset: 0;
+  background:
+    radial-gradient(38vmax 30vmax at 12% 30%, rgba(185, 167, 232, 0.2), transparent 70%),
+    radial-gradient(34vmax 28vmax at 88% 40%, rgba(159, 220, 196, 0.18), transparent 70%),
+    radial-gradient(36vmax 30vmax at 50% 92%, rgba(243, 195, 166, 0.18), transparent 70%);
+  animation: aurora-drift 20s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+html::before {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
   background-size: 160px 160px;
   opacity: 0.05;
 }
 
+/* Small moves only, so the hero blobs never drift behind the text */
+@keyframes aurora-sway {
+  from { transform: translate3d(-12px, -8px, 0); }
+  to   { transform: translate3d(12px, 8px, 0); }
+}
+
 @keyframes aurora-drift {
-  from { transform: translate3d(-3%, -2%, 0) rotate(0deg); }
-  to   { transform: translate3d(3%, 2%, 0) rotate(6deg); }
+  from { transform: translate3d(-3%, -2%, 0); }
+  to   { transform: translate3d(3%, 2%, 0); }
+}
+
+/* Light grey sections let the faint aurora show through (cards and navy sections stay opaque) */
+.section-soft {
+  background: rgba(246, 247, 251, 0.7);
 }
 
 @media (max-width: 599px) {
   body::before {
+    height: 1000px;
     background:
-      radial-gradient(28vmax 22vmax at 20% 22%, rgba(185, 167, 232, 0.18), transparent 70%),
-      radial-gradient(24vmax 20vmax at 82% 40%, rgba(159, 220, 196, 0.16), transparent 70%),
-      radial-gradient(26vmax 22vmax at 50% 80%, rgba(243, 195, 166, 0.16), transparent 70%);
+      radial-gradient(170px 170px at calc(100% - 40px) 120px, rgba(150, 118, 232, 0.5), transparent),
+      radial-gradient(150px 170px at calc(100% + 40px) 560px, rgba(84, 206, 160, 0.45), transparent),
+      radial-gradient(180px 170px at -40px 900px, rgba(247, 160, 112, 0.5), transparent);
   }
 
   body::after {
+    background:
+      radial-gradient(28vmax 22vmax at 10% 24%, rgba(185, 167, 232, 0.18), transparent 70%),
+      radial-gradient(24vmax 20vmax at 90% 44%, rgba(159, 220, 196, 0.16), transparent 70%),
+      radial-gradient(26vmax 22vmax at 50% 90%, rgba(243, 195, 166, 0.16), transparent 70%);
+  }
+
+  html::before {
     opacity: 0.03;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  body::before {
+  body::before,
+  body::after {
     animation: none;
     transform: none;
     will-change: auto;
