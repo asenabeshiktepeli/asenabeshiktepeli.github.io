@@ -3474,6 +3474,103 @@ html:has(.lightbox[open]) {
   }
 }
 
+/* ---------- How I use AI: four <details> cards with CSS arrows between them ----------
+   Side by side on desktop, stacked on phones. Cards keep the opaque .card background;
+   the hover lift comes from .card and is switched off by the reduced-motion block below. */
+
+#ai-workflow .badge {
+  margin-bottom: 18px;
+}
+
+.ai-flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 32px;
+  align-items: start;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ai-flow > li {
+  position: relative;
+}
+
+/* Arrow (chevron) in the gap before every card except the first */
+.ai-flow > li + li::before {
+  content: "";
+  position: absolute;
+  top: 24px;
+  left: -23px;
+  width: 10px;
+  height: 10px;
+  border-top: 2px solid var(--accent);
+  border-right: 2px solid var(--accent);
+  transform: rotate(45deg);
+}
+
+.ai-flow-summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 14px 16px;
+  border-radius: inherit;
+  list-style: none;
+  cursor: pointer;
+}
+
+.ai-flow-summary::-webkit-details-marker {
+  display: none;
+}
+
+.ai-flow-summary:hover .ai-flow-title {
+  color: var(--accent);
+}
+
+.ai-flow-index {
+  color: var(--teal-ink);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.ai-flow-title {
+  flex: 1;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.ai-flow-text {
+  margin: 0;
+  padding: 0 16px 16px;
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.ai-flow-step[open] .faq-icon {
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+}
+
+.ai-flow-step[open] .faq-icon::after {
+  transform: rotate(0deg);
+}
+
+@media (max-width: 899px) {
+  .ai-flow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+
+  /* Arrow points down, centred in the gap above the card */
+  .ai-flow > li + li::before {
+    top: -20px;
+    left: 26px;
+    transform: rotate(135deg);
+  }
+}
+
 /* ---------- Aurora + grain background ----------
    Three layers behind all content, none of them clickable:
    - body::before: strong aurora at the top of the page only (absolute, so it stays behind the hero and

@@ -277,6 +277,30 @@ portfolio:
     text: "Seen the samples? Tell me what would make this site better (3 minutes)"
     url: "https://docs.google.com/forms/d/e/1FAIpQLSdacdB8X1TM5an62U-kB64D28lrl4B0Tm4R6rquM5yPhlEAVQ/viewform?usp=header"
 
+# "How I use AI": a sample workflow between Work and How I work. Each step is a <details> card;
+# track / track_title = GoatCounter click event for the step's summary. Empty steps list hides the section.
+ai_workflow:
+  label: "Sample workflow"
+  title: "How I use AI"
+  intro: "AI drafts, I check, then I send."
+  steps:
+    - title: "Customer message"
+      text: "A customer asks something routine, like where their order is."
+      track: "flow-step-1-message"
+      track_title: "AI workflow step 1 (Customer message)"
+    - title: "AI draft"
+      text: "An AI tool drafts a reply from my saved response library."
+      track: "flow-step-2-ai-draft"
+      track_title: "AI workflow step 2 (AI draft)"
+    - title: "My check"
+      text: "I check the order details, store policy and tone before anything is sent. Refunds and upset customers stay with me."
+      track: "flow-step-3-my-check"
+      track_title: "AI workflow step 3 (My check)"
+    - title: "Send and log"
+      text: "I send the approved reply and log it in the order sheet."
+      track: "flow-step-4-send-log"
+      track_title: "AI workflow step 4 (Send and log)"
+
 how_i_work:
   title: "How I work"  # empty steps list hides the section
   steps:

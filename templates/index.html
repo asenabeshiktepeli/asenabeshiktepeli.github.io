@@ -451,6 +451,35 @@
   </section>
   {% endif %}
 
+  {# ================= How I use AI (sample workflow) =================
+     Not a numbered section, so the soft/plain backgrounds of the sections below stay the same.
+     Each step is a native <details> card (no JS); the summary carries the step's GoatCounter event.
+     The arrows between the cards are CSS only. #}
+  {% set flow_steps = (ai_workflow.steps or []) | selectattr("title") | list %}
+  {% if flow_steps %}
+  <section class="section section-soft" id="ai-workflow">
+    <div class="container">
+      {% if ai_workflow.label %}<span class="badge reveal">{{ ai_workflow.label }}</span>{% endif %}
+      {{ section_head(ai_workflow.title) }}
+      {% if ai_workflow.intro %}<p class="section-intro reveal">{{ ai_workflow.intro }}</p>{% endif %}
+      <ol class="ai-flow">
+        {% for step in flow_steps %}
+        <li class="reveal" style="--d: {{ loop.index0 }}">
+          <details class="card ai-flow-step">
+            <summary class="ai-flow-summary"{% if step.track %} data-goatcounter-click="{{ step.track }}"{% if step.track_title %} data-goatcounter-title="{{ step.track_title }}"{% endif %}{% endif %}>
+              <span class="ai-flow-index" aria-hidden="true">{{ "%02d" | format(loop.index) }}</span>
+              <span class="ai-flow-title">{{ step.title }}</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </summary>
+            {% if step.text %}<p class="ai-flow-text">{{ step.text }}</p>{% endif %}
+          </details>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+  </section>
+  {% endif %}
+
   {# ================= How I work ================= #}
   {% set hiw_steps = (how_i_work.steps or []) | selectattr("title") | list %}
   {% if hiw_steps %}
