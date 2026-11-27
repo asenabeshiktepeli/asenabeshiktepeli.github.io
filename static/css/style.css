@@ -2022,6 +2022,31 @@ html:not(.js) .js-only {
   flex-basis: 100%;
 }
 
+/* Work groups: a small h3 title and one intro line above each group's grid */
+.project-group + .project-group {
+  margin-top: clamp(40px, 6vw, 64px);
+}
+
+.project-group-title {
+  font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+  letter-spacing: -0.02em;
+}
+
+.project-group-intro {
+  margin: 6px 0 20px;
+  color: var(--muted);
+}
+
+/* Cards in a row share one height; the tags and buttons sit at the bottom of each card.
+   (An open "Details" panel makes the other cards in that row as tall as well.) */
+.project-group .project-tile {
+  align-self: stretch;
+}
+
+.project-group .project-tile .project-foot {
+  margin-top: auto;
+}
+
 /* Phones: compact row. A small square preview on the left of the badge and title (now only
    for a grid card with a video; image previews are hidden, see the end of this block);
    the short text, "Details" and the buttons run full width below. */
@@ -2087,6 +2112,22 @@ html:not(.js) .js-only {
 
   .project-tile:not(:has(video)) .badge,
   .project-tile:not(:has(video)) .card-title {
+    grid-column: 1;
+  }
+
+  /* A grid card with a video (the n8n card): one column too, with the video full width on top,
+     so its controls stay usable (instead of the 96px square preview) */
+  .project-tile:has(video) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .project-tile:has(video) .project-media {
+    grid-row: auto;
+    padding: 10px;
+  }
+
+  .project-tile:has(video) .badge,
+  .project-tile:has(video) .card-title {
     grid-column: 1;
   }
 }

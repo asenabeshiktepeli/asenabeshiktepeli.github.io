@@ -165,9 +165,22 @@ portfolio:
   title: "Selected work"
   intro: "Sample projects built with fictional data to show how I work."
   view_label: "View sample"  # button text (↗ is added by the template); the button only shows when an item has a link
+  # Cards are shown in these groups, in this order (each card's "group" is one of these ids).
+  # Cards without a known group are listed after the groups.
+  groups:
+    - id: "support-ops"
+      title: "Support operations"
+      intro: "Practice setups of helpdesk tools and reply libraries, built on fictional stores."
+    - id: "data-reporting"
+      title: "Data & reporting"
+      intro: "Spreadsheets and a reporting pipeline built on simulated or fictional data."
+    - id: "automation-ai"
+      title: "Automation & AI"
+      intro: "Small automations and AI-assisted checks for online shops."
   items:
     - title: "Customer Request Automation (n8n)"
       id: "work-request-automation"
+      group: "automation-ai"  # one of portfolio.groups[].id
       label: "Sample project"
       text: "A customer request form with automated follow-up. n8n creates an Asana task with priority and a due date, adds a follow-up reminder to Google Calendar and logs the request in Google Sheets. An hourly workflow marks the log as Done when the task is completed in Asana."
       tools: ["n8n", "Asana", "Google Calendar", "Google Sheets"]
@@ -183,6 +196,7 @@ portfolio:
       poster_fallback: "static/img/portfolio/customer-request-automation-poster.jpg"  # used only if the WebP poster cannot load
     - title: "Support Quality Lab"
       id: "support-quality-lab"
+      group: "data-reporting"  # one of portfolio.groups[].id
       short: "A reporting pipeline for a support inbox: response times, SLA breaches and satisfaction, plus a rubric for rating AI-drafted replies."
       label: "Sample project"
       text: "Built on simulated data: 400 tickets, business-hour measurement, 95% confidence intervals, and a plain note on what the numbers can and cannot show."
@@ -193,18 +207,9 @@ portfolio:
       image_alt: "Chart of simulated data: first response time by priority for a support inbox, with SLA targets (sample project)"  # optional: replaces the default "Screenshot of …" alt text
       track: "sample-support-quality-lab"
       track_title: "View sample (Support Quality Lab)"
-    - title: "AI shopping assistant readiness check"
-      id: "work-ai-ready"
-      short: "A 10-question self-check for small online shops, with a score, the top 3 gaps and plain-language policy templates."
-      label: "Sample project"
-      text: "A 10-question self-check for small online shops: can AI shopping assistants find clear shipping, returns, FAQ and product information? It gives a score and the top 3 gaps, with plain-language policy and FAQ templates and a before/after example on a fictional store. It runs in the browser and saves nothing."
-      tools: ["HTML", "CSS", "JavaScript", "Python"]
-      link: "ai-ready/"  # a page on this site: opens in the same tab (links starting with http open in a new tab)
-      link_label: "Try the self-check"
-      image: "static/img/portfolio/ai-ready.webp"  # screenshot of the page's own result box (no third-party logos)
-      track: "card-ai-ready"  # optional: GoatCounter click event for the card's link and image
     - title: "Order Tracking Sheet"
       id: "work-order-tracking"  # anchor target for links such as services "sample"
+      group: "data-reporting"  # one of portfolio.groups[].id
       short: "A Google Sheets tracker showing each order's status, shipping date and follow-up notes."  # grid cards: one short line; the full text sits under "Details"
       label: "Sample project"
       text: "A Google Sheets tracker that shows each order's status, shipping date and follow-up notes at a glance."
@@ -215,6 +220,7 @@ portfolio:
       track_title: "View sample (Order Tracking Sheet)"
     - title: "AI-Assisted Reply Drafting"
       id: "work-ai-drafting"
+      group: "automation-ai"  # one of portfolio.groups[].id
       short: "How I use AI for first drafts of customer replies and check each one against store policy before it is sent."
       label: "Sample project"
       text: "How I use AI for first drafts of customer replies, and how I check every draft against store policy before it is sent. Four examples show the AI draft, the reviewed reply and what I changed and why."
@@ -230,18 +236,20 @@ portfolio:
         - src: "static/img/portfolio/ai-drafting-top-full.webp"
           alt: "Rules for using AI in customer support (sample project)"
           caption: "My rules: no customer data in public AI tools, policy from the store, every draft reviewed."
-    - title: "Customer Support Response Library"
-      id: "work-response-library"
-      short: "A support playbook for a small online shop: 10 reply templates with response time targets and escalation rules."
+    - title: "AI shopping assistant readiness check"
+      id: "work-ai-ready"
+      group: "automation-ai"  # one of portfolio.groups[].id
+      short: "A 10-question self-check for small online shops, with a score, the top 3 gaps and plain-language policy templates."
       label: "Sample project"
-      text: "A support playbook for a small online shop: 10 reply templates for order updates, delays, returns and complaints, with response time targets, escalation rules and store policy fields."
-      tools: ["Google Docs"]
-      link: "https://docs.google.com/document/d/1xYm1fliueMGKPDli2UzKeNNLda1rVmu8jLQrLuVwvgo/preview"
-      image: "static/img/portfolio/response-library.webp"
-      track: "sample-response-library"
-      track_title: "View sample (Customer Support Response Library)"
+      text: "A 10-question self-check for small online shops: can AI shopping assistants find clear shipping, returns, FAQ and product information? It gives a score and the top 3 gaps, with plain-language policy and FAQ templates and a before/after example on a fictional store. It runs in the browser and saves nothing."
+      tools: ["HTML", "CSS", "JavaScript", "Python"]
+      link: "ai-ready/"  # a page on this site: opens in the same tab (links starting with http open in a new tab)
+      link_label: "Try the self-check"
+      image: "static/img/portfolio/ai-ready.webp"  # screenshot of the page's own result box (no third-party logos)
+      track: "card-ai-ready"  # optional: GoatCounter click event for the card's link and image
     - title: "Data Cleanup Before/After"
       id: "work-data-cleanup"
+      group: "data-reporting"  # one of portfolio.groups[].id
       short: "A messy customer export cleaned with reusable formulas, with every change logged and checked."
       label: "Sample project"
       text: "A messy customer export cleaned with reusable formulas: duplicates found automatically, names split, dates, countries and amounts standardised, every change logged and every row checked against the final list."
@@ -252,6 +260,7 @@ portfolio:
       track_title: "View sample (Data Cleanup Before/After)"
     - title: "HubSpot Support Workflow"
       id: "work-hubspot-support"
+      group: "support-ops"  # one of portfolio.groups[].id
       short: "A practice HubSpot help desk for a fictional online shop: 8 tickets moved through a pipeline and tracked on a dashboard."
       label: "Sample project"
       text: "A practice HubSpot help desk for a fictional online shop: 8 support tickets for delays, returns, refunds and damaged items, answered with reply snippets and moved through a ticket pipeline (New, Waiting on contact, Waiting on us, Closed), then tracked on a service dashboard by status, category and source. Test data and replies were loaded with Python through the HubSpot API."
@@ -269,6 +278,7 @@ portfolio:
           caption: "Service dashboard"
     - title: "Jira Partner Support Desk"
       id: "work-jira-support"
+      group: "support-ops"  # one of portfolio.groups[].id
       short: "A practice Jira Service Management desk for fictional bank and payment partners, with SLA goals for first response and resolution."
       label: "Sample project"
       text: "A practice Jira Service Management desk for fictional bank and payment partners: incidents and service requests with urgency and impact, internal notes kept separate from partner-facing replies, and SLA goals for first response and resolution that pause while waiting for the customer. The screenshots show a breached SLA, a paused SLA and an SLA met."
@@ -285,6 +295,17 @@ portfolio:
         - src: "static/img/portfolio/jira-sla-met-full.webp"
           alt: "Screenshot of a resolved Jira request with the resolution SLA met (sample project, fictional data)"
           caption: "Resolved within SLA"
+    - title: "Customer Support Response Library"
+      id: "work-response-library"
+      group: "support-ops"  # one of portfolio.groups[].id
+      short: "A support playbook for a small online shop: 10 reply templates with response time targets and escalation rules."
+      label: "Sample project"
+      text: "A support playbook for a small online shop: 10 reply templates for order updates, delays, returns and complaints, with response time targets, escalation rules and store policy fields."
+      tools: ["Google Docs"]
+      link: "https://docs.google.com/document/d/1xYm1fliueMGKPDli2UzKeNNLda1rVmu8jLQrLuVwvgo/preview"
+      image: "static/img/portfolio/response-library.webp"
+      track: "sample-response-library"
+      track_title: "View sample (Customer Support Response Library)"
   feedback:  # one-line text link under the cards (services-extra style), opens url in a new tab; empty text hides it
     text: "Seen the samples? Tell me what would make this site better (3 minutes)"
     url: "https://docs.google.com/forms/d/e/1FAIpQLSdacdB8X1TM5an62U-kB64D28lrl4B0Tm4R6rquM5yPhlEAVQ/viewform?usp=header"

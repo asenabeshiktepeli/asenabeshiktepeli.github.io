@@ -334,15 +334,36 @@
     <div class="container">
       {{ section_head(portfolio.title) }}
       {% if portfolio.intro %}<p class="section-intro reveal">{{ portfolio.intro }}</p>{% endif %}
-      {# The first item is the featured card (full width). All other items sit in a grid below:
-         3 columns on desktop, 2 on tablets, 1 on phones. Each grid card shows item.short;
-         the full item.text sits in a "Details" <details> panel (no JS). #}
+      {# Cards are shown in the groups of portfolio.groups (in that order), each group with an h3 title,
+         a one-line intro and its own grid (3 columns on desktop, 2 on tablets, 1 on phones).
+         A card joins a group through item.group; cards without a known group follow the groups.
+         Every card is a grid card: item.short, with the full item.text in a "Details" <details> panel (no JS). #}
+      {% set all_items = portfolio["items"] or [] %}
+      {% set groups = portfolio.groups or [] %}
+      {% set group_ids = groups | map(attribute="id") | list %}
+      {% set project_sets = [] %}
+      {% for g in groups %}
+        {% set g_items = all_items | selectattr("group", "equalto", g.id) | list %}
+        {% if g_items %}{% set _ = project_sets.append({"group": g, "items": g_items}) %}{% endif %}
+      {% endfor %}
+      {% set ungrouped = all_items | rejectattr("group", "in", group_ids) | list %}
+      {% if ungrouped %}{% set _ = project_sets.append({"group": none, "items": ungrouped}) %}{% endif %}
+      <div class="project-groups">
+      {% for set_ in project_sets %}
+      {% set g = set_.group %}
+      <div class="project-group"{% if g %} aria-labelledby="group-{{ g.id }}"{% endif %}>
+        {% if g %}
+        <h3 class="project-group-title reveal" id="group-{{ g.id }}">{{ g.title }}</h3>
+        {% if g.intro %}<p class="project-group-intro reveal">{{ g.intro }}</p>{% endif %}
+        {% endif %}
+        {# Card titles sit one level below the group title #}
+        {% set title_tag = "h4" if g else "h3" %}
       <div class="projects">
-        {% for item in portfolio["items"] %}
+        {% for item in set_["items"] %}
         {# Screenshots for the lightbox gallery: a list of {src, alt, caption} from content.yaml. #}
         {% set shots = item.screenshots or [] %}
         {% set first_shot = shots[0].src if shots else "" %}
-        {% set featured = loop.first %}
+        {% set featured = false %}
         {# Links starting with http open in a new tab (↗); a page on this site (e.g. "ai-ready/") opens in the same tab (→).
            Optional item.track adds a GoatCounter click event to the card's link and image. #}
         {% set external = item.link and item.link.startswith("http") %}
@@ -351,7 +372,7 @@
            so every event name on the page is unique. #}
         {% set track_attrs %}{% if item.track %} data-goatcounter-click="{{ item.track }}" data-goatcounter-title="{{ item.track_title or (item.title ~ ' – card') }}"{% endif %}{% endset %}
         {% set track_image_attrs %}{% if item.track and item.track_title %} data-goatcounter-click="{{ item.track }}-image" data-goatcounter-title="{{ item.track_title }} (image)"{% else %}{{ track_attrs }}{% endif %}{% endset %}
-        <article class="card project{% if featured %} project-featured{% else %} project-tile{% endif %} spotlight reveal"{% if item.id %} id="{{ item.id }}"{% endif %} style="--d: {{ 0 if featured else (loop.index0 - 1) % 3 }}">
+        <article class="card project{% if featured %} project-featured{% else %} project-tile{% endif %} spotlight reveal"{% if item.id %} id="{{ item.id }}"{% endif %} style="--d: {{ loop.index0 % 3 }}">
           <div class="project-media" aria-hidden="{{ 'false' if item.image or item.video else 'true' }}">
             {% if item.video %}
             {# Optional video instead of an image: plays only when the visitor presses play.
@@ -381,7 +402,7 @@
           </div>
           <div class="project-body">
             {% if item.label %}<span class="badge">{{ item.label }}</span>{% endif %}
-            <h3 class="card-title">{{ item.title }}</h3>
+            <{{ title_tag }} class="card-title">{{ item.title }}</{{ title_tag }}>
             {% if item.short and item.text and not featured %}
             <p class="card-text">{{ item.short }}</p>
             <details class="project-details">
@@ -441,6 +462,9 @@
           {% endif %}
         </article>
         {% endfor %}
+      </div>
+      </div>
+      {% endfor %}
       </div>
 
       {# One-line text link under the cards (same style as the services link) #}
