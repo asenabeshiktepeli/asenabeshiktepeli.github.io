@@ -480,26 +480,112 @@
      Each step is a native <details> card (no JS); the summary carries the step's GoatCounter event.
      The arrows between the cards are CSS only. #}
   {% set flow_steps = (ai_workflow.steps or []) | selectattr("title") | list %}
+  {# Small line icons for the steps (decorative, currentColor, 24px grid). step.icon picks one by name. #}
+  {% set aiw_icons = {
+    "envelope": '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/>',
+    "sparkle": '<path d="M11 4c.7 4.3 2.7 6.3 7 7-4.3.7-6.3 2.7-7 7-.7-4.3-2.7-6.3-7-7 4.3-.7 6.3-2.7 7-7z"/><path d="M19 3v4M17 5h4"/>',
+    "check-search": '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/><path d="m7.8 10.6 2 2 3.6-3.8"/>',
+    "send": '<path d="M21 3 10.5 13.5"/><path d="M21 3 14.5 21l-4-7.5L3 9.5z"/>',
+  } %}
   {% if flow_steps %}
   <section class="section section-soft" id="ai-workflow">
     <div class="container">
       {% if ai_workflow.label %}<span class="badge reveal">{{ ai_workflow.label }}</span>{% endif %}
       {{ section_head(ai_workflow.title) }}
       {% if ai_workflow.intro %}<p class="section-intro reveal">{{ ai_workflow.intro }}</p>{% endif %}
-      <ol class="ai-flow">
+      <ol class="ai-flow aiw-flow">
         {% for step in flow_steps %}
         <li class="reveal" style="--d: {{ loop.index0 }}">
           <details class="card ai-flow-step">
             <summary class="ai-flow-summary"{% if step.track %} data-goatcounter-click="{{ step.track }}"{% if step.track_title %} data-goatcounter-title="{{ step.track_title }}"{% endif %}{% endif %}>
-              <span class="ai-flow-index" aria-hidden="true">{{ "%02d" | format(loop.index) }}</span>
+              {# No visible step number; screen readers hear "Step 1: …" (the <ol> keeps the order too).
+                 The tag is visual only; screen readers hear tag_label instead ("…, drafted by AI"). #}
+              <span class="visually-hidden">Step {{ loop.index }}: </span>
+              {% if step.icon and step.icon in aiw_icons %}<svg class="aiw-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">{{ aiw_icons[step.icon] | safe }}</svg>{% endif %}
               <span class="ai-flow-title">{{ step.title }}</span>
+              {% if step.tag %}<span class="aiw-tag aiw-tag-{{ step.tag | lower }}" aria-hidden="true">{{ step.tag }}</span>{% if step.tag_label %}<span class="visually-hidden">, {{ step.tag_label }}</span>{% endif %}{% endif %}
               <span class="faq-icon" aria-hidden="true"></span>
             </summary>
             {% if step.text %}<p class="ai-flow-text">{{ step.text }}</p>{% endif %}
+            {% if step.chips %}
+            <ul class="chips aiw-chips">
+              {% for chip in step.chips %}<li class="chip chip-sm aiw-chip">{{ chip }}</li>{% endfor %}
+            </ul>
+            {% endif %}
+            {% if step.note %}<p class="aiw-note">{{ step.note }}</p>{% endif %}
           </details>
         </li>
         {% endfor %}
       </ol>
+
+      {# ---------- Spot the mistake (content.yaml "ai_spot") ----------
+         Without JS: the draft is plain text and the mistakes are listed in a <details>.
+         static/js/spot-mistake.js turns each sentence into a button, shows the controls and
+         adds .is-ready, which hides the <details>. Nothing is stored or sent. #}
+      {% set spot = ai_spot %}
+      {% set spot_sentences = (spot.sentences or []) | selectattr("text") | list %}
+      {% if spot.title and spot_sentences %}
+      {% set spot_total = spot_sentences | selectattr("mistake") | list | length %}
+      <div class="spot" data-spot aria-labelledby="spot-title"
+           data-progress="{{ spot.progress }}" data-done="{{ spot.done }}" data-total="{{ spot_total }}"
+           data-fine="{{ spot.fine }}" data-prefix="{{ spot.mistake_prefix }}">
+        <h3 class="spot-title" id="spot-title">{{ spot.title }}</h3>
+        {% if spot.intro %}<p class="spot-intro">{{ spot.intro }}</p>{% endif %}
+        {% if spot.note %}<p class="spot-note">{{ spot.note }}</p>{% endif %}
+        <div class="spot-grid">
+          <div class="spot-card spot-message">
+            <p class="spot-label">{{ spot.message_label }}</p>
+            <p class="spot-message-text">{{ spot.message }}</p>
+          </div>
+          <div class="spot-card spot-draft">
+            <p class="spot-label"><span class="aiw-tag aiw-tag-ai">{{ spot.draft_label }}</span></p>
+            <ul class="spot-sentences" role="list">
+              {% for s in spot_sentences %}
+              <li class="spot-item" data-spot-item{% if s.mistake %} data-mistake="{{ s.mistake.label }}"{% endif %}>
+                <span class="spot-text" data-spot-text>{{ s.text }}</span>
+                <div class="spot-feedback" id="spot-feedback-{{ loop.index }}" data-spot-feedback hidden>
+                  {% if s.mistake %}
+                  <p class="spot-flag spot-flag-mistake">{{ spot.mistake_prefix }} {{ s.mistake.label }}</p>
+                  <p class="spot-explain">{{ s.mistake.text }}</p>
+                  {% else %}
+                  <p class="spot-flag spot-flag-fine">{{ spot.fine }}</p>
+                  {% endif %}
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+
+        {# Controls and live feedback: shown only once the script is ready #}
+        <div class="spot-controls" data-spot-controls hidden>
+          <p class="spot-progress" data-spot-progress aria-live="polite">{{ spot.progress | replace("{found}", "0") | replace("{total}", spot_total | string) }}</p>
+          <p class="visually-hidden" data-spot-announce aria-live="polite"></p>
+          <div class="spot-actions">
+            {% if spot.show_all %}<button class="btn btn-ghost btn-sm" type="button" data-spot-show>{{ spot.show_all }}</button>{% endif %}
+            {% if spot.reset %}<button class="btn btn-ghost btn-sm" type="button" data-spot-reset>{{ spot.reset }}</button>{% endif %}
+          </div>
+        </div>
+
+        {% if spot.send %}
+        <div class="spot-send" data-spot-send hidden>
+          <h4 class="spot-send-title">{{ spot.send_title }}</h4>
+          <p>{{ spot.send }}</p>
+        </div>
+        {% endif %}
+
+        {# No-JS fallback (hidden by .is-ready) #}
+        <details class="spot-nojs" data-spot-nojs>
+          <summary>{{ spot.nojs_summary }}</summary>
+          <ul role="list">
+            {% for s in spot_sentences if s.mistake %}
+            <li><strong>{{ spot.mistake_prefix }} {{ s.mistake.label }}</strong> “{{ s.text }}” {{ s.mistake.text }}</li>
+            {% endfor %}
+          </ul>
+          {% if spot.send %}<p><strong>{{ spot.send_title }}:</strong> {{ spot.send }}</p>{% endif %}
+        </details>
+      </div>
+      {% endif %}
     </div>
   </section>
   {% endif %}
@@ -786,4 +872,8 @@
 </footer>
 
 {{ m.toast() }}
+{% endblock %}
+
+{% block scripts %}
+  {% if ai_spot and ai_spot.title %}<script src="static/js/spot-mistake.js" defer></script>{% endif %}
 {% endblock %}

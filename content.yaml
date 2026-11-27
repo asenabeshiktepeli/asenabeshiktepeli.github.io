@@ -312,27 +312,78 @@ portfolio:
 
 # "How I use AI": a sample workflow between Work and How I work. Each step is a <details> card;
 # track / track_title = GoatCounter click event for the step's summary. Empty steps list hides the section.
+# Optional per step: icon (envelope | sparkle | check-search | send: a small line icon next to the title),
+# tag ("AI" or "Me": a small label next to the title; tag_label is what screen readers hear instead), chips (short tags under the text) and
+# note (a sentence shown in a framed box after the text; text + " " + note reads as one paragraph).
 ai_workflow:
   label: "Sample workflow"
   title: "How I use AI"
   intro: "AI drafts, I check, then I send."
   steps:
     - title: "Customer message"
+      icon: "envelope"
       text: "A customer asks something routine, like where their order is."
       track: "flow-step-1-message"
       track_title: "AI workflow step 1 (Customer message)"
     - title: "AI draft"
+      icon: "sparkle"
+      tag: "AI"
+      tag_label: "drafted by AI"
       text: "An AI tool drafts a reply from my saved response library."
       track: "flow-step-2-ai-draft"
       track_title: "AI workflow step 2 (AI draft)"
     - title: "My check"
-      text: "I check the order details, store policy and tone before anything is sent. Refunds and upset customers stay with me."
+      icon: "check-search"
+      tag: "Me"
+      tag_label: "done by me"
+      text: "I check the order details, store policy and tone before anything is sent."
+      chips: ["Order details", "Store policy", "Tone"]
+      note: "Refunds and upset customers stay with me."
       track: "flow-step-3-my-check"
       track_title: "AI workflow step 3 (My check)"
     - title: "Send and log"
+      icon: "send"
+      tag: "Me"
+      tag_label: "done by me"
       text: "I send the approved reply and log it in the order sheet."
       track: "flow-step-4-send-log"
       track_title: "AI workflow step 4 (Send and log)"
+
+# "Spot the mistake": a small exercise under the four steps of "How I use AI" (same section).
+# Made-up example. With JS (static/js/spot-mistake.js) each draft sentence is a button; without JS the
+# draft is plain text and the mistakes are listed in a <details>. A sentence with "mistake" is wrong.
+# progress: {found} and {total} are filled in by the script. Nothing is stored or sent anywhere.
+ai_spot:
+  title: "Spot the mistake"
+  intro: "Here is a made-up AI draft. Click the sentences you would not send."
+  note: "Made-up example, not a real customer."
+  message_label: "Customer message"
+  message: "Hi, my order #SS-48213 has not arrived and the tracking has not moved for 6 days. Can you tell me where it is? If it is lost, I want my money back."
+  draft_label: "AI draft"
+  sentences:
+    - text: "Hi Alex, thanks for reaching out!"
+    - text: "I checked and your order is out for delivery and will arrive tomorrow before 5 pm."
+      mistake:
+        label: "Invented fact"
+        text: "Nothing in the message or the order data says this. The customer says the tracking has not moved. I would never state a status or date I cannot see."
+    - text: "Our policy says all lost orders are refunded within 24 hours."
+      mistake:
+        label: "Invented policy"
+        text: "A policy rule that does not exist. I check every policy statement against the store's written policy before it is sent."
+    - text: "I have approved your refund of $48.90."
+      mistake:
+        label: "Promise I cannot make"
+        text: "Approving a refund, and the amount, is not for an AI draft. Refunds stay with me."
+    - text: "Best, Support"
+  mistake_prefix: "Mistake:"  # shown before each mistake label, e.g. "Mistake: Invented fact"
+  fine: "That sentence is fine."
+  progress: "Found {found} of {total}"
+  done: "You found all three. This is the check I do before anything is sent."
+  show_all: "Show all mistakes"
+  reset: "Reset"
+  send_title: "What I would send"
+  send: "Hi Alex, I am sorry about the wait. Your tracking has not moved for 6 days, so I am passing this to the person who handles delivery problems and refunds. You will get an update by email."
+  nojs_summary: "Show the three mistakes"  # without JS: the mistakes (and the reply I would send) sit in this <details>
 
 how_i_work:
   title: "How I work"  # empty steps list hides the section
