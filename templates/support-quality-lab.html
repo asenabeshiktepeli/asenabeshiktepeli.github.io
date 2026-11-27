@@ -4,7 +4,7 @@
 {# /support-quality-lab/: support metrics case page (sample project, simulated data).
    Texts: content.yaml "support_quality_lab". Same layout and stylesheet as /ai-ready/,
    plus static/css/case-page.css for the chart figures ("sql-" classes). No page script.
-   No external links: the code repository is not public. #}
+   The only external link is the public code repository (sq.code_link, new tab). #}
 {% set sq = support_quality_lab %}
 
 {% block head_end %}
@@ -33,6 +33,12 @@
       <h1 class="ai-title" id="sql-title">{{ sq.title }}</h1>
       {% if sq.lead %}<p class="ai-lead">{{ sq.lead }}</p>{% endif %}
       {% if sq.notice %}<p class="ai-callout sql-notice">{{ sq.notice }}</p>{% endif %}
+      {% if sq.code_link and sq.code_link.url %}
+      <a class="btn btn-ghost btn-sm" href="{{ sq.code_link.url }}" target="_blank" rel="noopener"
+         data-goatcounter-click="sql-code-github" data-goatcounter-title="Code on GitHub (Support Quality Lab)">
+        {{ sq.code_link.label }} <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span>
+      </a>
+      {% endif %}
     </div>
   </section>
 

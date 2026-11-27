@@ -808,7 +808,7 @@ black_friday_support:
   cta_text: "Need an extra pair of hands in the busy weeks? Send me a message at {email}, and we can start with a small trial task."
 
 # Support Quality Lab: a separate page at /support-quality-lab/ (build.py PAGES). Sample project, simulated data.
-# Not linked from the homepage yet. No external links (the code repository is not public).
+# The only external link is code_link (the public code repository on GitHub, opens in a new tab).
 # Chart width/height are read from the PNG files at build time (image_size filter in build.py).
 support_quality_lab:
   meta_title: "Support Quality Lab – Asena Beshiktepeli"
@@ -817,6 +817,9 @@ support_quality_lab:
   title: "Support Quality Lab"
   lead: "A small reporting pipeline for an e-commerce support inbox. It turns a ticket log into response-time, SLA and satisfaction reports, and includes a rubric for rating AI-drafted replies."
   notice: "All data on this page is simulated. There are no real customers and no real store. The numbers show how the report works, not how any real team performs."
+  code_link:  # shown under the notice; empty url hides it
+    label: "Code on GitHub"
+    url: "https://github.com/asenabeshiktepeli/support-copilot"
   built_title: "What I built"
   built:
     - title: "Ticket simulator"
