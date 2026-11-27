@@ -181,6 +181,18 @@ portfolio:
       video: "static/video/customer-request-automation.mp4"
       poster: "static/img/portfolio/customer-request-automation-poster.webp"
       poster_fallback: "static/img/portfolio/customer-request-automation-poster.jpg"  # used only if the WebP poster cannot load
+    - title: "Support Quality Lab"
+      id: "support-quality-lab"
+      short: "A reporting pipeline for a support inbox: response times, SLA breaches and satisfaction, plus a rubric for rating AI-drafted replies."
+      label: "Sample project"
+      text: "Built on simulated data: 400 tickets, business-hour measurement, 95% confidence intervals, and a plain note on what the numbers can and cannot show."
+      tools: ["Python", "matplotlib", "CSV"]
+      link: "support-quality-lab/"  # a page on this site: opens in the same tab
+      link_label: "Read the case study"
+      image: "static/img/portfolio/support-quality-lab.webp"  # 16:10 card made from the first-response chart (padded, not cropped)
+      image_alt: "Chart of simulated data: first response time by priority for a support inbox, with SLA targets (sample project)"  # optional: replaces the default "Screenshot of …" alt text
+      track: "sample-support-quality-lab"
+      track_title: "View sample (Support Quality Lab)"
     - title: "AI shopping assistant readiness check"
       id: "work-ai-ready"
       short: "A 10-question self-check for small online shops, with a score, the top 3 gaps and plain-language policy templates."
