@@ -1,0 +1,66 @@
+/* Case pages (e.g. /support-quality-lab/): loaded after ai-ready.css.
+   Only "sql-" classes; shared layout comes from ai-ready.css and style.css. */
+
+/* The intro text here is wider than on the homepage and reaches the violet hero blob
+   (style.css, body::before). Fainter blobs on this page keep --muted text above 4.5:1. */
+body::before {
+  opacity: 0.45;
+}
+
+/* Space under section titles (these sections have no intro line under the title) */
+.sql-section-title {
+  margin-bottom: 24px;
+}
+
+/* A second title further down the same section */
+.sql-next {
+  margin-top: clamp(40px, 6vw, 64px);
+}
+
+.sql-notice {
+  margin: 4px 0 0;
+  max-width: 44rem;
+  color: var(--text);
+}
+
+.sql-text {
+  color: var(--muted);
+}
+
+.sql-text li + li {
+  margin-top: 6px;
+}
+
+/* Charts: one per row, each in an opaque card so the background never shows through */
+.sql-charts {
+  display: grid;
+  gap: 20px;
+}
+
+.sql-chart {
+  margin: 0;
+  padding: clamp(16px, 2.6vw, 24px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.sql-chart-title {
+  margin-bottom: 12px;
+  font-size: 1.0625rem;
+  letter-spacing: -0.01em;
+}
+
+.sql-chart img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+}
+
+.sql-chart figcaption {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 0.9375rem;
+}

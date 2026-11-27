@@ -14,6 +14,7 @@ from pathlib import Path
 import yaml
 from jinja2 import ChainableUndefined, Environment, FileSystemLoader, select_autoescape
 from markupsafe import Markup, escape
+from PIL import Image
 
 ROOT = Path(__file__).resolve().parent
 CONTENT = ROOT / "content.yaml"
@@ -31,6 +32,7 @@ OUT = ROOT / "docs"
 PAGES = [
     {"template": "ai-ready.html", "path": "ai-ready/", "content": "ai_ready"},  # AI shopping assistant self-check
     {"template": "black-friday-support.html", "path": "black-friday-support/", "content": "black_friday_support"},  # peak-season support checklist (not linked from the site)
+    {"template": "support-quality-lab.html", "path": "support-quality-lab/", "content": "support_quality_lab"},  # support metrics case page (simulated data)
 ]
 
 # Proper names inside sentences that browser translation should leave alone.
@@ -128,6 +130,15 @@ def make_linker(contact):
         return html
 
     return link_phrases
+
+
+def image_size(path):
+    """Filter: (width, height) of an image file in this repo, read with Pillow; (0, 0) if missing."""
+    file = ROOT / (path or "")
+    if not path or not file.is_file():
+        return (0, 0)
+    with Image.open(file) as img:
+        return img.size
 
 
 def person_jsonld(content):
@@ -234,6 +245,8 @@ def main():
     env.filters["mini_markdown"] = mini_markdown
     # {% if path is static_file %}: true when the file exists, e.g. to list only real thumbnail sizes in srcset
     env.tests["static_file"] = lambda path: bool(path) and (ROOT / path).is_file()
+    # {% set w, h = path | image_size %}: pixel size of an image in this repo, for <img width/height>
+    env.filters["image_size"] = image_size
 
     OUT.mkdir(exist_ok=True)
     home = env.get_template("index.html").render(
